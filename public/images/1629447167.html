@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Font Awsome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <!-- Custom Style -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!-- Responsive Style -->
+    <link rel="stylesheet" type="text/css" href="css/responsive.css">
+
+  </head>
+  <body class="d-flex flex-column min-vh-100">
+
+    <!-- Header -->
+      <div class="header-area">
+        <div class="container-xxl">
+            <div class="row align-items-center">
+              <div class="col-6 col-lg-3">
+                <a class="logo" href="#"><img src="img/logo-white.png" align="" class="img-fluid" width="200"></a>
+              </div> 
+              <div class="col-6 col-lg-9 text-end">
+                <div class="login-info">developer@softpyramid.com <a href="/logout/" class="logout"><span class="fas fa-power-off"></span> Log Out</a></div>
+                <button type="button" id="sidebarCollapse" class="btn btn-info d-lg-none d-inline-block">
+                    <i class="fas fa-align-left"></i>
+                </button>
+                <span class="dropdown">
+                  <a class="btn btn-white dropdown-toggle text-white no-arrow p-0" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Softpyramid &nbsp;<i class="fas fa-bars text-primary pe-2"></i>
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  </ul>
+                </span>  
+                <a href="#" class="share-link text-primary ps-2 position-relative"><i class="fas fa-share-alt share"></i> <span class="badge">6</span></a>
+                <a href="#" class="ps-2 help-link"><i class="fas fa-question"></i></a>         
+              </div>
+            </div>
+          </div>
+      </div>
+    <!-- end Header -->
+    <!-- Page Title Bar -->
+      <div class="page-title-area">
+        <div class="container-xxl">
+          <div class="row align-items-center">
+            <div class="col-6 col-lg-3">
+              <h3>Main Sections</h3>
+            </div>
+            <div class="col-6 col-lg-9 text-end">
+              <div class="d-flex justify-content-between">
+                <div class="left">
+                  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <div class="collapse navbar-collapse cats-navbar" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center">
+                          <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#"><i class="fas fa-folder-plus"></i><br> +Foldar</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fas fa-columns"></i><br> Columns</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fas fa-tag"></i><br> Meta</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="far fa-handshake"></i><br> Approval</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fas fa-file-alt"></i><br> Audit Log</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fas fa-list-ol"></i><br> Numbering</a>
+                          </li>
+                        </ul>
+                      </div>
+                  </nav>
+                </div>
+                <div class="right d-flex align-items-center">
+                  <div class="btn-group me-2">
+                    <span class="file-input btn btn-primary btn-file">
+                        Upload <input type="file" >
+                    </span>
+                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                      <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" style="">
+                      <li><a class="dropdown-item" href="#">Upload Foldar</a></li>
+                      <li><a class="dropdown-item" href="#">New Word document</a></li>
+                      <li><a class="dropdown-item" href="#">New Excel Spreadsheet</a></li>
+                      <li><a class="dropdown-item" href="#">New PowerPoint presentation</a></li>
+                    </ul>
+                  </div>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username with two button addons">
+                    <button type="button" class="btn btn-white bg-white text-secondary border-0 border-top border-bottom dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                      <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" style="">
+                      <li><a class="dropdown-item" href="#">Upload Foldar</a></li>
+                      <li><a class="dropdown-item" href="#">New Word document</a></li>
+                      <li><a class="dropdown-item" href="#">New Excel Spreadsheet</a></li>
+                      <li><a class="dropdown-item" href="#">New PowerPoint presentation</a></li>
+                    </ul>
+                    <a href="#" class="btn btn-primary" type="button"><i class="fas fa-search"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- end Page Title Bar -->
+    <div class="main-content wrapper flex-grow-1">
+      <div class="container-xxl">
+        <div class="wrapper">
+            <!-- Sidebar  -->
+            <div class="row">
+              <div class="col-lg-3 left-sidebar-area">
+                  <nav id="sidebar">
+                    <ul class="list-unstyled components">
+                        <li>
+                            <a href="#">Index&nbsp;<i class="fas fa-envelope text-primary"></i></a>
+                        </li>
+                        <li><a href="#">#team</a></li>
+                        <li class="active"><a href="#">Projects</a></li>
+                        <li><a href="#">Partners</a></li>
+                        <li><a href="#">Accounting</a></li>
+                        <li><a href="#">Human Resource</a></li>
+                        <li><a href="#">Fakhar Khan</a></li>
+                        <li><a href="#">Admin Department</a></li>
+                        <li><a href="#">Custom Order</a></li>
+                        <li><a href="#">GGL</a></li>
+                        <li class="mb-5"><a href="#" data-bs-toggle="modal" data-bs-target="#createnewsection"><i class="fas fa-plus-circle text-primary"></i> &nbsp;Create New Section</a></li>
+                        <li><p class="heading-sidebar">Admin tools</p></li>
+                        <li><a href="#"><i class="fas fa-flag"></i>&nbsp; Dashboard & Reports</a></li>
+                        <li><a href="#"><i class="fas fa-user"></i>&nbsp; Manage Users</a></li>
+                        <li><a href="#"><i class="fas fa-users"></i>&nbsp; Manage User Groups</a></li>
+                        <li><a href="#"><i class="fas fa-trash-alt"></i>&nbsp; Recycle bin</a></li>
+                        <li class='sub-menu'><a href='javascript:void(0)'><i class="fas fa-chevron-right right"></i>&nbsp;More Tools</a>
+                          <ul class="p-0 list-unstyled">
+                            <li><a href='#'><i class="fas fa-share-alt"></i>&nbsp;Share</a></li>
+                            <li><a href='#'><i class="fas fa-user"></i>&nbsp;Access Overview</a></li>
+                            <li><a href='#'><i class="fas fa-tag"></i>&nbsp;Meta</a></li>
+                            <li><a href='#'><i class="fas fa-list-ol"></i>&nbsp;Numbering</a></li>
+                            <li><a href='#'><i class="fas fa-file-alt"></i>&nbsp;Audit Log</a></li>
+                          </ul>
+                        </li>
+                    </ul>
+                </nav>
+              </div>
+              <div class="col-lg-9">
+                <!-- Page Content  -->
+                <div id="content">
+                  <div class="breadcrumb-area mb-4">
+                    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="#">Softpyramid</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Projects</li>
+                        </ol>
+                      </nav>
+                    </div>
+                    <div class="main-content-area">
+                      <div class="dashboard-report-area">
+                        <div class="heading mb-4">
+                          <h5><strong>25</strong> total files</h5>
+                        </div>
+                        <div class="inner-content">
+                          <div class="report-cards-area">
+                            <div class="row display-flex">
+                              <div class="col-md-6 col-lg-4">
+                                <div class="report-card mb-4">
+                                  <a href="#" class="p-4 h-100 rounded shadow-sm d-block w-100">
+                                    <div class="d-flex align-items-center">
+                                      <div class="flex-shrink-0">
+                                        <i class="far fa-clone"></i>
+                                      </div>
+                                      <div class="flex-grow-1 ms-4">
+                                        <h6 class="text-primary font-600 mb-1">Dublicate</h6>
+                                        <p class="mb-0">8 dublicates found</p>
+                                      </div>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>                              
+                              <div class="col-md-6 col-lg-4">
+                                <div class="report-card mb-4">
+                                  <a href="#" class="p-4 h-100 rounded shadow-sm d-block w-100">
+                                    <div class="d-flex align-items-center">
+                                      <div class="flex-shrink-0">
+                                        <i class="fas fa-handshake"></i>
+                                      </div>
+                                      <div class="flex-grow-1 ms-4">
+                                        <h6 class="text-primary font-600 mb-1">Pending Approval</h6>
+                                        <p class="mb-0">5 docuemnts awaiting for approval</p>
+                                      </div>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-lg-4">
+                                <div class="report-card mb-4">
+                                  <a href="#" class="p-4 h-100 rounded shadow-sm d-block w-100">
+                                    <div class="d-flex align-items-center">
+                                      <div class="flex-shrink-0">
+                                        <i class="far fa-clock"></i>
+                                      </div>
+                                      <div class="flex-grow-1 ms-4">
+                                        <h6 class="text-primary font-600 mb-1">Nearing Retention End</h6>
+                                        <p class="mb-0">0 documents with rentention in the next 30 days.</p>
+                                      </div>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-lg-4">
+                                <div class="report-card mb-4">
+                                  <a href="#" class="p-4 h-100 rounded shadow-sm d-block w-100">
+                                    <div class="d-flex align-items-center">
+                                      <div class="flex-shrink-0">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                      </div>
+                                      <div class="flex-grow-1 ms-4">
+                                        <h6 class="text-primary font-600 mb-1">Nearing Due Date</h6>
+                                        <p class="mb-0">1 due or soon to be due document</p>
+                                      </div>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-lg-4">
+                                <div class="report-card mb-4">
+                                  <a href="#" class="p-4 h-100 rounded shadow-sm d-block w-100">
+                                    <div class="d-flex align-items-center">
+                                      <div class="flex-shrink-0">
+                                        <i class="fas fa-file-alt"></i>
+                                      </div>
+                                      <div class="flex-grow-1 ms-4">
+                                        <h6 class="text-primary font-600 mb-1">All Files</h6>
+                                        <p class="mb-0"></p>
+                                      </div>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>  
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+     <!-- Footer -->
+    <footer class="footer">
+      <ul class="footer-menu">
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Privacy policy</a></li>
+        <li><a href="#">Terms of use</a></li>
+      </ul>
+      <div class="copyright">Softpyramid © 2021</div>
+    </footer>
+    <!-- end Footer -->
+
+<!-- New Foldar Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Foldar</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="">
+          <div class="mb-3">
+            <label>Foldar Name</label>
+            <input type="text" name="foldar_name" class="form-control">
+          </div>
+          <div class="mb-3 text-end">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Section Modal -->
+<div class="modal fade" id="createnewsection" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Section</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="">
+          <div class="mb-3">
+            <label>Section Name</label>
+            <input type="text" name="foldar_name" class="form-control">
+          </div>
+          <div class="mb-3 text-end">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Reminders -->
+<div class="modal fade" id="browse-modal" tabindex="-1" aria-labelledby="remindersModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="remindersModalLabel"><i class="fas fa-arrow-left"></i>&nbsp; Kashif Ali</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="foldername-area-modal">
+          <div class="row">
+            <div class="col-md-12">
+                <div class="folderlist d-flex justify-content-between align-items-center p-2 mb-3">
+                  <p class="mb-0"><i class="fas fa-folder"></i>&nbsp; Test</p>
+                  <a href="#" class="btn btn-folderlist py-0 px-2"><i class="fas fa-chevron-right"></i></a>
+                </div>
+                <div class="files-lists">
+                  <div class="filelist disabled p-2"><i class="far fa-images"></i>&nbsp; Screenshot from 2021-07-28 23-20-40.png</div>
+                </div>
+                <div class="files-lists">
+                  <div class="filelist p-2"><i class="far fa-images"></i>&nbsp; Screenshot from 2021-07-28 23-20-40.png</div>
+                </div>
+                <div class="files-lists">
+                  <div class="filelist p-2"><i class="far fa-images"></i>&nbsp; Screenshot from 2021-07-28 23-20-40.png</div>
+                </div>
+                <div class="files-lists">
+                  <div class="filelist disabled p-2"><i class="far fa-images"></i>&nbsp; Screenshot from 2021-07-28 23-20-40.png</div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+
+        $('.sub-menu ul').hide();
+        $(".sub-menu a").click(function () {
+          $(this).parent(".sub-menu").children("ul").slideToggle("100");
+          $(this).find(".right").toggleClass("fa-chevron-right fa-chevron-down");
+        });
+        // Equal height columns
+        $( document ).ready(function() {
+            var heights = $(".report-card").map(function() {
+                return $(this).height();
+            }).get(),
+
+            maxHeight = Math.max.apply(null, heights);
+
+            $(".report-card").height(maxHeight);
+        });
+    </script>
+  </body>
+</html>

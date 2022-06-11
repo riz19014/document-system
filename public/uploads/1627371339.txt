@@ -1,0 +1,14 @@
+Pull Changes
+------------------------------------
+git status .... give the status in which branch you are
+git checkout develop --- move to develop branch
+git pull origin develop  --- get latest changes by some one other
+
+push changes
+------------------------------------
+git add .
+git commit -m "Fiscal Year change june 30  --- means what changes we made"
+git push origin develop .. push our changes 
+
+
+--- you working off line and make versions  and push changes when you live with server
