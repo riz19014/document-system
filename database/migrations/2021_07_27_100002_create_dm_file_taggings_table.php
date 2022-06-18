@@ -19,6 +19,9 @@ class CreateDmFileTaggingsTable extends Migration
             $table->bigInteger('folder_id')->nullable();
             $table->string('meta_tag_id')->nullable();
             $table->string('meta_tag_value')->nullable();
+            $table->tinyInteger('company_id')->nullable();
+            $table->tinyInteger('company_branch_id')->nullable();
+            $table->tinyInteger('department_id')->nullable();
             $table->timestamps();
         });
     }

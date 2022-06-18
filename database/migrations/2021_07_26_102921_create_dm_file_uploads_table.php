@@ -27,6 +27,9 @@ class CreateDmFileUploadsTable extends Migration
              $table->string('signature')->nullable();
             $table->tinyInteger('object_type')->default(2);
             $table->string('doc_path')->nullable();
+            $table->tinyInteger('company_id')->nullable();
+            $table->tinyInteger('company_branch_id')->nullable();
+            $table->tinyInteger('department_id')->nullable();
             $table->timestamps();
         });
     }

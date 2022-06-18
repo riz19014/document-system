@@ -18,6 +18,9 @@ class CreateDmSectionsTable extends Migration
             $table->string('description')->nullable();
             $table->unsignedInteger('parent_id')->nullable();
             $table->tinyInteger('object_type')->default(1);
+            $table->tinyInteger('company_id')->nullable();
+            $table->tinyInteger('company_branch_id')->nullable();
+            $table->tinyInteger('department_id')->nullable();
             $table->timestamps();
         });
     }
