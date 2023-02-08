@@ -22,9 +22,10 @@ class CreateApprovalStatusesTable extends Migration
             $table->timestamp("approval_date")->nullable();
             $table->tinyInteger("approval_status")->default(1);
             $table->string('resolution')->nullable();
-            $table->tinyInteger('company_id')->nullable();
-            $table->tinyInteger('company_branch_id')->nullable();
-            $table->tinyInteger('department_id')->nullable();
+            $table->bigInteger('company_id')->nullable();
+            $table->bigInteger('company_branch_id')->nullable();
+            $table->bigInteger('department_id')->nullable();
+            $table->bigInteger('section_id')->nullable();
             $table->timestamps();
         });
     }

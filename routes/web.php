@@ -100,7 +100,20 @@ Route::get('/account/report', [App\Http\Controllers\DashboardController::class, 
 
 Route::get('proceed-invoice-order',[App\Http\Controllers\FolderController::class, 'OrderData'])->name('proceed-invoice-order');
 
-Route::get('/account/users', [App\Http\Controllers\AccountController::class, 'index'])->name('manage-users');
+Route::get('/company/users', [App\Http\Controllers\AccountController::class, 'index'])->name('manage-users');
+
+Route::get('/company/departments', [App\Http\Controllers\AccountController::class, 'department'])->name('manage-departments');
+
+Route::get('/company/departments/data', [App\Http\Controllers\AccountController::class, 'departmentData'])->name('department-table-data');
+
+Route::post('/create/department', [App\Http\Controllers\AccountController::class, 'storeDepartment'])->name('store-department');
+
+
+Route::get('/company/sections', [App\Http\Controllers\AccountController::class, 'section'])->name('manage-sections');
+
+Route::get('/company/sections/data', [App\Http\Controllers\AccountController::class, 'sectionData'])->name('section-table-data');
+
+Route::post('/create/sections', [App\Http\Controllers\AccountController::class, 'storeSection'])->name('store-section');
 
 
 Route::get('/folder-file/{id}', [App\Http\Controllers\FileController::class, 'FileFolderDownload'])->name('download-folder-file');

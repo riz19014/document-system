@@ -202,6 +202,12 @@ a:hover, a:focus {
   border: 1px solid #ddd;
   border-radius: 4px;
 }
+
+label {
+  margin-bottom: 5px;
+}
+
+
 .btn-file input[readonly] {
   background-color: white !important;
   cursor: text !important;

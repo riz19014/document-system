@@ -24,12 +24,15 @@ class CreateDmFileUploadsTable extends Migration
             $table->timestamp("deleted_at")->nullable();
             $table->timestamp("date")->nullable();
             $table->timestamp("due_date")->nullable();
-             $table->string('signature')->nullable();
+            $table->string('signature')->nullable();
             $table->tinyInteger('object_type')->default(2);
             $table->string('doc_path')->nullable();
-            $table->tinyInteger('company_id')->nullable();
-            $table->tinyInteger('company_branch_id')->nullable();
-            $table->tinyInteger('department_id')->nullable();
+            $table->string('note')->nullable();
+            $table->tinyInteger('file_locked')->default(0);
+            $table->bigInteger('company_id')->nullable();
+            $table->bigInteger('company_branch_id')->nullable();
+            $table->bigInteger('department_id')->nullable();
+            $table->bigInteger('section_id')->nullable();
             $table->timestamps();
         });
     }

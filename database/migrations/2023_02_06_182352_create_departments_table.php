@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDmFileTaggingsTable extends Migration
+class CreateDepartmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,11 @@ class CreateDmFileTaggingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('dm_file_taggings', function (Blueprint $table) {
+        Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('file_scan_id')->nullable();
-            $table->bigInteger('folder_id')->nullable();
-            $table->string('meta_tag_id')->nullable();
-            $table->string('meta_tag_value')->nullable();
+            $table->string('name')->nullable();
             $table->bigInteger('company_id')->nullable();
             $table->bigInteger('company_branch_id')->nullable();
-            $table->bigInteger('department_id')->nullable();
-            $table->bigInteger('section_id')->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +29,6 @@ class CreateDmFileTaggingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dm_file_taggings');
+        Schema::dropIfExists('departments');
     }
 }

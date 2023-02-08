@@ -19,9 +19,10 @@ class CreateDmRententionsTable extends Migration
             $table->string('count_value')->nullable();
             $table->string('description')->nullable();
             $table->timestamp("end_date")->nullable();
-            $table->tinyInteger('company_id')->nullable();
-            $table->tinyInteger('company_branch_id')->nullable();
-            $table->tinyInteger('department_id')->nullable();
+            $table->bigInteger('company_id')->nullable();
+            $table->bigInteger('company_branch_id')->nullable();
+            $table->bigInteger('department_id')->nullable();
+            $table->bigInteger('section_id')->nullable();
             $table->timestamps();
         });
     }

@@ -17,9 +17,10 @@ class CreateApprovalUsersTable extends Migration
             $table->id();
             $table->bigInteger('user_id')->nullable();
             $table->integer('position')->nullable();
-            $table->tinyInteger('company_id')->nullable();
-            $table->tinyInteger('company_branch_id')->nullable();
-            $table->tinyInteger('department_id')->nullable();
+            $table->bigInteger('company_id')->nullable();
+            $table->bigInteger('company_branch_id')->nullable();
+            $table->bigInteger('department_id')->nullable();
+            $table->bigInteger('section_id')->nullable();
             $table->timestamps();
         });
     }

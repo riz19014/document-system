@@ -19,9 +19,10 @@ class CreateDmFolderColumnsTable extends Migration
             $table->bigInteger('meta_tag_id')->nullable();
             $table->bigInteger('tab_index')->nullable();
             $table->tinyInteger('tag_value')->default(0);
-            $table->tinyInteger('company_id')->nullable();
-            $table->tinyInteger('company_branch_id')->nullable();
-            $table->tinyInteger('department_id')->nullable();
+            $table->bigInteger('company_id')->nullable();
+            $table->bigInteger('company_branch_id')->nullable();
+            $table->bigInteger('department_id')->nullable();
+            $table->bigInteger('section_id')->nullable();
             $table->timestamps();
         });
     }

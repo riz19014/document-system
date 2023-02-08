@@ -23,6 +23,11 @@
                     <li><a href="{{route('dash-index')}}"><i class="fas fa-flag"></i>&nbsp; Dashboard & Reports</a></li>
 
                   @if(Auth::user()->role_id == 1)
+
+                    <li><a href="{{route('manage-departments')}}"><i class="fas fa-user"></i>&nbsp; Departments</a></li>
+
+                    <li><a href="{{route('manage-sections')}}"><i class="fas fa-user"></i>&nbsp; Sections</a></li>
+
                     <li><a href="{{route('manage-users')}}"><i class="fas fa-user"></i>&nbsp; Manage Users</a></li>
                     {{--<li><a href="#"><i class="fas fa-users"></i>&nbsp; Manage User Groups</a></li>--}}
 

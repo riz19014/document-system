@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddNoteToDmFileUploadsTable extends Migration
+class CreateSectionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddNoteToDmFileUploadsTable extends Migration
      */
     public function up()
     {
-        Schema::table('dm_file_uploads', function (Blueprint $table) {
-            $table->string('note')->nullable();
+        Schema::create('sections', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->nullable();
+            $table->bigInteger('department_id')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddNoteToDmFileUploadsTable extends Migration
      */
     public function down()
     {
-        Schema::table('dm_file_uploads', function (Blueprint $table) {
-            $table->dropColumn('note');
-        });
+        Schema::dropIfExists('sections');
     }
 }

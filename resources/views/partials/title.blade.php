@@ -57,7 +57,18 @@
                             <a class="nav-link" data-bs-toggle="modal" data-bs-target="#UserAddModal" href="#"><i class="fas fa-user-plus"></i><br> +User</a>
                           </li>
 
-                       
+
+                          @elseif(Route::currentRouteName() == 'manage-departments')
+
+                          <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#departmentAddModal" href="#"><i class="fas fa-box"></i><br> Department</a>
+                          </li>
+
+                          @elseif(Route::currentRouteName() == 'manage-sections')
+
+                          <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#sectionAddModal" href="#"><i class="fas fa-box"></i><br> Section</a>
+                          </li>
 
 
                          @elseif(Route::currentRouteName() == 'file-view')

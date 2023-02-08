@@ -1,13 +1,11 @@
-@extends('layouts.layout')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 
-@section('content_header')
+<?php $__env->startSection('content_header'); ?>
 
-  @include('partials.title')
+  <?php echo $__env->make('partials.title', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
@@ -42,14 +40,14 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                	@foreach ($users as $user)
+                                	<?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                   <tr>
-                                    <td>{{$user->email}}</td>
-                                    <td>{{$user->name}}</td>
-                                    <td>{{$user->role->title}}</td>
+                                    <td><?php echo e($user->email); ?></td>
+                                    <td><?php echo e($user->name); ?></td>
+                                    <td><?php echo e($user->role->title); ?></td>
                                     <td><a style="cursor: pointer;" class="delUser" title="Delete User" data-id=""><i class="fas fa-trash trash-icon"></i></a></td>
                                   </tr>
-                                  @endforeach
+                                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                               </table>
                             </div>
@@ -73,7 +71,8 @@
       </div>
       <div class="modal-body">
         <form id="user_form" action="" method="post">
-            {{csrf_field()}}
+            <?php echo e(csrf_field()); ?>
+
           <div class="mb-3">
           <div class="form-group">
             <input type="text" id="meta-name" class="form-control" name="email" placeholder="user email">
@@ -108,10 +107,10 @@
 
           	     <select  id="roleId" class="form-control" name="role">
                             <option value="" disabled="" selected="">Select role</option>
-                            @foreach ($roles as $role)
-                             <option value="{{$role->id}}">{{$role->title}}</option>
+                            <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                             <option value="<?php echo e($role->id); ?>"><?php echo e($role->title); ?></option>
 
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
              
           </div>
@@ -128,7 +127,7 @@
 
 
 
-@endsection 
+<?php $__env->stopSection(); ?> 
 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -138,13 +137,13 @@
         e.preventDefault(); 
         $.ajax({
           type: "POST",
-          url: "{{ route('store-user') }}",
+          url: "<?php echo e(route('store-user')); ?>",
          data: $('#user_form').serialize(),
           success: function(data) {
             // alert('respose');
             $('#UserAddModal').modal('hide');
             $('#user_form')[0].reset();
-            url: "{{ route('manage-users') }}",
+            url: "<?php echo e(route('manage-users')); ?>",
             location.reload();
           },
         });
@@ -161,3 +160,5 @@
 
 
 
+
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/rizwan/tpro/NDMS/resources/views/account/users.blade.php ENDPATH**/ ?>

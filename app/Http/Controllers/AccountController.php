@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Department;
 use App\Models\DmAudit;
+use App\Models\Section;
 use App\Models\DmFileUpload;
 use Illuminate\Support\Facades\Hash;
 use App\Models\DmSection;
@@ -21,6 +23,7 @@ class AccountController extends Controller
          
         $roles = Role::all();
         $users = User::where('role_id', '!=', 1)->get();
+        // dd($users);
      	return view('account.users',compact('roles','users'));
      }
 
@@ -111,4 +114,116 @@ class AccountController extends Controller
 
           return view('folder.audit',compact('folder_audits'));
      }
+
+     public function department(){
+
+        return view('account.department');
+     }
+
+     public function departmentData(){
+
+
+        $departments = Department::orderBy('id', 'DESC')->get();
+
+        return Datatables::of($departments)
+
+
+        
+
+        ->addColumn('name', function($row){
+           return $row->name;         
+       })
+
+        ->addColumn('created_at', function($row){
+           return Carbon::parse( $row->created_at )->timezone('Asia/Karachi')->format('d.m.y | H:i:s');      
+       })
+
+        ->addColumn('action', function($row){
+
+              $html_string = '<a class="nav-link delDepartment" title="Delete Department" style="cursor:pointer" data-name="'.$row->name.'"  data-id="'.$row->id.'"><i class="fas fa-trash"></i><br></a>';
+
+              return $html_string;
+                
+       })
+     ->rawColumns(['action'])
+          ->make(true);
+
+
+
+        
+     }
+    public function storeDepartment(Request $request)
+    {
+        // dd($request->all());
+        if(!Department::where('name', $request->name)->exists()){
+
+            $create = new Department ();
+            $create->name = $request->name;
+            $create->save();
+            return response()->json(['success' => true]);
+        }
+        
+        return response()->json(['success' => false]);
+
+    }
+
+     public function section(){     
+        $departments = Department::all();
+        return view('account.section',compact('departments'));
+     }
+
+     public function sectionData(){
+
+
+        $sections = Section::orderBy('id', 'DESC')->get();
+
+        return Datatables::of($sections)
+
+
+        
+
+        ->addColumn('name', function($row){
+           return $row->name;         
+       })
+
+        ->addColumn('department', function($row){
+           return $row->department->name;         
+       })
+
+        ->addColumn('created_at', function($row){
+           return Carbon::parse( $row->created_at )->timezone('Asia/Karachi')->format('d.m.y | H:i:s');      
+       })
+
+        ->addColumn('action', function($row){
+
+              $html_string = '<a class="nav-link delDepartment" title="Delete Department" style="cursor:pointer" data-name="'.$row->name.'"  data-id="'.$row->id.'"><i class="fas fa-trash"></i><br></a>';
+
+              return $html_string;
+                
+       })
+     ->rawColumns(['action'])
+          ->make(true);
+
+
+
+        
+     }
+    public function storeSection(Request $request)
+    {
+        // dd($request->all());
+        if(!Section::where('name', $request->name)->exists()){
+
+            $create = new Section ();
+            $create->name = $request->name;
+            $create->department_id = $request->department;
+            $create->save();
+            return response()->json(['success' => true]);
+        }
+        
+        return response()->json(['success' => false]);
+
+    }
+
+     
+
 }
