@@ -115,6 +115,12 @@ Route::get('/company/sections/data', [App\Http\Controllers\AccountController::cl
 
 Route::post('/create/sections', [App\Http\Controllers\AccountController::class, 'storeSection'])->name('store-section');
 
+Route::get('/company/units', [App\Http\Controllers\AccountController::class, 'unit'])->name('manage-units');
+
+Route::get('/company/units/data', [App\Http\Controllers\AccountController::class, 'unitData'])->name('unit-table-data');
+
+Route::post('/create/unit', [App\Http\Controllers\AccountController::class, 'storeUnit'])->name('store-unit');
+
 
 Route::get('/folder-file/{id}', [App\Http\Controllers\FileController::class, 'FileFolderDownload'])->name('download-folder-file');
 

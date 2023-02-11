@@ -30,10 +30,10 @@
             <div class="row align-items-center">
               <div class="col-6 col-lg-3">
                 <a class="logo" href="#"><img src="<?php echo e(asset('img/logo-white.png')); ?>" align="" class="img-fluid" width="200"></a>
-              </div> 
-              <div class="col-6 col-lg-9 text-end">                
+              </div>
+              <div class="col-6 col-lg-9 text-end">
                 <a href="<?php echo e(route('register')); ?>" class="ps-2 text-white">Sign up</a>
-                <a href="<?php echo e(route('login')); ?>" class="ps-2 text-white">Login</a>         
+                <a href="<?php echo e(route('login')); ?>" class="ps-2 text-white">Login</a>
               </div>
             </div>
           </div>
@@ -105,7 +105,7 @@ unset($__errorArgs, $__bag); ?>
                         </label>
                       </div>
                     </div>
-                      
+
                   </div>
                   <div class="submit-btn">
                     <button type="submit" class="btn btn-primary text-uppercase btn-wide">sing in</button>
@@ -126,7 +126,7 @@ unset($__errorArgs, $__bag); ?>
         <li><a href="#">Privacy policy</a></li>
         <li><a href="#">Terms of use</a></li>
       </ul>
-      <div class="copyright">Softpyramid © 2021</div>
+      <div class="copyright">Nishat © 2021</div>
     </footer>
     <!-- end Footer -->
 

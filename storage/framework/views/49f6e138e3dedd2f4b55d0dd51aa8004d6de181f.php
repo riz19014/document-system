@@ -10,7 +10,7 @@
               <div class="breadcrumb-area mb-4">
                 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item"><a href="#" onclick="return false;">Softpyramid</a></li>       
+                      <li class="breadcrumb-item"><a href="#" onclick="return false;">Nishat</a></li>
                       <li class="breadcrumb-item active" aria-current="page">Recycle Bin</li>
                     </ol>
                   </nav>
@@ -25,13 +25,13 @@
                               <label class="custom-control-label" for="check-all"></label>
                             </div>
                           </th>
-                            <th>Name </th> 
+                            <th>Name </th>
                             <th> Deleted at </th>
                             <th> Size </th>
                             <th></th>
                         </tr>
                     </thead>
-                    
+
            </table>
 
 
@@ -44,11 +44,11 @@
                           <button type="button" class="dz-button">Folder is empty.</button><br />
                           <span class="note needsclick">Click, or drag your first file here!</span>
                         </div>
-                      
+
                       </form>
                     </div>
                   </div> -->
-                
+
             </div>
           </div>
 
@@ -106,7 +106,7 @@
       </div>
     </div>
   </div>
-</div>  
+</div>
 
 
   <div class="modal fade" id="restoreDelModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -132,7 +132,7 @@
       </div>
     </div>
   </div>
-</div> 
+</div>
 
 
 
@@ -155,7 +155,7 @@
       </div>
     </div>
   </div>
-</div> 
+</div>
 
 
 <div class="modal fade" id="multipleRemoveModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -176,23 +176,23 @@
       </div>
     </div>
   </div>
-</div> 
-                         
-    <?php $__env->stopSection(); ?>  
+</div>
+
+    <?php $__env->stopSection(); ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="<?php echo e(asset('js/dropzone.min.js')); ?>"></script>
 <script type="text/javascript">
 
 		$(function () {
 		var table = $('.recycle-table').DataTable({
-		     
+
 		     "paging": false,
 		     "ordering": false,
 		     "searching": false,
 		     "info": false,
-      
+
 		     language : {
-		        "zeroRecords": "No records is table"             
+		        "zeroRecords": "No records is table"
 		    },
 		      ajax: {
 		          url:"<?php echo route('recycle-data'); ?>",
@@ -202,32 +202,32 @@
                   { data: 'checkbox', name: 'checkbox' },
 		            {data: 'doc_name', name: 'doc_name'},
                  {data: 'deleted_at', name: 'deleted_at'},
-		            {data: 'file_size', name: 'file_size'},              
+		            {data: 'file_size', name: 'file_size'},
 		            {data: 'action', name: 'action'},
-		            
+
 		        ]
 		    });
-		    
+
 		  });
 
 
-         $(document).on('click','#restoreId',function(e){ 
+         $(document).on('click','#restoreId',function(e){
           doc_id = $(this).data("id");
-          doc_name = $(this).data("name"); 
+          doc_name = $(this).data("name");
           $('#headval').text(doc_name);
           $('#restID').val(doc_id);
          });
 
-          $(document).on('click','#restoreDel',function(e){ 
+          $(document).on('click','#restoreDel',function(e){
           del_id = $(this).data("id");
-          del_name = $(this).data("name"); 
+          del_name = $(this).data("name");
           $('#restdelval').text(del_name);
           $('#restdel').val(del_id);
          });
 
 
         $(document).on('submit','#restore_data',function(e){
-        e.preventDefault(); 
+        e.preventDefault();
 
         $.ajax({
           type: "get",
@@ -242,7 +242,7 @@
 
 
         $(document).on('submit','#empty_recycle',function(e){
-        e.preventDefault(); 
+        e.preventDefault();
         $.ajax({
           type: "get",
           url: "<?php echo e(route('empty-recycle')); ?>",
@@ -271,28 +271,28 @@
         // $('.selected-item').addClass('d-none');
           $('.cancel-quotations').addClass('d-none');
           $('.proceed-invoice').addClass('d-none');
-        
-      } 
+
+      }
     });
 
-    
+
     $(document).on('click', '#remove_multiple', function(e){
       e.preventDefault();
       var selected_quots = [];
             var check_idd = 1;
           $("input.check1:checked").each(function() {
-            selected_quots.push($(this).val());     
+            selected_quots.push($(this).val());
           });
           $.ajaxSetup({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
-          });   
+          });
           if(selected_quots == ''){
             $('#multipleRemoveModel').modal('hide');
             return false;
           }
-          
+
        $.ajax({
           url: "<?php echo e(route('permanent-delete')); ?>",
           method: 'post',

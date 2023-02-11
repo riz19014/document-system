@@ -1,31 +1,31 @@
 <?php $__env->startSection('content'); ?>
-              
+
 
 <?php $__env->startSection('content_header'); ?>
 
 <?php echo $__env->make('partials.title', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 <?php $__env->stopSection(); ?>
-          
+
             <!-- Page Content  -->
-          <div id="content">  
+          <div id="content">
               <div class="breadcrumb-area mb-4">
                 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item"><a href="#" onclick="return false;">Softpyramid</a></li>
+                      <li class="breadcrumb-item"><a href="#" onclick="return false;">Nishat</a></li>
                       <?php $__currentLoopData = $parents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $folder): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                        <li class="breadcrumb-item"><a href="<?php echo e(route('folder-index',$folder->id)); ?>"><?php echo e($folder->description); ?></a></li>
-                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                       <li class="breadcrumb-item"><a href="<?php echo e(route('file-view',$file->id)); ?>"><?php echo e($file->doc_name); ?></a></li>
-                     
-                      
+
+
                     </ol>
                   </nav>
                 </div>
 
 
-        
+
 
 
           <div class="main-content-area">
@@ -80,7 +80,7 @@
                                       <?php endif; ?>>
                                     </div>
                                   </div>
-  
+
                                   <div class="col-md-12">
                                     <div class="mb-4">
                                       <label class="text-primary font-600" >Notes</label>
@@ -92,9 +92,9 @@
                                       <label class="text-primary">Manage all metadata fields</label>
                                   </div>
 
-                                  <?php if($editfiles->isEmpty()): ?> 
-                                  <?php $__currentLoopData = $editcols; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $editcol): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
-                                  
+                                  <?php if($editfiles->isEmpty()): ?>
+                                  <?php $__currentLoopData = $editcols; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $editcol): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
                                   <div class="col-md-6">
                                     <div class="mb-3">
                                       <span class="form-control metavalue"><?php echo e($editcol->tagname->tagging_name); ?></span>
@@ -105,7 +105,7 @@
                                       <input type="text" id="docname" name="meta[<?php echo e($editcol->meta_tag_id); ?>]" class="form-control" />
                                     </div>
                                   </div>
-                                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+                                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                   <?php else: ?>
                                    <?php $__currentLoopData = $editfiles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $editfile): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
@@ -147,14 +147,14 @@
                   </div>
 
 
-<?php $__env->stopSection(); ?> 
+<?php $__env->stopSection(); ?>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 
 
 
-     $(document).on('submit','#folder_file',function(e){  
-        e.preventDefault(); 
+     $(document).on('submit','#folder_file',function(e){
+        e.preventDefault();
         $.ajax({
           type: "POST",
           url: "<?php echo e(route('edit-file-form')); ?>",
@@ -173,7 +173,7 @@
 
   $(document).on('click', '#send_btn', function(){
        value = 34;
-       
+
          $.ajax({
       url: "<?php echo e(route('edit-file-form')); ?>",
       method: 'post',
@@ -185,23 +185,23 @@
             $('#res_message').show();
             $('#res_message').html(response.msg);
             $('#msg_div').removeClass('d-none');
- 
-            document.getElementById("contact_us").reset(); 
+
+            document.getElementById("contact_us").reset();
             setTimeout(function(){
             $('#res_message').hide();
             $('#msg_div').hide();
             },10000);
          //--------------------------
       }});
-        
+
          });
-  
+
   $(document).ready(function(){
 $('#send_form').click(function(e){
    e.preventDefault();
- 
+
    $('#send_form').html('Sending..');
-   
+
    /* Submit form data using ajax*/
    $.ajax({
       url: "<?php echo e(url('edit-form')); ?>",
@@ -213,8 +213,8 @@ $('#send_form').click(function(e){
             $('#res_message').show();
             $('#res_message').html(response.msg);
             $('#msg_div').removeClass('d-none');
- 
-            document.getElementById("contact_us").reset(); 
+
+            document.getElementById("contact_us").reset();
             setTimeout(function(){
             $('#res_message').hide();
             $('#msg_div').hide();

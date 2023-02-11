@@ -13,7 +13,7 @@
     <div class="breadcrumb-area mb-4">
       <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb"  >
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#" onclick="return false;">Softpyramid</a></li>       
+            <li class="breadcrumb-item"><a href="#" onclick="return false;">Nishat</a></li>
             <li class="breadcrumb-item active" aria-current="page">departments</li>
           </ol>
       </nav>
@@ -27,6 +27,7 @@
                 <thead>
                   <tr>
                     <th>Department Name</th>
+                    <th>Unit</th>
                     <th>Created at</th>
                     <th>Action</th>
                   </tr>
@@ -34,10 +35,10 @@
                 <tbody>
                 </tbody>
               </table>
-            </div>                    
+            </div>
         </div>
       </div>
-  </div> 
+  </div>
 </div>
 
 
@@ -66,6 +67,17 @@
             </div>
             </div>
 
+            <div class="mb-3">
+                <div class="form-group">
+                 <select required id="unit_id" class="form-control" name="unit">
+                    <option value="" disabled="" selected="">Select unit</option>
+                    @foreach ($units as $unit)
+                     <option value="{{$unit->id}}">{{$unit->unit_name}}</option>
+                    @endforeach
+                </select>
+                </div>
+            </div>
+
             <div class="mb-3 text-end">
               <button type="submit" class="btn btn-primary">Create</button>
             </div>
@@ -73,7 +85,7 @@
         </div>
       </div>
     </div>
-</div> 
+</div>
 
 
 <!-- delete department model -->
@@ -100,9 +112,9 @@
       </div>
     </div>
   </div>
-</div> 
+</div>
 
-@endsection 
+@endsection
 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  <script type="text/javascript">
@@ -118,27 +130,28 @@
        "info": false,
        // "lengthChange": false
        language : {
-          "zeroRecords": " "             
+          "zeroRecords": " "
       },
         ajax: {
             url:"{!! route('department-table-data') !!}",
             method: "get",
           },
           columns: [
-             
+
               {data: 'name', name: 'name'},
+              {data: 'unit', name: 'unit'},
               {data: 'created_at', name: 'created_at'},
               {data: 'action', name: 'action'},
-              
+
           ]
       });
-    
+
   });
 
   /* ---- department sotre ----  */
 
     $(document).on('submit','#department_form',function(e){
-        e.preventDefault(); 
+        e.preventDefault();
         $.ajax({
           type: "POST",
           url: "{{ route('store-department') }}",
@@ -151,9 +164,9 @@
             }else{
               $("#form-meta_name").removeClass('d-none');
               document.getElementById('error-meta_name').innerHTML = "Department name already exists.";
-              setTimeout(function(){ $('#form-meta_name').addClass('d-none'); }, 4000); 
+              setTimeout(function(){ $('#form-meta_name').addClass('d-none'); }, 4000);
             }
-            
+
           },
         });
       });

@@ -7,6 +7,7 @@
               <nav id="sidebar">
 
                    <ul class="list-unstyled components">
+                    <?php if(Auth::user()->role_id !== 4): ?>
                     <li>
                         <a href="#">Index&nbsp;<i class="fas fa-envelope text-primary"></i></a>
                     </li>
@@ -15,19 +16,14 @@
                      <li><a id="sinfo" data-id="<?php echo e($side->id); ?>" href="<?php echo e(route('folder-index',$side->id)); ?>"><?php echo e($side->description); ?></a></li>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     <div id="line_items"></div>
-                     <?php if(Auth::user()->role_id == 1): ?>
+                     
                     <li class="mb-5"><a id="sectionId" href="#" data-bs-toggle="modal" data-bs-target="#createnewsection"><i class="fas fa-plus-circle text-primary"></i> &nbsp;Create New Section</a></li>
-                     <?php endif; ?>
 
                     <li><p class="heading-sidebar">Admin tools</p></li>
                     <li><a href="<?php echo e(route('dash-index')); ?>"><i class="fas fa-flag"></i>&nbsp; Dashboard & Reports</a></li>
 
-                  <?php if(Auth::user()->role_id == 1): ?>
-                    <li><a href="<?php echo e(route('manage-users')); ?>"><i class="fas fa-user"></i>&nbsp; Manage Users</a></li>
-                    
 
-                  <?php endif; ?>
-                     <li><a href="<?php echo e(route('recycle-bin')); ?>"><i class="fas fa-trash-alt"></i>&nbsp; Recycle bin</a></li>
+                    <li><a href="<?php echo e(route('recycle-bin')); ?>"><i class="fas fa-trash-alt"></i>&nbsp; Recycle bin</a></li>
                     <li class='sub-menu'><a href='javascript:void(0)'><i class="fas fa-chevron-right right"></i>&nbsp;More Tools</a>
                       <ul class="p-0 list-unstyled">
                         
@@ -38,6 +34,23 @@
                         <li><a href="<?php echo e(route('audit-log')); ?>"><i class="fas fa-file-alt"></i>&nbsp;Audit Log</a></li>
                       </ul>
                     </li>
+                  <?php endif; ?>
+
+                    
+
+                  <?php if(Auth::user()->role_id == 4): ?>
+
+                  <li><a href="<?php echo e(route('manage-units')); ?>"><i class="fas fa-code-branch"></i>&nbsp; Operating Unit</a></li>
+
+                    <li><a href="<?php echo e(route('manage-departments')); ?>"><i class="fa fa-server"></i>&nbsp; Departments</a></li>
+
+                    <li><a href="<?php echo e(route('manage-sections')); ?>"><i class="fa fa-cubes"></i>&nbsp; Sections</a></li>
+
+                    <li><a href="<?php echo e(route('manage-users')); ?>"><i class="fas fa-users"></i>&nbsp; Manage Users</a></li>
+                    
+
+                  <?php endif; ?>
+                     
                 </ul>
             </nav>
           </div>

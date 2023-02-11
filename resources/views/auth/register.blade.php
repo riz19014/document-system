@@ -29,10 +29,10 @@
             <div class="row align-items-center">
               <div class="col-6 col-lg-3">
                 <a class="logo" href="#"><img src="{{asset('img/logo-white.png')}}" align="" class="img-fluid" width="200"></a>
-              </div> 
-              <div class="col-6 col-lg-9 text-end">                
+              </div>
+              <div class="col-6 col-lg-9 text-end">
                 <a href="{{ route('register') }}" class="ps-2 text-white">Sign up</a>
-                <a href="{{ route('login') }}" class="ps-2 text-white">Login</a>         
+                <a href="{{ route('login') }}" class="ps-2 text-white">Login</a>
               </div>
             </div>
           </div>
@@ -392,7 +392,7 @@
         <li><a href="#">Privacy policy</a></li>
         <li><a href="#">Terms of use</a></li>
       </ul>
-      <div class="copyright">Softpyramid © 2021</div>
+      <div class="copyright">Nishat © 2021</div>
     </footer>
     <!-- end Footer -->
 

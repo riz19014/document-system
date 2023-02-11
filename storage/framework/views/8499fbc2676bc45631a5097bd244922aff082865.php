@@ -3,21 +3,21 @@
 <?php $__env->startSection('content_header'); ?>
 <?php echo $__env->make('partials.title', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
-              
+
 
         <div id="content">
 
               <div class="breadcrumb-area mb-4">
                 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item"><a href="#" onclick="return false;">Softpyramid</a></li>
+                      <li class="breadcrumb-item"><a href="#" onclick="return false;">Nishat</a></li>
                       <?php $__currentLoopData = $parents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $folder): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                        <li class="breadcrumb-item"><a href="<?php echo e(route('folder-index',$folder->id)); ?>"><?php echo e($folder->description); ?></a></li>
-                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                       <li class="breadcrumb-item"><?php echo e($file->doc_name); ?></li>
-                     
-                      
+
+
                     </ol>
                   </nav>
                 </div>
@@ -26,19 +26,19 @@
                         <div class="row">
                           <div class="col-lg-9">
                             <div class="img-icon mb-3">
-                              
 
 
 
-                              
+
+
 
                         <?php if(strpos($file->doc_name, '.png') || strpos($file->doc_name, '.jpg')
                         || strpos($file->doc_name, '.jpeg') || strpos($file->doc_name, '.svg')): ?>
-                        
 
 
-                        <a title="View" href="<?php echo e(asset('storage/'.$fname->description.'/'.$file->doc_name)); ?>" data-lity><i class='fas fa-images'></i>&nbsp;&nbsp;</a> 
-                     
+
+                        <a title="View" href="<?php echo e(asset('storage/'.$fname->description.'/'.$file->doc_name)); ?>" data-lity><i class='fas fa-images'></i>&nbsp;&nbsp;</a>
+
 
                         <?php elseif(strpos($file->doc_name, '.odt') || strpos($file->doc_name, '.txt')): ?>
 
@@ -48,30 +48,30 @@
 
                            <a href="" data-lity data-lity-target="<?php echo e(asset('storage/'.$fname->description.'/'.$file->doc_name)); ?>">Image</a>
                         <?php else: ?>
-                        <a title="View" href="<?php echo e(asset('storage/'.$fname->description.'/'.$file->doc_name)); ?>" data-lity><i class='fas fa-file-alt'></i>&nbsp;&nbsp;</a> 
-                        
-                         
-                        
+                        <a title="View" href="<?php echo e(asset('storage/'.$fname->description.'/'.$file->doc_name)); ?>" data-lity><i class='fas fa-file-alt'></i>&nbsp;&nbsp;</a>
+
+
+
                          <?php endif; ?>
                          <a href="<?php echo e(route('download-file',$file->id)); ?>">
-                            
+
                             <?php echo e($file->doc_name); ?></a>
                             </div>
 
-                          
+
                             <?php if($approve_status== 0): ?>
                               <div class="mb-4">
-                                <p class="mb-0 text-danger font-600">File is under approval!</p>    
+                                <p class="mb-0 text-danger font-600">File is under approval!</p>
                               </div>
                             <?php endif; ?>
 
                             <?php if($file->file_locked == 1): ?>
                               <div class="mb-4">
-                                <p class="mb-0 text-danger font-600">File is locked!</p>    
+                                <p class="mb-0 text-danger font-600">File is locked!</p>
                               </div>
                             <?php endif; ?>
-                            
-                            
+
+
 
                                 <div class="mb-4">
                                   <p class="mb-0 text-primary font-600">Notes</p>
@@ -91,7 +91,7 @@
                                 </div>
 
 
-                         
+
                             <div class="row">
                               <div class="col-md-4">
                                 <div class="mb-4">
@@ -128,7 +128,7 @@
                                 <?php if($fileScans->isEmpty()): ?>
 
               <?php $__currentLoopData = $folcols; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fol): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-       
+
 
 
           <div class="mb-4">
@@ -136,10 +136,10 @@
                                 </div>
 
 
-     
+
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-      <?php else: ?>    
+      <?php else: ?>
 
            <?php $__currentLoopData = $fileScans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fileScan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
@@ -157,7 +157,7 @@
 
 
 
-                            
+
                             <div class="audit-logs">
                               <p class="mb-2 text-primary font-600">Audit Log</p>
                               <table class="table table-striped">
@@ -176,8 +176,8 @@
                                     <td><?php echo e($audit->date); ?></td>
                                     <td><?php echo e($audit->User->email); ?></td>
                                     <td>
-                            
-                                      <?php echo e($audit->action); ?> 
+
+                                      <?php echo e($audit->action); ?>
 
                                     </td>
                                   </tr>
@@ -197,7 +197,7 @@
                                 </li>
                                 <li><a href="#" data-bs-toggle="modal" data-bs-target="#reminders-modal"><i class="far fa-bell"></i>&nbsp; Add New Reminder</a></li>
                               </ul>
-                              
+
                               <div class="Retention">
                                 <h6 class="text-primary font-600 mb-0 mt-3">Retention:</h6>
                                 <?php if($retention_end != null): ?>
@@ -211,34 +211,34 @@
                                 </a>
 
                                 <?php endif; ?>
-                              </div>                              
+                              </div>
                             </div>
                             <div class="right-btns">
-                              
+
                               <?php if($approve_status== 1): ?>
 
                                   <?php if($file->file_locked==0): ?>
-                                   <a href="#" id="lock_file" class="btn btn-primary btn-sm d-block font-600 mb-3" data-bs-toggle="modal" data-bs-target="#filelockModal" data-id="<?php echo e($file->id); ?>">Lock File</a>  
+                                   <a href="#" id="lock_file" class="btn btn-primary btn-sm d-block font-600 mb-3" data-bs-toggle="modal" data-bs-target="#filelockModal" data-id="<?php echo e($file->id); ?>">Lock File</a>
                                   <?php elseif($file->file_locked==1): ?>
-                                    <a href="#" id="unlock_file" class="btn btn-primary btn-sm d-block font-600 mb-3" data-bs-toggle="modal" data-bs-target="#fileunlockModal" data-id="<?php echo e($file->id); ?>">Unlock File</a> 
+                                    <a href="#" id="unlock_file" class="btn btn-primary btn-sm d-block font-600 mb-3" data-bs-toggle="modal" data-bs-target="#fileunlockModal" data-id="<?php echo e($file->id); ?>">Unlock File</a>
                                   <?php endif; ?>
-                                
-                              <?php endif; ?>
-                              
 
-                               
-                               
+                              <?php endif; ?>
+
+
+
+
                                 <?php if($file->file_locked==0): ?>
                                 <a id="update_file" class="btn btn-primary btn-sm d-block font-600 mb-3"href="#" data-bs-toggle="modal" data-bs-target="#fileupdateModal" data-id="<?php echo e($file->id); ?>" >Upload New Version</a>
                                 <?php endif; ?>
-                               
-                                
+
+
                                 <a href="#" class="btn btn-primary btn-sm d-block font-600 mb-3">View Approval Workflow</a>
                               </div>
                           </div>
                         </div>
                       </div>
-                    </div> 
+                    </div>
 </div>
 
 <!-- end view Content part  -->
@@ -267,7 +267,7 @@
       </div>
     </div>
   </div>
-</div>     
+</div>
 
 
 
@@ -294,7 +294,7 @@
       </div>
     </div>
   </div>
-</div>     
+</div>
 
 
 <div class="modal fade" id="fileunlockModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -320,7 +320,7 @@
       </div>
     </div>
   </div>
-</div> 
+</div>
 
 
 
@@ -333,30 +333,30 @@
       <div class="modal-body" style=" text-align: left;">
         <h4>Update file</h4>
         <div class="user-image mb-3 text-center">
-          <div id="imgGallery"> 
+          <div id="imgGallery">
             <img id="img" width="100" height="100"/>
           </div>
         </div>
         <form class="form-horizontal" id="file_update" enctype="multipart/form-data"  method="post">
           <?php echo e(csrf_field()); ?>
 
-            <div class="form-group" style="padding-bottom: 15px">                            
+            <div class="form-group" style="padding-bottom: 15px">
               <input type="file" class="form-control" id="chooseFile" name="image"
               onchange="document.getElementById('img').src = window.URL.createObjectURL(this.files[0])
               ">
                 <input type="hidden" name="file_id" id="FileUpdate" value="<?php echo e($file->id); ?>">
                 <input type="hidden" name="folder_des" id="FolderDes" value="<?php echo e($folder->description); ?>">
 
-               
+
             </div>
              <button type="submit" class="btn btn-success" style="margin-top:10px">Submit</button>
           </form>
       </div>
     </div>
   </div>
-</div> 
+</div>
 
-<?php $__env->stopSection(); ?> 
+<?php $__env->stopSection(); ?>
 
 
 
@@ -368,13 +368,13 @@
           var file_del_id = $(this).data('id');
           // alert(file_del_id);
           $('#FileDel').val(file_del_id);
-         });  
+         });
 
-         
-  
 
-    $(document).on('submit','#file_lock',function(e){   
-        e.preventDefault(); 
+
+
+    $(document).on('submit','#file_lock',function(e){
+        e.preventDefault();
         $.ajax({
           type: "POST",
           url: "<?php echo e(route('file-lock')); ?>",
@@ -387,8 +387,8 @@
       });
 
 
-      $(document).on('submit','#file_unlock',function(e){   
-        e.preventDefault(); 
+      $(document).on('submit','#file_unlock',function(e){
+        e.preventDefault();
         $.ajax({
           type: "POST",
           url: "<?php echo e(route('file-unlock')); ?>",
@@ -400,9 +400,9 @@
         });
       });
 
-      $(document).on('submit','#file_update',function(e){   
-        e.preventDefault(); 
-        let formData = new FormData(this); 
+      $(document).on('submit','#file_update',function(e){
+        e.preventDefault();
+        let formData = new FormData(this);
         $.ajax({
           type: "POST",
           data: formData,
@@ -416,10 +416,10 @@
         });
       });
 
-      
 
-  $(document).on('submit','#file_delete',function(e){   
-        e.preventDefault(); 
+
+  $(document).on('submit','#file_delete',function(e){
+        e.preventDefault();
         $.ajax({
           type: "POST",
           url: "<?php echo e(route('file-delete')); ?>",

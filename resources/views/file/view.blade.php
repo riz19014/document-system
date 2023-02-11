@@ -3,20 +3,20 @@
 @section('content_header')
 @include('partials.title')
 @endsection
-              
+
 
         <div id="content">
 
               <div class="breadcrumb-area mb-4">
                 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item"><a href="#" onclick="return false;">Softpyramid</a></li>
+                      <li class="breadcrumb-item"><a href="#" onclick="return false;">Nishat</a></li>
                       @foreach($parents as $folder)
                        <li class="breadcrumb-item"><a href="{{route('folder-index',$folder->id)}}">{{$folder->description}}</a></li>
-                      @endforeach 
+                      @endforeach
 
                       <li class="breadcrumb-item">{{$file->doc_name}}</li>
-                     
+
                       {{--<li class="breadcrumb-item active" aria-current="page">Projects</li>--}}
                     </ol>
                   </nav>
@@ -30,15 +30,15 @@
 
 
 
-                              
+
 
                         @if(strpos($file->doc_name, '.png') || strpos($file->doc_name, '.jpg')
                         || strpos($file->doc_name, '.jpeg') || strpos($file->doc_name, '.svg'))
-                        
 
 
-                        <a title="View" href="{{asset('storage/'.$fname->description.'/'.$file->doc_name)}}" data-lity><i class='fas fa-images'></i>&nbsp;&nbsp;</a> 
-                     
+
+                        <a title="View" href="{{asset('storage/'.$fname->description.'/'.$file->doc_name)}}" data-lity><i class='fas fa-images'></i>&nbsp;&nbsp;</a>
+
 
                         @elseif(strpos($file->doc_name, '.odt') || strpos($file->doc_name, '.txt'))
 
@@ -48,30 +48,30 @@
 
                            <a href="" data-lity data-lity-target="{{asset('storage/'.$fname->description.'/'.$file->doc_name)}}">Image</a>
                         @else
-                        <a title="View" href="{{asset('storage/'.$fname->description.'/'.$file->doc_name)}}" data-lity><i class='fas fa-file-alt'></i>&nbsp;&nbsp;</a> 
-                        
-                         
-                        
+                        <a title="View" href="{{asset('storage/'.$fname->description.'/'.$file->doc_name)}}" data-lity><i class='fas fa-file-alt'></i>&nbsp;&nbsp;</a>
+
+
+
                          @endif
                          <a href="{{route('download-file',$file->id)}}">
-                            
+
                             {{$file->doc_name}}</a>
                             </div>
 
-                          
+
                             @if($approve_status== 0)
                               <div class="mb-4">
-                                <p class="mb-0 text-danger font-600">File is under approval!</p>    
+                                <p class="mb-0 text-danger font-600">File is under approval!</p>
                               </div>
                             @endif
 
                             @if($file->file_locked == 1)
                               <div class="mb-4">
-                                <p class="mb-0 text-danger font-600">File is locked!</p>    
+                                <p class="mb-0 text-danger font-600">File is locked!</p>
                               </div>
                             @endif
-                            
-                            
+
+
 
                                 <div class="mb-4">
                                   <p class="mb-0 text-primary font-600">Notes</p>
@@ -91,7 +91,7 @@
                                 </div>
 
 
-                         
+
                             <div class="row">
                               <div class="col-md-4">
                                 <div class="mb-4">
@@ -126,7 +126,7 @@
                                 @if($fileScans->isEmpty())
 
               @foreach($folcols as $fol)
-       
+
 
 
           <div class="mb-4">
@@ -134,10 +134,10 @@
                                 </div>
 
 
-     
+
         @endforeach
 
-      @else    
+      @else
 
            @foreach($fileScans as $fileScan)
 
@@ -189,8 +189,8 @@
                                     <td>{{$audit->date}}</td>
                                     <td>{{$audit->User->email}}</td>
                                     <td>
-                            
-                                      {{$audit->action}} 
+
+                                      {{$audit->action}}
 
                                     </td>
                                   </tr>
@@ -226,34 +226,34 @@
                                 </a>
 
                                 @endif
-                              </div>                              
+                              </div>
                             </div>
                             <div class="right-btns">
                               {{-- <a  id="lock_file" data-id="{{$file->id}}" data-bs-toggle="modal" data-bs-target="#filedelModal" href="#"><i class="fas fa-trash"></i><br> Delete</a> --}}
                               @if ($approve_status== 1)
 
                                   @if ($file->file_locked==0)
-                                   <a href="#" id="lock_file" class="btn btn-primary btn-sm d-block font-600 mb-3" data-bs-toggle="modal" data-bs-target="#filelockModal" data-id="{{$file->id}}">Lock File</a>  
+                                   <a href="#" id="lock_file" class="btn btn-primary btn-sm d-block font-600 mb-3" data-bs-toggle="modal" data-bs-target="#filelockModal" data-id="{{$file->id}}">Lock File</a>
                                   @elseif ($file->file_locked==1)
-                                    <a href="#" id="unlock_file" class="btn btn-primary btn-sm d-block font-600 mb-3" data-bs-toggle="modal" data-bs-target="#fileunlockModal" data-id="{{$file->id}}">Unlock File</a> 
+                                    <a href="#" id="unlock_file" class="btn btn-primary btn-sm d-block font-600 mb-3" data-bs-toggle="modal" data-bs-target="#fileunlockModal" data-id="{{$file->id}}">Unlock File</a>
                                   @endif
-                                
-                              @endif
-                              
 
-                               
-                               
+                              @endif
+
+
+
+
                                 @if ($file->file_locked==0)
                                 <a id="update_file" class="btn btn-primary btn-sm d-block font-600 mb-3"href="#" data-bs-toggle="modal" data-bs-target="#fileupdateModal" data-id="{{$file->id}}" >Upload New Version</a>
                                 @endif
-                               
-                                
+
+
                                 <a href="#" class="btn btn-primary btn-sm d-block font-600 mb-3">View Approval Workflow</a>
                               </div>
                           </div>
                         </div>
                       </div>
-                    </div> 
+                    </div>
 </div>
 
 <!-- end view Content part  -->
@@ -281,7 +281,7 @@
       </div>
     </div>
   </div>
-</div>     
+</div>
 
 
 {{-- File update model --}}
@@ -307,7 +307,7 @@
       </div>
     </div>
   </div>
-</div>     
+</div>
 
 {{-- File update model --}}
 <div class="modal fade" id="fileunlockModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -332,7 +332,7 @@
       </div>
     </div>
   </div>
-</div> 
+</div>
 
 
 {{-- File update model --}}
@@ -345,29 +345,29 @@
       <div class="modal-body" style=" text-align: left;">
         <h4>Update file</h4>
         <div class="user-image mb-3 text-center">
-          <div id="imgGallery"> 
+          <div id="imgGallery">
             <img id="img" width="100" height="100"/>
           </div>
         </div>
         <form class="form-horizontal" id="file_update" enctype="multipart/form-data"  method="post">
           {{csrf_field()}}
-            <div class="form-group" style="padding-bottom: 15px">                            
+            <div class="form-group" style="padding-bottom: 15px">
               <input type="file" class="form-control" id="chooseFile" name="image"
               onchange="document.getElementById('img').src = window.URL.createObjectURL(this.files[0])
               ">
                 <input type="hidden" name="file_id" id="FileUpdate" value="{{$file->id}}">
                 <input type="hidden" name="folder_des" id="FolderDes" value="{{$folder->description}}">
 
-               
+
             </div>
              <button type="submit" class="btn btn-success" style="margin-top:10px">Submit</button>
           </form>
       </div>
     </div>
   </div>
-</div> 
+</div>
 
-@endsection 
+@endsection
 
 
 
@@ -379,13 +379,13 @@
           var file_del_id = $(this).data('id');
           // alert(file_del_id);
           $('#FileDel').val(file_del_id);
-         });  
+         });
 
-         
-  
 
-    $(document).on('submit','#file_lock',function(e){   
-        e.preventDefault(); 
+
+
+    $(document).on('submit','#file_lock',function(e){
+        e.preventDefault();
         $.ajax({
           type: "POST",
           url: "{{ route('file-lock') }}",
@@ -398,8 +398,8 @@
       });
 
 
-      $(document).on('submit','#file_unlock',function(e){   
-        e.preventDefault(); 
+      $(document).on('submit','#file_unlock',function(e){
+        e.preventDefault();
         $.ajax({
           type: "POST",
           url: "{{ route('file-unlock') }}",
@@ -411,9 +411,9 @@
         });
       });
 
-      $(document).on('submit','#file_update',function(e){   
-        e.preventDefault(); 
-        let formData = new FormData(this); 
+      $(document).on('submit','#file_update',function(e){
+        e.preventDefault();
+        let formData = new FormData(this);
         $.ajax({
           type: "POST",
           data: formData,
@@ -427,10 +427,10 @@
         });
       });
 
-      
 
-  $(document).on('submit','#file_delete',function(e){   
-        e.preventDefault(); 
+
+  $(document).on('submit','#file_delete',function(e){
+        e.preventDefault();
         $.ajax({
           type: "POST",
           url: "{{ route('file-delete') }}",

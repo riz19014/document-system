@@ -32,7 +32,7 @@
                 <a class="logo" href="#"><img src="{{asset('img/logo-white.png')}}" align="" class="img-fluid" width="200"></a>
               </div> 
               <div class="col-6 col-lg-9 text-end">                
-                <a href="{{ route('register') }}" class="ps-2 text-white">Sign up</a>
+                {{--<a href="{{ route('register') }}" class="ps-2 text-white">Sign up</a>--}}
                 <a href="{{ route('login') }}" class="ps-2 text-white">Login</a>         
               </div>
             </div>

@@ -23,13 +23,13 @@
 
 
     <link href="{{asset('dist/lity.css')}}" rel="stylesheet">
- 
+
     @yield('styles')
   </head>
   <body class="d-flex flex-column min-vh-100">
 
     <!-- Header -->
-  @if(Route::currentRouteName() == 'reso-view') 
+  @if(Route::currentRouteName() == 'reso-view')
 
          @include('partials.header')
 
@@ -54,24 +54,24 @@
 
 
 
-                
+
             </div>
 
           </div>
 
         </div>
-        
+
       </div>
 
 
-   
+
 
 
        <!-- end Title Bar -->
 
 
        <!-- sidebar -->
-  
+
 
          @include('partials.sidebar')
 
@@ -88,7 +88,7 @@
         <li><a href="#">Privacy policy</a></li>
         <li><a href="#">Terms of use</a></li>
       </ul>
-      <div class="copyright">Softpyramid © 2021</div>
+      <div class="copyright">Nishat © 2021</div>
     </footer>--}}
 
 
@@ -182,7 +182,7 @@
 
 
  $(document).on('submit','#section_part',function(e){
-        e.preventDefault(); 
+        e.preventDefault();
              $.ajaxSetup({
                     headers: {
                       'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -192,7 +192,7 @@
               if (name_folder.length<1) {
          $("#form-folder_name").removeClass('d-none');
           document.getElementById('error-folder_name').innerHTML = "Section name is required. *";
-         setTimeout(function(){ $('#form-folder_name').addClass('d-none'); }, 4000); 
+         setTimeout(function(){ $('#form-folder_name').addClass('d-none'); }, 4000);
     }
     if(name_folder.length<1){
         return false;
@@ -202,9 +202,9 @@
           url: "{{ route('add-section') }}",
          data: $('#section_part').serialize(),
           success: function(data) {
-          
+
             $('#createnewsection').modal('hide');
-            var nHTML = ''; 
+            var nHTML = '';
 
             var url = '{{ route("folder-index", ":slug") }}';
                 url = url.replace(':slug', data.sections.id);

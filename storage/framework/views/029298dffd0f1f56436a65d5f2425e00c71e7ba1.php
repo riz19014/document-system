@@ -4,13 +4,13 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-            
+
     <!-- Page Content  -->
     <div id="content">
       <div class="breadcrumb-area mb-4">
       <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#" onclick="return false;">Softpyramid</a></li>       
+              <li class="breadcrumb-item"><a href="#" onclick="return false;">Nishat</a></li>
               <li class="breadcrumb-item active" aria-current="page">Metadata</li>
             </ol>
           </nav>
@@ -18,13 +18,13 @@
           <table class="table table-striped table-hover meta-table">
             <thead>
                 <tr>
-                  <th >Name </th> 
+                  <th >Name </th>
                   <th > Actions </th>
                 </tr>
-            </thead>                   
+            </thead>
           </table>
         </div>
-                 
+
 <!-- New Section Modal -->
 
 <div class="modal fade" id="MetaexampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -67,10 +67,10 @@
       <div class="alert alert-danger d-none" id='form-messages_error'></div>
       <div class="modal-body">
           <form class="form-horizontal" id="form_package_edit" method="post" novalidate="novalidate">
-                       
+
             <?php echo e(csrf_field()); ?>
 
-                    
+
             <div class="mb-3">
             <input type="text" name="meta_name" id="edit_meta" class="form-control">
             <div class="d-none" id='form-fname' ><span id="error-fname" style="color: red"></span></div>
@@ -87,14 +87,14 @@
     </div>
   </div>
 </div>
-                        
+
 <?php $__env->stopSection(); ?>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="<?php echo e(asset('js/dropzone.min.js')); ?>"></script>
 <script type="text/javascript">
-  
+
 $(document).ready(function () {
   $('#MetaexampleModal').on('shown.bs.modal', function() {
     $('#meta-name').focus();
@@ -104,14 +104,14 @@ $(document).ready(function () {
 
 $(function () {
 var table = $('.meta-table').DataTable({
-     
+
      "paging": false,
      "ordering": false,
      "searching": false,
      "info": false,
      // "lengthChange": false
      language : {
-        "zeroRecords": " "             
+        "zeroRecords": " "
     },
       ajax: {
           url:"<?php echo route('meta-table'); ?>",
@@ -120,10 +120,10 @@ var table = $('.meta-table').DataTable({
         columns: [
             {data: 'tagging_name', name: 'tagging_name'},
             {data: 'action', name: 'action'},
-            
+
         ]
     });
-    
+
   });
 
 
@@ -148,7 +148,7 @@ var table = $('.meta-table').DataTable({
 
          // });
 
-      
+
 
 
           $(document).on('click', '#sectionId', function(){
@@ -162,23 +162,23 @@ var table = $('.meta-table').DataTable({
   //         url: "<?php echo e(route('edit-meta-form')); ?>",
   //         method: 'post',
   //         data: $('#form_package_edit').serialize(),
-          
+
   //         success: function(data){
   //           $('#metaModaledit').modal('hide');
   //           alert(data)
   //            $("#btnCloseModal").trigger('click');
 
   //           // $('.meta-table').DataTable().ajax.reload();
-                 
+
   //         },
   //       });
   //   });
 
 
-  $(document).on('click','#editmeta',function(e){ 
-           var id = $(this).data("id"); 
+  $(document).on('click','#editmeta',function(e){
+           var id = $(this).data("id");
            $('#meta_edit_id').val(id);
-           var name = $(this).data("name"); 
+           var name = $(this).data("name");
            $('#edit_meta').val(name);
          });
 
@@ -189,8 +189,8 @@ var table = $('.meta-table').DataTable({
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                   }
-              });   
-                
+              });
+
           $.ajax({
                 url: "<?php echo e(route('edit-meta-form')); ?>",
                 method: 'post',
@@ -204,16 +204,16 @@ var table = $('.meta-table').DataTable({
         });
 
 
-         $(document).on('click','#deletemeta',function(e){ 
-          meta_id = $(this).data("id"); 
-          meta_name = $(this).data("name"); 
+         $(document).on('click','#deletemeta',function(e){
+          meta_id = $(this).data("id");
+          meta_name = $(this).data("name");
           e.preventDefault();
               $.ajaxSetup({
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                   }
-              });   
-                
+              });
+
           $.ajax({
                 url: "<?php echo e(route('delete-meta')); ?>",
                 method: 'post',
@@ -227,7 +227,7 @@ var table = $('.meta-table').DataTable({
 
 
         $(document).on('submit','#meta_form',function(e){
-        e.preventDefault(); 
+        e.preventDefault();
              $.ajaxSetup({
                     headers: {
                       'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -237,7 +237,7 @@ var table = $('.meta-table').DataTable({
               if (meta_name.length<1) {
          $("#form-meta_name").removeClass('d-none');
           document.getElementById('error-meta_name').innerHTML = "Meta name is required. *";
-         setTimeout(function(){ $('#form-meta_name').addClass('d-none'); }, 4000); 
+         setTimeout(function(){ $('#form-meta_name').addClass('d-none'); }, 4000);
     }
     if(meta_name.length<1){
         return false;
@@ -257,6 +257,6 @@ var table = $('.meta-table').DataTable({
         });
       });
 
-  
+
     </script>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Tariq_Naeem\TNN\Laravel\DMS_S\dms\resources\views/meta/index.blade.php ENDPATH**/ ?>

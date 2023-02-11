@@ -55,7 +55,7 @@
             <div class="row align-items-center">
               <div class="col-6 col-lg-3">
                 <a class="logo" href="#"><img src="{{asset('img/logo-white.png')}}" align="" class="img-fluid" width="200"></a>
-              </div> 
+              </div>
               <div class="col-6 col-lg-9 text-end">
 
                 <div class="login-info">{{Auth::user()->email}} <a href="{{ url('logout') }}" class="logout"><span class="fas fa-power-off"></span> Log Out</a></div>
@@ -64,16 +64,16 @@
                 </button>
                 <span class="dropdown sp-dropdown">
                   <a class="btn btn-white dropdown-toggle text-white no-arrow p-0" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    Softpyramid &nbsp;<i class="fas fa-bars text-primary pe-2"></i>
+                    Nishat &nbsp;<i class="fas fa-bars text-primary pe-2"></i>
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="#">Action</a></li>
                     <li><a class="dropdown-item" href="#">Another action</a></li>
                     <li><a class="dropdown-item" href="#">Something else here</a></li>
                   </ul>
-                </span>  
+                </span>
                 <a href="#" class="share-link text-primary ps-2 position-relative"><i class="fas fa-share-alt share"></i> <span class="badge">6</span></a>
-                <a href="#" class="ps-2 help-link"><i class="fas fa-question"></i></a>         
+                <a href="#" class="ps-2 help-link"><i class="fas fa-question"></i></a>
               </div>
             </div>
           </div>
@@ -88,7 +88,7 @@
               <h3>Main Sections</h3>
             </div>
             <div class="col-6 col-lg-9 text-end">
-                
+
             </div>
           </div>
         </div>
@@ -209,7 +209,7 @@
 });
 
   $(function () {
-    
+
     var table = $('.main-section').DataTable({
      "paging": false,
      "ordering": false,
@@ -217,7 +217,7 @@
      "info": false,
      // "lengthChange": false
      language : {
-        "zeroRecords": " "             
+        "zeroRecords": " "
     },
 
       ajax: {
@@ -225,11 +225,11 @@
           method: "get",
         },
         columns: [
-           
+
             {data: 'description', name: 'description'},
         ]
     });
-    
+
   });
 
         $(document).ready(function () {
@@ -257,11 +257,11 @@
                $("#createnewsection").find("#section_part")[0].reset();
          });
 
-         
+
 
 
         $(document).on('submit','#section_part',function(e){
-        e.preventDefault(); 
+        e.preventDefault();
              $.ajaxSetup({
                     headers: {
                       'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -271,7 +271,7 @@
               if (name_folder.length<1) {
          $("#form-folder_name").removeClass('d-none');
           document.getElementById('error-folder_name').innerHTML = "Section name is required. *";
-         setTimeout(function(){ $('#form-folder_name').addClass('d-none'); }, 4000); 
+         setTimeout(function(){ $('#form-folder_name').addClass('d-none'); }, 4000);
     }
     if(name_folder.length<1){
         return false;

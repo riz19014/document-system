@@ -18,7 +18,7 @@
 	  <div class="breadcrumb-area mb-4">
                 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item"><a href="#" onclick="return false;">Softpyramid</a></li>       
+                      <li class="breadcrumb-item"><a href="#" onclick="return false;">Nishat</a></li>
                       <li class="breadcrumb-item active" aria-current="page">Manage Users</li>
                     </ol>
                   </nav>
@@ -57,7 +57,7 @@
 
                         </div>
                       </div>
-                    </div> 
+                    </div>
 </div>
 
 
@@ -74,46 +74,52 @@
       <div class="modal-body">
         <form id="user_form" action="" method="post">
             {{csrf_field()}}
+
           <div class="mb-3">
           <div class="form-group">
-            <input type="text" id="meta-name" class="form-control" name="email" placeholder="user email">
+            <input required type="text" id="meta-name" class="form-control" name="fname" placeholder="first name">
           </div>
             <div class="d-none" id='form-meta_name'><span id="error-meta_name" style="color: red"></span></div>
           </div>
 
           <div class="mb-3">
           <div class="form-group">
-            <input type="text" id="meta-name" class="form-control" name="fname" placeholder="first name">
+            <input required type="text" id="meta-name" class="form-control" name="lname" placeholder="last name">
           </div>
             <div class="d-none" id='form-meta_name'><span id="error-meta_name" style="color: red"></span></div>
           </div>
 
           <div class="mb-3">
           <div class="form-group">
-            <input type="text" id="meta-name" class="form-control" name="lname" placeholder="last name">
+            <input required type="email" id="meta-name" class="form-control" name="email" placeholder="user email">
           </div>
             <div class="d-none" id='form-meta_name'><span id="error-meta_name" style="color: red"></span></div>
           </div>
 
            <div class="mb-3">
           <div class="form-group">
-            <input type="password" name="password" class="form-control" placeholder="Password" >
+            <input required type="password" name="password" class="form-control" placeholder="Password" >
           </div>
             <div class="d-none" id='form-meta_name'><span id="error-meta_name" style="color: red"></span></div>
           </div>
-
+          <div class="mb-3">
+              <div class="form-group">
+               <select required id="section_id" class="form-control" name="section">
+                  <option value="" disabled="" selected="">Select section</option>
+                  @foreach ($sections as $section)
+                   <option value="{{$section->id}}">{{$section->name}}</option>
+                  @endforeach
+              </select>
+              </div>
+          </div>
           <div class="mb-3">
           <div class="form-group">
-
-
-          	     <select  id="roleId" class="form-control" name="role">
-                            <option value="" disabled="" selected="">Select role</option>
-                            @foreach ($roles as $role)
-                             <option value="{{$role->id}}">{{$role->title}}</option>
-
-                            @endforeach
-                        </select>
-             
+      	     <select required id="roleId" class="form-control" name="role">
+                <option value="" disabled="" selected="">Select role</option>
+                @foreach ($roles as $role)
+                 <option value="{{$role->id}}">{{$role->title}}</option>
+                @endforeach
+            </select>
           </div>
             <div class="d-none" id='form-meta_name'><span id="error-meta_name" style="color: red"></span></div>
           </div>
@@ -124,18 +130,18 @@
       </div>
     </div>
   </div>
-</div>    
+</div>
 
 
 
-@endsection 
+@endsection
 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 
 
     $(document).on('submit','#user_form',function(e){
-        e.preventDefault(); 
+        e.preventDefault();
         $.ajax({
           type: "POST",
           url: "{{ route('store-user') }}",
@@ -153,7 +159,7 @@
 </script>
 
 
- 
+
 
 
 

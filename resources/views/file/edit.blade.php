@@ -1,32 +1,32 @@
 @extends('layouts.layout')
 @section('content')
-              
+
 
 @section('content_header')
 
 @include('partials.title')
 
 @endsection
-          
+
             <!-- Page Content  -->
-          <div id="content">  
+          <div id="content">
               <div class="breadcrumb-area mb-4">
                 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item"><a href="#" onclick="return false;">Softpyramid</a></li>
+                      <li class="breadcrumb-item"><a href="#" onclick="return false;">Nishat</a></li>
                       @foreach($parents as $folder)
                        <li class="breadcrumb-item"><a href="{{route('folder-index',$folder->id)}}">{{$folder->description}}</a></li>
-                      @endforeach 
+                      @endforeach
 
                       <li class="breadcrumb-item"><a href="{{route('file-view',$file->id)}}">{{$file->doc_name}}</a></li>
-                     
+
                       {{--<li class="breadcrumb-item active" aria-current="page">Projects</li>--}}
                     </ol>
                   </nav>
                 </div>
 
 
-        
+
 
 
           <div class="main-content-area">
@@ -78,7 +78,7 @@
                                       @endif>
                                     </div>
                                   </div>
-  
+
                                   <div class="col-md-12">
                                     <div class="mb-4">
                                       <label class="text-primary font-600" >Notes</label>
@@ -90,9 +90,9 @@
                                       <label class="text-primary">Manage all metadata fields</label>
                                   </div>
 
-                                  @if($editfiles->isEmpty()) 
-                                  @foreach($editcols as $editcol) 
-                                  
+                                  @if($editfiles->isEmpty())
+                                  @foreach($editcols as $editcol)
+
                                   <div class="col-md-6">
                                     <div class="mb-3">
                                       <span class="form-control metavalue">{{$editcol->tagname->tagging_name}}</span>
@@ -103,7 +103,7 @@
                                       <input type="text" id="docname" name="meta[{{$editcol->meta_tag_id}}]" class="form-control" />
                                     </div>
                                   </div>
-                                  @endforeach 
+                                  @endforeach
                                   @else
                                    @foreach($editfiles as $editfile)
 
@@ -145,14 +145,14 @@
                   </div>
 
 
-@endsection 
+@endsection
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 
 
 
-     $(document).on('submit','#folder_file',function(e){  
-        e.preventDefault(); 
+     $(document).on('submit','#folder_file',function(e){
+        e.preventDefault();
         $.ajax({
           type: "POST",
           url: "{{ route('edit-file-form') }}",
@@ -171,7 +171,7 @@
 
   $(document).on('click', '#send_btn', function(){
        value = 34;
-       
+
          $.ajax({
       url: "{{ route('edit-file-form')}}",
       method: 'post',
@@ -183,23 +183,23 @@
             $('#res_message').show();
             $('#res_message').html(response.msg);
             $('#msg_div').removeClass('d-none');
- 
-            document.getElementById("contact_us").reset(); 
+
+            document.getElementById("contact_us").reset();
             setTimeout(function(){
             $('#res_message').hide();
             $('#msg_div').hide();
             },10000);
          //--------------------------
       }});
-        
+
          });
-  
+
   $(document).ready(function(){
 $('#send_form').click(function(e){
    e.preventDefault();
- 
+
    $('#send_form').html('Sending..');
-   
+
    /* Submit form data using ajax*/
    $.ajax({
       url: "{{ url('edit-form')}}",
@@ -211,8 +211,8 @@ $('#send_form').click(function(e){
             $('#res_message').show();
             $('#res_message').html(response.msg);
             $('#msg_div').removeClass('d-none');
- 
-            document.getElementById("contact_us").reset(); 
+
+            document.getElementById("contact_us").reset();
             setTimeout(function(){
             $('#res_message').hide();
             $('#msg_div').hide();

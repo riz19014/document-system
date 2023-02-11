@@ -21,7 +21,7 @@
 	  <div class="breadcrumb-area mb-4">
                 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item"><a href="#" onclick="return false;">Softpyramid</a></li>       
+                      <li class="breadcrumb-item"><a href="#" onclick="return false;">Nishat</a></li>
                       <li class="breadcrumb-item active" aria-current="page">Manage Users</li>
                     </ol>
                   </nav>
@@ -38,7 +38,7 @@
              <div class="main-content-area">
                       <div class="file-view-area">
                         <div class="row">
-                     
+
 
 
                             <div class="audit-logs">
@@ -54,14 +54,14 @@
                                 </thead>
                                 <tbody>
                                 </tbody>
-                   
+
                               </table>
                             </div>
-                          
+
 
                         </div>
                       </div>
-                    </div> 
+                    </div>
 </div>
 
 
@@ -86,10 +86,10 @@
                   @foreach ($users as $user)
                    <option value="{{$user->id}}">{{$user->email}}</option>
                   @endforeach
-              </select> 
+              </select>
                           <div class="mb-3 text-end">
             <button type="submit" class="btn btn-primary">Invite</button>
-          </div>           
+          </div>
           </div>
             <div class="d-none" id='form-meta_name'><span id="error-meta_name" style="color: red"></span></div>
           </div>
@@ -98,11 +98,11 @@
       </div>
     </div>
   </div>
-</div>    
+</div>
 
 
 
-@endsection 
+@endsection
 
 
 
@@ -113,33 +113,33 @@
 
 $(function () {
 var table = $('#table_data').DataTable({
-     
+
      "paging": false,
      "ordering": false,
      "searching": false,
      "info": false,
      // "lengthChange": false
      language : {
-        "zeroRecords": " "             
+        "zeroRecords": " "
     },
       ajax: {
           url:"{!! route('user-invite-table') !!}",
           method: "get",
         },
         columns: [
-           
+
             {data: 'email', name: 'email'},
             {data: 'created_at', name: 'created_at'},
             {data: 'position', name: 'position'},
             {data: 'action', name: 'action'},
-            
+
         ]
     });
-    
+
   });
 
 $(document).on('click','.delUser',function(e){
-     e.preventDefault(); 
+     e.preventDefault();
       var user_id = $(this).data('id');
         $.ajax({
           type: "get",
@@ -156,7 +156,7 @@ $(document).on('click','.delUser',function(e){
 
 
     $(document).on('submit','#invite_user',function(e){
-        e.preventDefault(); 
+        e.preventDefault();
 
         $.ajax({
           type: "POST",
@@ -177,7 +177,7 @@ $(document).on('click','.delUser',function(e){
 </script>
 
 
- 
+
 
 
 

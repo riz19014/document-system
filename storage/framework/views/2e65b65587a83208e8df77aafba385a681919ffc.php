@@ -57,7 +57,24 @@
                             <a class="nav-link" data-bs-toggle="modal" data-bs-target="#UserAddModal" href="#"><i class="fas fa-user-plus"></i><br> +User</a>
                           </li>
 
-                       
+
+                          <?php elseif(Route::currentRouteName() == 'manage-departments'): ?>
+
+                          <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#departmentAddModal" href="#"><i class="fa fa-server"></i><br> Department</a>
+                          </li>
+
+                          <?php elseif(Route::currentRouteName() == 'manage-sections'): ?>
+
+                          <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#sectionAddModal" href="#"><i class="fas fa-box"></i><br> Section</a>
+                          </li>
+
+                          <?php elseif(Route::currentRouteName() == 'manage-units'): ?>
+
+                          <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#unitAddModal" href="#"><i class="fas fa-code-branch"></i><br> Unit</a>
+                          </li>
 
 
                          <?php elseif(Route::currentRouteName() == 'file-view'): ?>
