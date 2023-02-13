@@ -75,46 +75,82 @@
         <form id="user_form" action="" method="post">
             <?php echo e(csrf_field()); ?>
 
+
           <div class="mb-3">
           <div class="form-group">
-            <input type="text" id="meta-name" class="form-control" name="email" placeholder="user email">
+            <input required type="text" id="meta-name" class="form-control" name="fname" placeholder="first name">
           </div>
             <div class="d-none" id='form-meta_name'><span id="error-meta_name" style="color: red"></span></div>
           </div>
 
           <div class="mb-3">
           <div class="form-group">
-            <input type="text" id="meta-name" class="form-control" name="fname" placeholder="first name">
+            <input required type="text" id="meta-name" class="form-control" name="lname" placeholder="last name">
           </div>
             <div class="d-none" id='form-meta_name'><span id="error-meta_name" style="color: red"></span></div>
           </div>
 
           <div class="mb-3">
           <div class="form-group">
-            <input type="text" id="meta-name" class="form-control" name="lname" placeholder="last name">
+            <input required type="email" id="meta-name" class="form-control" name="email" placeholder="user email">
           </div>
             <div class="d-none" id='form-meta_name'><span id="error-meta_name" style="color: red"></span></div>
           </div>
 
            <div class="mb-3">
           <div class="form-group">
-            <input type="password" name="password" class="form-control" placeholder="Password" >
+            <input required type="password" name="password" class="form-control" placeholder="Password" >
           </div>
             <div class="d-none" id='form-meta_name'><span id="error-meta_name" style="color: red"></span></div>
           </div>
-
+          <div class="mb-3">
+              <div class="form-group">
+               <select required id="unit_id" class="form-control" name="company">
+                  <option value="" disabled="" selected="">Select Company</option>
+                  <?php $__currentLoopData = $companies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $company): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                   <option value="<?php echo e($company->id); ?>"><?php echo e($company->company_name); ?></option>
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+              </select>
+              </div>
+          </div>
+          <div class="mb-3">
+              <div class="form-group">
+               <select required id="unit_id" class="form-control" name="unit">
+                  <option value="" disabled="" selected="">Select Unit</option>
+                  <?php $__currentLoopData = $units; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                   <option value="<?php echo e($unit->id); ?>"><?php echo e($unit->unit_name); ?></option>
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+              </select>
+              </div>
+          </div>
+          <div class="mb-3">
+              <div class="form-group">
+               <select required id="department_id" class="form-control" name="department">
+                  <option value="" disabled="" selected="">Select Department</option>
+                  <?php $__currentLoopData = $departments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $department): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                   <option value="<?php echo e($department->id); ?>"><?php echo e($department->name); ?></option>
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+              </select>
+              </div>
+          </div>
+          <div class="mb-3">
+              <div class="form-group">
+               <select required id="section_id" class="form-control" name="section">
+                  <option value="" disabled="" selected="">Select Department Section</option>
+                  <?php $__currentLoopData = $sections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $section): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                   <option value="<?php echo e($section->id); ?>"><?php echo e($section->name); ?></option>
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+              </select>
+              </div>
+          </div>
           <div class="mb-3">
           <div class="form-group">
-
-
-          	     <select  id="roleId" class="form-control" name="role">
-                            <option value="" disabled="" selected="">Select role</option>
-                            <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                             <option value="<?php echo e($role->id); ?>"><?php echo e($role->title); ?></option>
-
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>
-
+      	     <select required id="roleId" class="form-control" name="role">
+                <option value="" disabled="" selected="">Select role</option>
+                <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                 <option value="<?php echo e($role->id); ?>"><?php echo e($role->title); ?></option>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </select>
           </div>
             <div class="d-none" id='form-meta_name'><span id="error-meta_name" style="color: red"></span></div>
           </div>

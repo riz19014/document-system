@@ -104,8 +104,38 @@
           </div>
           <div class="mb-3">
               <div class="form-group">
+               <select required id="unit_id" class="form-control" name="company">
+                  <option value="" disabled="" selected="">Select Company</option>
+                  @foreach ($companies as $company)
+                   <option value="{{$company->id}}">{{$company->company_name}}</option>
+                  @endforeach
+              </select>
+              </div>
+          </div>
+          <div class="mb-3">
+              <div class="form-group">
+               <select required id="unit_id" class="form-control" name="unit">
+                  <option value="" disabled="" selected="">Select Unit</option>
+                  @foreach ($units as $unit)
+                   <option value="{{$unit->id}}">{{$unit->unit_name}}</option>
+                  @endforeach
+              </select>
+              </div>
+          </div>
+          <div class="mb-3">
+              <div class="form-group">
+               <select required id="department_id" class="form-control" name="department">
+                  <option value="" disabled="" selected="">Select Department</option>
+                  @foreach ($departments as $department)
+                   <option value="{{$department->id}}">{{$department->name}}</option>
+                  @endforeach
+              </select>
+              </div>
+          </div>
+          <div class="mb-3">
+              <div class="form-group">
                <select required id="section_id" class="form-control" name="section">
-                  <option value="" disabled="" selected="">Select section</option>
+                  <option value="" disabled="" selected="">Select Department Section</option>
                   @foreach ($sections as $section)
                    <option value="{{$section->id}}">{{$section->name}}</option>
                   @endforeach

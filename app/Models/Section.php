@@ -12,7 +12,12 @@ class Section extends Model
     protected $fillable = [
         'name',
         'department_id',
+        'unit_id',
     ];
+
+    public function unit(){
+        return $this->belongsTo('App\Models\dm_unit', 'unit_id');
+    }
 
     public function department(){
         return $this->belongsTo('App\Models\Department', 'department_id');

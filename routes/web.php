@@ -108,7 +108,6 @@ Route::get('/company/departments/data', [App\Http\Controllers\AccountController:
 
 Route::post('/create/department', [App\Http\Controllers\AccountController::class, 'storeDepartment'])->name('store-department');
 
-
 Route::get('/company/sections', [App\Http\Controllers\AccountController::class, 'section'])->name('manage-sections');
 
 Route::get('/company/sections/data', [App\Http\Controllers\AccountController::class, 'sectionData'])->name('section-table-data');

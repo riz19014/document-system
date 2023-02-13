@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 @section('content_header')
 
   @include('partials.title')
@@ -65,6 +64,17 @@
               </div>
 
             </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="form-group">
+                 <select required id="unit_id" class="form-control" name="unit">
+                    <option value="" disabled="" selected="">Select Unit</option>
+                    @foreach ($units as $unit)
+                     <option value="{{$unit->id}}">{{$unit->unit_name}}</option>
+                    @endforeach
+                </select>
+                </div>
             </div>
 
             <div class="mb-3">

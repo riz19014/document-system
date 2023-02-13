@@ -23,13 +23,13 @@
 
 
     <link href="<?php echo e(asset('dist/lity.css')); ?>" rel="stylesheet">
- 
+
     <?php echo $__env->yieldContent('styles'); ?>
   </head>
   <body class="d-flex flex-column min-vh-100">
 
     <!-- Header -->
-  <?php if(Route::currentRouteName() == 'reso-view'): ?> 
+  <?php if(Route::currentRouteName() == 'reso-view'): ?>
 
          <?php echo $__env->make('partials.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
@@ -54,24 +54,24 @@
 
 
 
-                
+
             </div>
 
           </div>
 
         </div>
-        
+
       </div>
 
 
-   
+
 
 
        <!-- end Title Bar -->
 
 
        <!-- sidebar -->
-  
+
 
          <?php echo $__env->make('partials.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
@@ -175,7 +175,7 @@
 
 
  $(document).on('submit','#section_part',function(e){
-        e.preventDefault(); 
+        e.preventDefault();
              $.ajaxSetup({
                     headers: {
                       'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -185,7 +185,7 @@
               if (name_folder.length<1) {
          $("#form-folder_name").removeClass('d-none');
           document.getElementById('error-folder_name').innerHTML = "Section name is required. *";
-         setTimeout(function(){ $('#form-folder_name').addClass('d-none'); }, 4000); 
+         setTimeout(function(){ $('#form-folder_name').addClass('d-none'); }, 4000);
     }
     if(name_folder.length<1){
         return false;
@@ -195,9 +195,9 @@
           url: "<?php echo e(route('add-section')); ?>",
          data: $('#section_part').serialize(),
           success: function(data) {
-          
+
             $('#createnewsection').modal('hide');
-            var nHTML = ''; 
+            var nHTML = '';
 
             var url = '<?php echo e(route("folder-index", ":slug")); ?>';
                 url = url.replace(':slug', data.sections.id);

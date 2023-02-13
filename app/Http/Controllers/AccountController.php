@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Department;
+use App\Models\dm_company;
 use App\Models\DmAudit;
 use App\Models\Section;
 use App\Models\dm_unit;
@@ -14,34 +15,39 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\DmSection;
 use DataTables;
 use Auth;
+use View;
 use Carbon\Carbon;
+use PhpParser\Node\Stmt\TryCatch;
 
 class AccountController extends Controller
 {
-     
-     public function index(){    
+        public function index(){    
         $roles = Role::where('id', '!=', 4)->get();
         $users = User::where('role_id', '!=', 4)->get();
+        $companies = dm_company::orderBy('id', 'DESC')->get();
+        $units = dm_unit::orderBy('id', 'DESC')->get();
+        $departments = department::orderBy('id', 'DESC')->get();
         $sections = Section::orderBy('id', 'DESC')->get();
-     	return view('account.users',compact('roles','users','sections'));
+     	  return view('account.users',compact('roles','users','companies','units','departments','sections'));
      }
 
      public function store(Request $request)
     {
-        $department = Section::where('id',$request['section'])->first();
-        // dd($department_id);
-        $unit = Department::where('id',$department->department_id)->first();
-        // dd($unit);
+        //dd($request['company'].$request['unit'].$request['department'].$request['section']);
+        try {
         $user = new User ();
         $user->name = $request['fname']." ".$request['lname'];
         $user->email = $request['email'];
         $user->role_id = $request['role'];
-        $user->company_id = 1;
-        $user->company_branch_id = $unit->unit_id;
-        $user->department_id = $department->department_id;
+        $user->company_id = $request['company'];
+        $user->company_branch_id = $request['unit'];
+        $user->department_id =  $request['department'];
         $user->section_id = $request['section'];
         $user->password = Hash::make($request['password']);
         $user->save();
+       } catch (\Exception $err) {
+         return $err->getMessage();
+       }
 
     }
 
@@ -175,8 +181,13 @@ class AccountController extends Controller
     }
 
      public function section(){     
+        //dd('innnn');
         $departments = Department::all();
-        return view('account.section',compact('departments'));
+        $units = dm_unit::all();
+        //return view('account.section',[compact('departments'),compact('units')]);
+        return View::make('account.section')
+          ->with(compact('departments'))
+          ->with(compact('units'));
      }
 
      public function sectionData(){
@@ -187,7 +198,6 @@ class AccountController extends Controller
         return Datatables::of($sections)
 
 
-        
 
         ->addColumn('name', function($row){
            return $row->name;         
@@ -210,24 +220,19 @@ class AccountController extends Controller
        })
      ->rawColumns(['action'])
           ->make(true);
-
-
-
-        
      }
+
     public function storeSection(Request $request)
     {
         if(!Section::where('name', $request->name)->exists()){
-
             $create = new Section ();
             $create->name = $request->name;
+            $create->unit_id = $request->unit;
             $create->department_id = $request->department;
             $create->save();
             return response()->json(['success' => true]);
         }
-        
         return response()->json(['success' => false]);
-
     }
 
     public function unit(){     
@@ -235,7 +240,6 @@ class AccountController extends Controller
      }
 
      public function unitData(){
-
 
         $units = dm_unit::orderBy('id', 'DESC')->get();
 
