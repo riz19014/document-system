@@ -102,11 +102,16 @@ Route::get('proceed-invoice-order',[App\Http\Controllers\FolderController::class
 
 Route::get('/company/users', [App\Http\Controllers\AccountController::class, 'index'])->name('manage-users');
 
+Route::get('/delete/company/{id}/user', [App\Http\Controllers\AccountController::class, 'deleteUser'])->name('delete-manage-user');
+
 Route::get('/company/departments', [App\Http\Controllers\AccountController::class, 'department'])->name('manage-departments');
 
 Route::get('/company/departments/data', [App\Http\Controllers\AccountController::class, 'departmentData'])->name('department-table-data');
 
 Route::post('/create/department', [App\Http\Controllers\AccountController::class, 'storeDepartment'])->name('store-department');
+
+Route::post('/departments/delete', [App\Http\Controllers\AccountController::class, 'deleteDepartment'])->name('department-delete');
+
 
 
 Route::get('/company/sections', [App\Http\Controllers\AccountController::class, 'section'])->name('manage-sections');
@@ -115,11 +120,20 @@ Route::get('/company/sections/data', [App\Http\Controllers\AccountController::cl
 
 Route::post('/create/sections', [App\Http\Controllers\AccountController::class, 'storeSection'])->name('store-section');
 
+Route::post('/delete/sections', [App\Http\Controllers\AccountController::class, 'deleteSection'])->name('section-delete');
+
+Route::get('/get/department/sections', [App\Http\Controllers\AccountController::class, 'getSections'])->name('get-department-sections');
+
 Route::get('/company/units', [App\Http\Controllers\AccountController::class, 'unit'])->name('manage-units');
 
 Route::get('/company/units/data', [App\Http\Controllers\AccountController::class, 'unitData'])->name('unit-table-data');
 
 Route::post('/create/unit', [App\Http\Controllers\AccountController::class, 'storeUnit'])->name('store-unit');
+
+Route::get('/get/unit/departments', [App\Http\Controllers\AccountController::class, 'getDepartments'])->name('get-unit-departments');
+
+Route::post('/delete/unit', [App\Http\Controllers\AccountController::class, 'deleteUnit'])->name('delete-unit');
+
 
 
 Route::get('/folder-file/{id}', [App\Http\Controllers\FileController::class, 'FileFolderDownload'])->name('download-folder-file');

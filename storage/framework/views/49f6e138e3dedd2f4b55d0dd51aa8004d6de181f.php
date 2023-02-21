@@ -48,7 +48,7 @@
                       </form>
                     </div>
                   </div> -->
-
+                
             </div>
           </div>
 
@@ -308,4 +308,5 @@
         });
 
     </script>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/rizwan/tpro/NDMS/resources/views/folder/recycle-bin.blade.php ENDPATH**/ ?>

@@ -41,7 +41,7 @@
 </div>
 
 
-<!-- create department model -->
+<!-- create unit model -->
 
 <div class="modal fade" id="unitAddModal" tabindex="-1" aria-labelledby="    exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -76,7 +76,7 @@
 </div>
 
 
-<!-- delete department model -->
+<!-- delete unit model -->
 
 <div class="modal fade" id="unitDelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -85,12 +85,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" style=" text-align: left;">
-        <p>Are you sure you want to delete department?</p>
-        <form id="file_delete" action="" method="post">
+        <p>Are you sure you want to delete unit?</p>
+        <form id="unit_delete" action="" method="post">
            {{csrf_field()}}
           <div class="mb-3">
             <div class="d-none" id='form-fname'><span id="error-fname" style="color: red"></span></div>
-            <input type="hidden" name="del_id" id="departmentDel" >
+            <input type="hidden" name="unit_id" id="unitDel" >
             <div class="big" id="textTitle" style="font-size: 2.2rem;"></div>
           </div>
           <div class="mb-3 text-end">
@@ -104,11 +104,12 @@
 
 @endsection
 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ @section('js')
+
  <script type="text/javascript">
 
 
-  /* ---- department list ----  */
+  /* ---- unit list ----  */
 
   $(function () {
        var table = $('.unit-table').DataTable({
@@ -122,6 +123,9 @@
       },
         ajax: {
             url:"{!! route('unit-table-data') !!}",
+            data: function(data) { 
+               data.search_grid = $('#search_grid').val()
+           },
             method: "get",
           },
           columns: [
@@ -135,7 +139,7 @@
 
   });
 
-  /* ---- department sotre ----  */
+  /* ---- unit sotre ----  */
 
     $(document).on('submit','#unit_form',function(e){
         e.preventDefault();
@@ -150,7 +154,7 @@
               $('.unit-table').DataTable().ajax.reload();
             }else{
               $("#form-meta_name").removeClass('d-none');
-              document.getElementById('error-meta_name').innerHTML = "Department name already exists.";
+              document.getElementById('error-meta_name').innerHTML = "Unit name already exists.";
               setTimeout(function(){ $('#form-meta_name').addClass('d-none'); }, 4000);
             }
 
@@ -159,16 +163,16 @@
       });
 
 
-  /* ---- department delete ----  */
+  /* ---- unit delete ----  */
 
-    $(document).on('click','.delDepartment',function(e){
+    $(document).on('click','.delUnit',function(e){
       var name = $(this).data("name");
-      $('#departmentDel').val($(this).data("id"));
+      $('#unitDel').val($(this).data("id"));
       $('#textTitle').html('"'+name+'"');
       $('#unitDelModal').modal('show');
     });
 
-  /* ---- reset department create form ----  */
+  /* ---- reset unit create form ----  */
 
     $(document).ready(function(){
       $(document).on('shown.bs.modal','#unitAddModal', function () {
@@ -177,9 +181,33 @@
       });
     });
 
+  /* ---- delete unit ----  */
+
+    $(document).on('submit','#unit_delete',function(e){
+        e.preventDefault();
+        $.ajax({
+          type: "POST",
+          url: "{{ route('delete-unit') }}",
+          data: $('#unit_delete').serialize(),
+          success: function(data) {
+              $('#unitDelModal').modal('hide');
+              $('.unit-table').DataTable().ajax.reload();
+          },
+        });
+      });
+
+  /* ---- search unit ----  */
+
+    $(document).on('keyup','#search_grid', function(e) {
+      $('.unit-table').DataTable().ajax.reload(); 
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+       document.getElementById('search_grid').placeholder = 'Search unit..';
+    }) 
 
 
 </script>
 
 
-
+@endsection

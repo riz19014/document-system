@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSectionsTable extends Migration
+class CreateDepartmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateSectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sections', function (Blueprint $table) {
+        Schema::create('departments', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->bigInteger('department_id')->nullable();
+            $table->unsignedBigInteger('unit_id')->nullable();
+            $table->foreign('unit_id')->on('dm_units')->references('id')->onDelete('cascade'); 
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateSectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sections');
+        Schema::dropIfExists('departments');
     }
 }

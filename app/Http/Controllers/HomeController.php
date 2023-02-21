@@ -23,6 +23,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('layouts.layout');
+        if (auth()->user()->role_id == 4) {
+            return redirect()->route('manage-units');
+        } else {
+            return view('layouts.layout');
+        }
     }
 }

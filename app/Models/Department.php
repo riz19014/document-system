@@ -11,9 +11,7 @@ class Department extends Model
 
     protected $fillable = [
         'name',
-        'unit_id',
-        'company_id',
-        'company_branch_id'
+        'unit_id'
     ];
 
     public function unit(){

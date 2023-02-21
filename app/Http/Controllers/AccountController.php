@@ -19,30 +19,33 @@ use Carbon\Carbon;
 class AccountController extends Controller
 {
      
-     public function index(){    
+    public function index()
+    {    
         $roles = Role::where('id', '!=', 4)->get();
         $users = User::where('role_id', '!=', 4)->get();
-        $sections = Section::orderBy('id', 'DESC')->get();
-     	return view('account.users',compact('roles','users','sections'));
-     }
+        $units = dm_unit::orderBy('id', 'DESC')->get();
+     	return view('account.users',compact('roles','users','units'));
+    }
 
-     public function store(Request $request)
+    public function store(Request $request)
     {
-        $department = Section::where('id',$request['section'])->first();
-        // dd($department_id);
-        $unit = Department::where('id',$department->department_id)->first();
-        // dd($unit);
         $user = new User ();
         $user->name = $request['fname']." ".$request['lname'];
         $user->email = $request['email'];
         $user->role_id = $request['role'];
         $user->company_id = 1;
-        $user->company_branch_id = $unit->unit_id;
-        $user->department_id = $department->department_id;
+        $user->company_branch_id = $request['unit'];
+        $user->department_id = $request['department'];
         $user->section_id = $request['section'];
         $user->password = Hash::make($request['password']);
         $user->save();
 
+    }
+
+    public function deleteUser($id)
+    {
+        User::where('id', $id)->delete();
+        return redirect()->back();
     }
 
      public function AuditView(){
@@ -126,10 +129,13 @@ class AccountController extends Controller
         return view('account.department', compact('units'));
      }
 
-     public function departmentData(){
-
-
-        $departments = Department::orderBy('id', 'DESC')->get();
+     public function departmentData(Request $request)
+     {
+        $departments = Department::orderBy('id', 'DESC');
+        if($request->search_grid){
+          $departments->where('name', 'LIKE', '%'.$request->search_grid.'%');
+        }
+        $departments->get();
 
         return Datatables::of($departments)
 
@@ -174,20 +180,29 @@ class AccountController extends Controller
 
     }
 
+    public function deleteDepartment(Request $request)
+    {
+        Department::where('id', $request->del_id)->delete();    
+        return response()->json(['success' => true]);
+
+    }
+
      public function section(){     
         $departments = Department::all();
-        return view('account.section',compact('departments'));
+        $units = dm_unit::all();
+        return view('account.section',compact('departments','units'));
      }
 
-     public function sectionData(){
+     public function sectionData(Request $request)
+     {
 
-
-        $sections = Section::orderBy('id', 'DESC')->get();
+        $sections = Section::orderBy('id', 'DESC');
+        if($request->search_grid){
+          $sections->where('name', 'LIKE', '%'.$request->search_grid.'%');
+        }
+        $sections->get();
 
         return Datatables::of($sections)
-
-
-        
 
         ->addColumn('name', function($row){
            return $row->name;         
@@ -203,7 +218,7 @@ class AccountController extends Controller
 
         ->addColumn('action', function($row){
 
-              $html_string = '<a class="nav-link delDepartment" title="Delete Department" style="cursor:pointer" data-name="'.$row->name.'"  data-id="'.$row->id.'"><i class="fas fa-trash"></i><br></a>';
+              $html_string = '<a class="nav-link delSection" title="Delete Section" style="cursor:pointer" data-name="'.$row->name.'"  data-id="'.$row->id.'"><i class="fas fa-trash"></i><br></a>';
 
               return $html_string;
                 
@@ -230,15 +245,24 @@ class AccountController extends Controller
 
     }
 
+    public function deleteSection(Request $request)
+    {
+        Section::where('id', $request->sec_id)->delete();    
+        return response()->json(['success' => true]);
+
+    }
+
     public function unit(){     
         return view('account.unit');
      }
 
-     public function unitData(){
+     public function unitData(Request $request){
 
-
-        $units = dm_unit::orderBy('id', 'DESC')->get();
-
+        $units = dm_unit::orderBy('id', 'DESC');
+        if($request->search_grid){
+          $units->where('unit_name', 'LIKE', '%'.$request->search_grid.'%');
+        }
+        $units->get();
         return Datatables::of($units)
 
         ->addColumn('name', function($row){
@@ -251,7 +275,7 @@ class AccountController extends Controller
 
         ->addColumn('action', function($row){
 
-              $html_string = '<a class="nav-link delDepartment" title="Delete Department" style="cursor:pointer" data-name="'.$row->name.'"  data-id="'.$row->id.'"><i class="fas fa-trash"></i><br></a>';
+              $html_string = '<a class="nav-link delUnit" title="Delete unit" style="cursor:pointer" data-name="'.$row->unit_name.'"  data-id="'.$row->id.'"><i class="fas fa-trash"></i><br></a>';
 
               return $html_string;
                 
@@ -275,6 +299,25 @@ class AccountController extends Controller
         
         return response()->json(['success' => false]);
 
+    }
+
+    public function deleteUnit(Request $request)
+    {
+        dm_unit::where('id', $request->unit_id)->delete();    
+        return response()->json(['success' => true]);
+
+    }
+
+    public function getDepartments(Request $request)
+    {
+        $departments = Department::where('unit_id', $request->unit_id)->get();
+        return json_encode(['departments' => $departments]);
+    }
+
+    public function getSections(Request $request)
+    {
+        $sections = Section::where('department_id', $request->department_id)->get();
+        return json_encode(['sections' => $sections]);
     }
 
      

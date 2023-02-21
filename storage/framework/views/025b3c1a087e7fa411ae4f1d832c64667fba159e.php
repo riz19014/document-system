@@ -26,7 +26,6 @@
              <div class="main-content-area">
                       <div class="file-view-area">
                         <div class="row">
-                          <div class="col-lg-9">
 
                             <div class="audit-logs">
                               <p class="mb-2 text-primary font-600">User list</p>
@@ -35,6 +34,8 @@
                                   <tr>
                                     <th>Email</th>
                                     <th>Name</th>
+                                    <th>Department</th>
+                                    <th>Section</th>
                                     <th>Position</th>
                                     <th>Action</th>
                                   </tr>
@@ -44,14 +45,15 @@
                                   <tr>
                                     <td><?php echo e($user->email); ?></td>
                                     <td><?php echo e($user->name); ?></td>
+                                    <td><?php echo e($user->department ? $user->department->name:'--'); ?></td>
+                                    <td><?php echo e($user->section ? $user->section->name:'--'); ?></td>
                                     <td><?php echo e($user->role->title); ?></td>
-                                    <td><a style="cursor: pointer;" class="delUser" title="Delete User" data-id=""><i class="fas fa-trash trash-icon"></i></a></td>
+                                    <td><a onclick="if (confirm('Delete selected user?')){return true;}else{event.stopPropagation(); event.preventDefault();};" href="<?php echo e(route('delete-manage-user', $user->id)); ?>" style="cursor: pointer;" class="delUser" title="Delete User" data-id=""><i class="fas fa-trash trash-icon"></i></a></td>
                                   </tr>
                                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                               </table>
                             </div>
-                          </div>
 
                         </div>
                       </div>
@@ -62,7 +64,7 @@
 
 
 <div class="modal fade" id="UserAddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">New user
@@ -74,54 +76,85 @@
             <?php echo e(csrf_field()); ?>
 
 
-          <div class="mb-3">
-          <div class="form-group">
-            <input required type="text" id="meta-name" class="form-control" name="fname" placeholder="first name">
-          </div>
-            <div class="d-none" id='form-meta_name'><span id="error-meta_name" style="color: red"></span></div>
-          </div>
-
-          <div class="mb-3">
-          <div class="form-group">
-            <input required type="text" id="meta-name" class="form-control" name="lname" placeholder="last name">
-          </div>
-            <div class="d-none" id='form-meta_name'><span id="error-meta_name" style="color: red"></span></div>
-          </div>
-
-          <div class="mb-3">
-          <div class="form-group">
-            <input required type="email" id="meta-name" class="form-control" name="email" placeholder="user email">
-          </div>
-            <div class="d-none" id='form-meta_name'><span id="error-meta_name" style="color: red"></span></div>
-          </div>
-
-           <div class="mb-3">
-          <div class="form-group">
-            <input required type="password" name="password" class="form-control" placeholder="Password" >
-          </div>
-            <div class="d-none" id='form-meta_name'><span id="error-meta_name" style="color: red"></span></div>
-          </div>
-          <div class="mb-3">
+          <div class="row">
+            
+            <div class="col-lg-6 mb-3">
               <div class="form-group">
-               <select required id="section_id" class="form-control" name="section">
-                  <option value="" disabled="" selected="">Select section</option>
-                  <?php $__currentLoopData = $sections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $section): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                   <option value="<?php echo e($section->id); ?>"><?php echo e($section->name); ?></option>
-                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-              </select>
+                <input required type="text" id="first-name" class="form-control" name="fname" placeholder="first name">
               </div>
+              <div class="d-none" id='form-meta_name'>
+                <span id="error-meta_name" style="color: red"></span>
+              </div>      
+            </div>
+
+            <div class="col-lg-6 mb-3">
+              <div class="form-group">
+                <input required type="text" id="meta-name" class="form-control" name="lname" placeholder="last name">
+              </div>
+              <div class="d-none" id='form-meta_name'>
+                <span id="error-meta_name" style="color: red"></span>
+              </div>      
+            </div>
+
+            <div class="col-lg-6 mb-3">
+                <div class="form-group">
+              <input required type="email" id="meta-name" class="form-control" name="email" placeholder="user email">
+            </div>
+              <div class="d-none" id='form-meta_name'><span id="error-meta_name" style="color: red"></span></div>     
+            </div>
+
+
+            <div class="col-lg-6 mb-3">
+                <div class="form-group">
+                <input required type="password" name="password" class="form-control" placeholder="Password" >
+              </div>
+                <div class="d-none" id='form-meta_name'><span id="error-meta_name" style="color: red"></span></div>   
+            </div>
+
+            <div class="col-lg-6 mb-3">
+                <div class="form-group">
+                 <select required id="unit_id" class="form-control" name="unit">
+                    <option value="" disabled="" selected="">Select unit</option>
+                    <?php $__currentLoopData = $units; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                     <option value="<?php echo e($unit->id); ?>"><?php echo e($unit->unit_name); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </select>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-3" id="unit_department">
+                <div class="form-group">
+                 <select required id="department_id" class="form-control" name="department">
+                     <option value="">Select department</option>
+                     <option v-for='department in departments' :value="department.id">{{ department . name }}</option>
+                </select>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-3" id="department_section">
+                <div class="form-group">
+                 <select required id="section_id" class="form-control" name="section">
+                     <option value="">Select section</option>
+                     <option v-for='section in sections' :value="section.id">{{ section . name }}</option>
+                </select>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-3">
+                <div class="form-group">
+                 <select required id="roleId" class="form-control" name="role">
+                    <option value="" disabled="" selected="">Select role</option>
+                    <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                     <option value="<?php echo e($role->id); ?>"><?php echo e($role->title); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </select>
+              </div>
+            </div>
+
+
+
           </div>
-          <div class="mb-3">
-          <div class="form-group">
-      	     <select required id="roleId" class="form-control" name="role">
-                <option value="" disabled="" selected="">Select role</option>
-                <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                 <option value="<?php echo e($role->id); ?>"><?php echo e($role->title); ?></option>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </select>
-          </div>
-            <div class="d-none" id='form-meta_name'><span id="error-meta_name" style="color: red"></span></div>
-          </div>
+
           <div class="mb-3 text-end">
             <button type="submit" class="btn btn-primary">Create</button>
           </div>
@@ -135,7 +168,9 @@
 
 <?php $__env->stopSection(); ?>
 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<?php $__env->startSection('js'); ?>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript">
 
 
@@ -154,10 +189,64 @@
           },
         });
       });
+  
+
+    $(document).ready(function(){
+        $(document).on('shown.bs.modal','#UserAddModal', function () {
+          $('#user_form')[0].reset();
+          $('#first-name').focus();
+        });
+      });
+
+    $(document).on('change','#unit_id',function(e){
+        e.preventDefault();
+        $.ajax({
+          type: "get",
+          url: "<?php echo e(route('get-unit-departments')); ?>",
+          dataType: 'JSON',
+          data: {unit_id: $(this).val()},
+          success: function(response) {
+               departmentData.departments = response.departments;
+          },
+        });
+      });
+
+    $(document).on('change','#department_id',function(e){
+        e.preventDefault();
+        $.ajax({
+          type: "get",
+          url: "<?php echo e(route('get-department-sections')); ?>",
+          dataType: 'JSON',
+          data: {department_id: $(this).val()},
+          success: function(response) {
+               sectionData.sections = response.sections;
+          },
+        });
+      });
+
+
+    var departmentData = new Vue({
+
+    el: '#unit_department',
+    data: {
+        departments: ''
+    }
+
+   });
+
+    var sectionData = new Vue({
+
+    el: '#department_section',
+    data: {
+        sections: ''
+    }
+
+   });
+
 
 </script>
 
-
+<?php $__env->stopSection(); ?>
 
 
 

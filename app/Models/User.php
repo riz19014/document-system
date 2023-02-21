@@ -42,7 +42,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-      public function role(){
+    public function role()
+    {
         return $this->belongsTo('App\Models\Role', 'role_id');
+    }
+    public function department()
+    {
+        return $this->belongsTo('App\Models\Department', 'department_id');
+    }
+    public function section()
+    {
+        return $this->belongsTo('App\Models\Section', 'section_id');
     }
 }

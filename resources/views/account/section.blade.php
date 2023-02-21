@@ -69,11 +69,20 @@
 
             <div class="mb-3">
                 <div class="form-group">
-                 <select required id="department_id" class="form-control" name="department">
-                    <option value="" disabled="" selected="">Select department</option>
-                    @foreach ($departments as $department)
-                     <option value="{{$department->id}}">{{$department->name}}</option>
+                 <select required id="unit_id" class="form-control" name="unit">
+                    <option value="" disabled="" selected="">Select unit</option>
+                    @foreach ($units as $unit)
+                     <option value="{{$unit->id}}">{{$unit->unit_name}}</option>
                     @endforeach
+                </select>
+                </div>
+            </div>
+
+            <div class="mb-3" id="unit_department">
+                <div class="form-group">
+                 <select required id="department_id" class="form-control" name="department">
+                     <option value="">Select department</option>
+                     <option v-for='department in departments' :value="department.id">@{{ department . name }}</option>
                 </select>
                 </div>
             </div>
@@ -98,11 +107,11 @@
       </div>
       <div class="modal-body" style=" text-align: left;">
         <p>Are you sure you want to delete section?</p>
-        <form id="file_delete" action="" method="post">
+        <form id="section_delete" action="" method="post">
            {{csrf_field()}}
           <div class="mb-3">
             <div class="d-none" id='form-fname'><span id="error-fname" style="color: red"></span></div>
-            <input type="hidden" name="del_id" id="departmentDel" >
+            <input type="hidden" name="sec_id" id="sectionDel" >
             <div class="big" id="textTitle" style="font-size: 2.2rem;"></div>
           </div>
           <div class="mb-3 text-end">
@@ -114,9 +123,11 @@
   </div>
 </div>
 
-@endsection
+ @endsection
 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ @section('js')
+
+ <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
  <script type="text/javascript">
 
 
@@ -134,6 +145,9 @@
       },
         ajax: {
             url:"{!! route('section-table-data') !!}",
+            data: function(data) { 
+               data.search_grid = $('#search_grid').val()
+           },
             method: "get",
           },
           columns: [
@@ -174,11 +188,11 @@
 
   /* ---- department delete ----  */
 
-    $(document).on('click','.delDepartment',function(e){
+    $(document).on('click','.delSection',function(e){
       var name = $(this).data("name");
-      $('#departmentDel').val($(this).data("id"));
+      $('#sectionDel').val($(this).data("id"));
       $('#textTitle').html('"'+name+'"');
-      $('#departmentDelModal').modal('show');
+      $('#sectionDelModal').modal('show');
     });
 
   /* ---- reset department create form ----  */
@@ -190,9 +204,53 @@
       });
     });
 
+    $(document).on('change','#unit_id',function(e){
+        e.preventDefault();
+        $.ajax({
+          type: "get",
+          url: "{{ route('get-unit-departments') }}",
+          dataType: 'JSON',
+          data: {unit_id: $(this).val()},
+          success: function(response) {
+               departmentData.departments = response.departments;
+          },
+        });
+      });
+
+
+    $(document).on('submit','#section_delete',function(e){
+        e.preventDefault();
+        $.ajax({
+          type: "POST",
+          url: "{{ route('section-delete') }}",
+          data: $('#section_delete').serialize(),
+          success: function(data) {
+              $('#sectionDelModal').modal('hide');
+              $('.section-table').DataTable().ajax.reload();
+          },
+        });
+      });
+
+    document.addEventListener('DOMContentLoaded', function () {
+       document.getElementById('search_grid').placeholder = 'Search section..';
+    }) 
+
+    $(document).on('keyup','#search_grid', function(e) {
+      $('.section-table').DataTable().ajax.reload(); 
+    });
+
+
+   var departmentData = new Vue({
+
+    el: '#unit_department',
+    data: {
+        departments: ''
+    }
+
+   });
 
 
 </script>
 
-
+@endsection
 
