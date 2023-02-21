@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Department;
+use App\Models\dm_company;
 use App\Models\DmAudit;
 use App\Models\Section;
 use App\Models\dm_unit;
@@ -14,13 +15,15 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\DmSection;
 use DataTables;
 use Auth;
+use View;
 use Carbon\Carbon;
+use PhpParser\Node\Stmt\TryCatch;
 
 class AccountController extends Controller
 {
-     
+
     public function index()
-    {    
+    {
         $roles = Role::where('id', '!=', 4)->get();
         $users = User::where('role_id', '!=', 4)->get();
         $units = dm_unit::orderBy('id', 'DESC')->get();
@@ -39,7 +42,6 @@ class AccountController extends Controller
         $user->section_id = $request['section'];
         $user->password = Hash::make($request['password']);
         $user->save();
-
     }
 
     public function deleteUser($id)
@@ -50,7 +52,7 @@ class AccountController extends Controller
 
      public function AuditView(){
 
-        
+
         return view('account.audit');
      }
 
@@ -63,11 +65,11 @@ class AccountController extends Controller
 
 
         ->addColumn('date', function($row){
-           return Carbon::parse( $row->date )->timezone('Asia/Karachi')->format('d.m.y | H:i:s');      
+           return Carbon::parse( $row->date )->timezone('Asia/Karachi')->format('d.m.y | H:i:s');
      })
 
         ->addColumn('user', function($row){
-           return $row->User->email;         
+           return $row->User->email;
      })
 
         ->addColumn('obj_type', function($row){
@@ -77,7 +79,7 @@ class AccountController extends Controller
                 return 'File';
              }else{
                 return 'Account';
-             }        
+             }
      })
 
         ->addColumn('object', function($row){
@@ -93,7 +95,7 @@ class AccountController extends Controller
                 return Auth::user()->name;
 
             }
-                 
+
      })
 
         ->addColumn('action', function($row){
@@ -103,17 +105,17 @@ class AccountController extends Controller
 
 
                 // $status_btn .= $row->action.' '.'<a style="color: #1ea1d7;" href="'.route('folder-index',$row['object_id']).'">'.$row->Object->.'</a>';
-                
 
-             // return $status_btn;  
-                
+
+             // return $status_btn;
+
      })
      ->rawColumns(['action'])
           ->make(true);
 
 
 
-        
+
      }
 
      public function FolderAuditView($id){
@@ -140,15 +142,15 @@ class AccountController extends Controller
         return Datatables::of($departments)
 
         ->addColumn('name', function($row){
-           return $row->name;         
+           return $row->name;
        })
 
         ->addColumn('unit', function($row){
-           return $row->unit->unit_name;         
+           return $row->unit->unit_name;
        })
 
         ->addColumn('created_at', function($row){
-           return Carbon::parse( $row->created_at )->timezone('Asia/Karachi')->format('d.m.y | H:i:s');      
+           return Carbon::parse( $row->created_at )->timezone('Asia/Karachi')->format('d.m.y | H:i:s');
        })
 
         ->addColumn('action', function($row){
@@ -156,14 +158,14 @@ class AccountController extends Controller
               $html_string = '<a class="nav-link delDepartment" title="Delete Department" style="cursor:pointer" data-name="'.$row->name.'"  data-id="'.$row->id.'"><i class="fas fa-trash"></i><br></a>';
 
               return $html_string;
-                
+
        })
      ->rawColumns(['action'])
           ->make(true);
 
 
 
-        
+
      }
     public function storeDepartment(Request $request)
     {
@@ -175,19 +177,20 @@ class AccountController extends Controller
             $create->save();
             return response()->json(['success' => true]);
         }
-        
+
         return response()->json(['success' => false]);
 
     }
 
     public function deleteDepartment(Request $request)
     {
-        Department::where('id', $request->del_id)->delete();    
+        Department::where('id', $request->del_id)->delete();
         return response()->json(['success' => true]);
 
     }
 
-     public function section(){     
+     public function section(){
+        //dd('innnn');
         $departments = Department::all();
         $units = dm_unit::all();
         return view('account.section',compact('departments','units'));
@@ -205,15 +208,15 @@ class AccountController extends Controller
         return Datatables::of($sections)
 
         ->addColumn('name', function($row){
-           return $row->name;         
+           return $row->name;
        })
 
         ->addColumn('department', function($row){
-           return $row->department->name;         
+           return $row->department->name;
        })
 
         ->addColumn('created_at', function($row){
-           return Carbon::parse( $row->created_at )->timezone('Asia/Karachi')->format('d.m.y | H:i:s');      
+           return Carbon::parse( $row->created_at )->timezone('Asia/Karachi')->format('d.m.y | H:i:s');
        })
 
         ->addColumn('action', function($row){
@@ -221,38 +224,33 @@ class AccountController extends Controller
               $html_string = '<a class="nav-link delSection" title="Delete Section" style="cursor:pointer" data-name="'.$row->name.'"  data-id="'.$row->id.'"><i class="fas fa-trash"></i><br></a>';
 
               return $html_string;
-                
+
        })
      ->rawColumns(['action'])
           ->make(true);
-
-
-
-        
      }
+
     public function storeSection(Request $request)
     {
         if(!Section::where('name', $request->name)->exists()){
-
             $create = new Section ();
             $create->name = $request->name;
+            $create->unit_id = $request->unit;
             $create->department_id = $request->department;
             $create->save();
             return response()->json(['success' => true]);
         }
-        
         return response()->json(['success' => false]);
-
     }
 
     public function deleteSection(Request $request)
     {
-        Section::where('id', $request->sec_id)->delete();    
+        Section::where('id', $request->sec_id)->delete();
         return response()->json(['success' => true]);
 
     }
 
-    public function unit(){     
+    public function unit(){
         return view('account.unit');
      }
 
@@ -266,11 +264,11 @@ class AccountController extends Controller
         return Datatables::of($units)
 
         ->addColumn('name', function($row){
-           return $row->unit_name;         
+           return $row->unit_name;
        })
 
         ->addColumn('created_at', function($row){
-           return Carbon::parse( $row->created_at )->timezone('Asia/Karachi')->format('d.m.y | H:i:s');      
+           return Carbon::parse( $row->created_at )->timezone('Asia/Karachi')->format('d.m.y | H:i:s');
        })
 
         ->addColumn('action', function($row){
@@ -278,14 +276,14 @@ class AccountController extends Controller
               $html_string = '<a class="nav-link delUnit" title="Delete unit" style="cursor:pointer" data-name="'.$row->unit_name.'"  data-id="'.$row->id.'"><i class="fas fa-trash"></i><br></a>';
 
               return $html_string;
-                
+
        })
      ->rawColumns(['action'])
           ->make(true);
 
 
 
-        
+
      }
     public function storeUnit(Request $request)
     {
@@ -296,14 +294,14 @@ class AccountController extends Controller
             $create->save();
             return response()->json(['success' => true]);
         }
-        
+
         return response()->json(['success' => false]);
 
     }
 
     public function deleteUnit(Request $request)
     {
-        dm_unit::where('id', $request->unit_id)->delete();    
+        dm_unit::where('id', $request->unit_id)->delete();
         return response()->json(['success' => true]);
 
     }
@@ -320,6 +318,6 @@ class AccountController extends Controller
         return json_encode(['sections' => $sections]);
     }
 
-     
+
 
 }

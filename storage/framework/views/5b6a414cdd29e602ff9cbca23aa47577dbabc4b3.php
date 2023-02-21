@@ -27,6 +27,7 @@
                 <thead>
                   <tr>
                     <th>Department Name</th>
+                    <th>Unit</th>
                     <th>Created at</th>
                     <th>Action</th>
                   </tr>
@@ -65,6 +66,17 @@
               </div>
 
             </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="form-group">
+                 <select required id="unit_id" class="form-control" name="unit">
+                    <option value="" disabled="" selected="">Select unit</option>
+                    <?php $__currentLoopData = $units; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                     <option value="<?php echo e($unit->id); ?>"><?php echo e($unit->unit_name); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </select>
+                </div>
             </div>
 
             <div class="mb-3 text-end">
@@ -129,6 +141,7 @@
           columns: [
 
               {data: 'name', name: 'name'},
+              {data: 'unit', name: 'unit'},
               {data: 'created_at', name: 'created_at'},
               {data: 'action', name: 'action'},
 

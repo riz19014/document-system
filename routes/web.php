@@ -167,7 +167,7 @@ Route::get('/resolution/status/', [App\Http\Controllers\ApprovalController::clas
 Route::post('get-duplicate', [App\Http\Controllers\DashboardController::class,'getDuplicate'])->name('excel-duplicate');
 
 Route::post('/retention/', [App\Http\Controllers\FileController::class, 'FileRetention'])->name('file-retention');
- 
+
 
 Route::get('/delete/user', [App\Http\Controllers\ApprovalController::class, 'deleteUser'])->name('delete-user');
 
