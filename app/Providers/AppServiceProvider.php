@@ -7,7 +7,7 @@ use App\Models\DmSection;
 use App\Models\ApprovalUser;
 use App\Models\DmFileUpload;
 use App\Models\ApprovalStatus;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
      
          view()->composer(['layouts.layout','approval.notify'], function ($view) {
             $filecount = 0;
-            $sidebars = DmSection::where('is_section',1)->get();
+            $sidebars = DmSection::where('is_section',1)->where('section_id', Auth::user()->section_id)->get();
             $apps = ApprovalUser::all();
             foreach($apps as $app){
 

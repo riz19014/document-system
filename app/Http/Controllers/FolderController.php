@@ -13,7 +13,7 @@ use App\Classes\Audits;
 use App\Models\ApprovalUser;
 use App\Models\ApprovalStatus;
 use DataTables;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class FolderController extends Controller
@@ -26,6 +26,10 @@ class FolderController extends Controller
       $section = new DmSection();
       $section->description = $request->folder_name;
       $section->is_section = 1;
+      $section->company_id = Auth::user()->company_id;
+      $section->company_branch_id = Auth::user()->company_branch_id;
+      $section->department_id = Auth::user()->department_id;
+      $section->section_id = Auth::user()->section_id;
       $section->save();
       $sections = DmSection::where('id', $section->id)->first();
 
@@ -52,9 +56,9 @@ class FolderController extends Controller
      
         $metaTags =  DmFolderColumn::where('folder_id',$id)->orderBy('tab_index', 'ASC')->get();
          //dd($metaTags);
-        $folder_child = DmSection::where('parent_id', $id)->orderBy('created_at', 'desc')->get();
+        $folder_child = DmSection::where('parent_id', $id)->where('section_id', Auth::user()->section_id)->orderBy('created_at', 'desc')->get();
         //dd( $folder_child);
-        $folder_files = DmFileUpload::where('folder_id', $id)->where('is_delete', 0)->orderBy('created_at', 'desc')->get();
+        $folder_files = DmFileUpload::where('folder_id', $id)->where('section_id', Auth::user()->section_id)->where('is_delete', 0)->orderBy('created_at', 'desc')->get();
         // dd($folder_files);
         $parents = array();  
         do {
@@ -83,6 +87,10 @@ class FolderController extends Controller
         $folder->description = $request->foldar_name;
         $folder->is_section = 0;
         $folder->parent_id = $request->folder_id;
+        $folder->company_id = Auth::user()->company_id;
+        $folder->company_branch_id = Auth::user()->company_branch_id;
+        $folder->department_id = Auth::user()->department_id;
+        $folder->section_id = Auth::user()->section_id;
         $folder->save();
 
       $params = ['objtype'=> 1,'obj_id'=>$folder->id,'obj'=>$request->folder_id,
@@ -141,6 +149,10 @@ class FolderController extends Controller
             $photo->file_size =  $fileSize / 1000;
             // $photo->doc_path = 'file_uploads/' . $name;
             $photo->doc_path = 'storage/'.$path;
+            $photo->company_id = Auth::user()->company_id;
+            $photo->company_branch_id = Auth::user()->company_branch_id;
+            $photo->department_id = Auth::user()->department_id;
+            $photo->section_id = Auth::user()->section_id;
             $photo->save();
 
             if($priorityUser !=null){
