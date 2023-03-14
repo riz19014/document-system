@@ -532,6 +532,13 @@ $(document).ready(function () {
       
 
     $(document).on('submit','#files_upload',function(e){  
+
+        var $fileUpload = $("input[type='file']");
+        if (parseInt($fileUpload.get(0).files.length)>5){
+         alert("You can only upload a maximum of 5 files");
+         document.getElementById("files_upload").reset();
+         return false
+        }
       e.preventDefault();
       let formData = new FormData(this);  
     $.ajax({

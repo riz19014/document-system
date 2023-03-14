@@ -102,6 +102,10 @@ Route::get('proceed-invoice-order',[App\Http\Controllers\FolderController::class
 
 Route::get('/company/users', [App\Http\Controllers\AccountController::class, 'index'])->name('manage-users');
 
+Route::post('/user/change-password', [App\Http\Controllers\AccountController::class, 'changePassword'])->name('user-changePassword');
+
+
+
 Route::get('/delete/company/{id}/user', [App\Http\Controllers\AccountController::class, 'deleteUser'])->name('delete-manage-user');
 
 Route::get('/company/departments', [App\Http\Controllers\AccountController::class, 'department'])->name('manage-departments');

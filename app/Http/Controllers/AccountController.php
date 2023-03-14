@@ -318,6 +318,45 @@ class AccountController extends Controller
         return json_encode(['sections' => $sections]);
     }
 
+    public function changePassword(Request $request)
+    {
+
+        if(is_null($request->get('password'))){
+           return response()->json([
+                'status' => false,
+                'msg' => 'Password field is required.',
+            ]);
+        }
+        if(is_null($request->get('password_confirmation'))){
+
+            return response()->json([
+                'status' => false,
+                'msg' => 'Password confirmation field is required.',
+            ]);
+
+        }
+        if ($request->get('password') == $request->get('password_confirmation')) {
+        if(strlen($request->get('password')) < 8){
+            return response()->json([
+                'status' => false,
+                'msg' => 'Password must be at least 8 characters',
+            ]);
+        }
+        $user = User::find($request->userId);
+        $user->password = Hash::make($request->get('password'));
+        $user->save();
+        return response()->json([
+            'status' => true,
+            'msg' => 'Your password changed successfully',
+        ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'msg' => 'Passwords do NOT match!',
+            ]);
+        }
+    }
+
 
 
 }
