@@ -128,7 +128,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="user_form" action="" method="post">
+                <form id="user_form_change_password" action="" method="post">
                     {{ csrf_field() }}
 
                     <div class="row">

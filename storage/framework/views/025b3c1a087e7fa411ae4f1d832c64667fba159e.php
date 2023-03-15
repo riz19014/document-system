@@ -126,7 +126,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="user_form" action="" method="post">
+                <form id="user_form_change_password" action="" method="post">
                     <?php echo e(csrf_field()); ?>
 
 
