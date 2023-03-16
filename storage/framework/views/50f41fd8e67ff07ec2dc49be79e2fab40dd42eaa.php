@@ -1,4 +1,14 @@
-<div class="right d-flex align-items-center">
+
+  <?php if(Route::currentRouteName() == 'manage-units' || Route::currentRouteName() == 'manage-departments' || Route::currentRouteName() == 'manage-sections' || Route::currentRouteName() == 'manage-users'): ?>
+
+    <div class="right d-flex align-items-center">
+          <div class="input-group">
+            <input type="text" class="form-control"  id="search_grid">
+          </div>
+  </div>
+
+  <?php else: ?>
+     <div class="right d-flex align-items-center">
           <div class="btn-group me-2">
             <span class="file-input btn btn-primary btn-file">
                 Upload
@@ -10,6 +20,10 @@
             <a href="javascript:void(0);" id="searchBtn" class="btn btn-primary" type="button"><i class="fas fa-search"></i></a>
           </div>
   </div>
+
+  <?php endif; ?>
+
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script type="text/javascript">
     

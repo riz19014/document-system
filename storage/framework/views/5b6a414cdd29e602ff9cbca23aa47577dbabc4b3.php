@@ -99,7 +99,7 @@
       </div>
       <div class="modal-body" style=" text-align: left;">
         <p>Are you sure you want to delete department?</p>
-        <form id="file_delete" action="" method="post">
+        <form id="department_delete" action="" method="post">
            <?php echo e(csrf_field()); ?>
 
           <div class="mb-3">
@@ -118,7 +118,8 @@
 
 <?php $__env->stopSection(); ?>
 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <?php $__env->startSection('js'); ?>
+
  <script type="text/javascript">
 
 
@@ -136,6 +137,9 @@
       },
         ajax: {
             url:"<?php echo route('department-table-data'); ?>",
+            data: function(data) { 
+               data.search_grid = $('#search_grid').val()
+           },
             method: "get",
           },
           columns: [
@@ -192,9 +196,32 @@
       });
     });
 
+    $(document).on('submit','#department_delete',function(e){
+        e.preventDefault();
+        $.ajax({
+          type: "POST",
+          url: "<?php echo e(route('department-delete')); ?>",
+          data: $('#department_delete').serialize(),
+          success: function(data) {
+              $('#departmentDelModal').modal('hide');
+              $('.department-table').DataTable().ajax.reload();
+          },
+        });
+      });
+
+    $(document).on('keyup','#search_grid', function(e) {
+      $('.department-table').DataTable().ajax.reload(); 
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+       document.getElementById('search_grid').placeholder = 'Search department..';
+    }) 
+
 
 
 </script>
+
+<?php $__env->stopSection(); ?>
 
 
 
