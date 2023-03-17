@@ -61,17 +61,17 @@
             <!-- Page Content  -->
              <div style="margin-bottom: -10px; text-align: center;background-color: #f9f8f8">
             @if(Auth::user()->role_id !== 4)
-                  <strong> 
-                       {{Auth::user()->company->company_name}} <i style="color: #b7b7b7" class="fas fa-arrow-right"></i>
-                       {{Auth::user()->unit->unit_name}} <i style="color: #b7b7b7" class="fas fa-arrow-right"></i>
-                       {{Auth::user()->department->name}} <i style="color: #b7b7b7" class="fas fa-arrow-right"></i>
-                       {{Auth::user()->section->name}} <i style="color: #b7b7b7" class="fas fa-arrow-right"></i>
+                      
+                       {{Auth::user()->company->company_name}} <i style="color: #b3acac" class="fas fa-angle-right"></i>
+                       {{Auth::user()->unit->unit_name}} <i style="color: #b3acac" class="fas fa-angle-right"></i>
+                       {{Auth::user()->department->name}} <i style="color: #b3acac" class="fas fa-angle-right"></i>
+                       {{Auth::user()->section->name}} <i style="color: #b3acac" class="fas fa-angle-right"></i>
                        {{Auth::user()->name}}
-                  </strong>
+                  
               @else
-                   <strong> 
+                   
                       {{Auth::user()->name}}
-                   </strong>
+                   
               @endif
                
                

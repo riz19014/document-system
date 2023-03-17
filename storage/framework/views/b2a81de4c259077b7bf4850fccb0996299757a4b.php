@@ -61,19 +61,19 @@
             <!-- Page Content  -->
              <div style="margin-bottom: -10px; text-align: center;background-color: #f9f8f8">
             <?php if(Auth::user()->role_id !== 4): ?>
-                  <strong> 
-                       <?php echo e(Auth::user()->company->company_name); ?> <i style="color: #b7b7b7" class="fas fa-arrow-right"></i>
-                       <?php echo e(Auth::user()->unit->unit_name); ?> <i style="color: #b7b7b7" class="fas fa-arrow-right"></i>
-                       <?php echo e(Auth::user()->department->name); ?> <i style="color: #b7b7b7" class="fas fa-arrow-right"></i>
-                       <?php echo e(Auth::user()->section->name); ?> <i style="color: #b7b7b7" class="fas fa-arrow-right"></i>
+                      
+                       <?php echo e(Auth::user()->company->company_name); ?> <i style="color: #b3acac" class="fas fa-angle-right"></i>
+                       <?php echo e(Auth::user()->unit->unit_name); ?> <i style="color: #b3acac" class="fas fa-angle-right"></i>
+                       <?php echo e(Auth::user()->department->name); ?> <i style="color: #b3acac" class="fas fa-angle-right"></i>
+                       <?php echo e(Auth::user()->section->name); ?> <i style="color: #b3acac" class="fas fa-angle-right"></i>
                        <?php echo e(Auth::user()->name); ?>
 
-                  </strong>
+                  
               <?php else: ?>
-                   <strong> 
+                   
                       <?php echo e(Auth::user()->name); ?>
 
-                   </strong>
+                   
               <?php endif; ?>
                
                
