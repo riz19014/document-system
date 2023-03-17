@@ -26,8 +26,8 @@
 
     <?php echo $__env->yieldContent('styles'); ?>
   </head>
-  <body class="d-flex flex-column min-vh-100">
 
+  <body class="d-flex flex-column min-vh-100">
     <!-- Header -->
   <?php if(Route::currentRouteName() == 'reso-view'): ?>
 
@@ -88,18 +88,18 @@
 
   <?php endif; ?>
 
+ <?php echo $__env->yieldContent('js'); ?>
 
 <script src="<?php echo e(asset('vendor/jquery.js')); ?>"></script>
 <script src="<?php echo e(asset('dist/lity.js')); ?>"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-
-  <script src="<?php echo e(asset('js/dropzone.min.js')); ?>"></script>
+<script src="<?php echo e(asset('js/dropzone.min.js')); ?>"></script>
 
 <script type="text/javascript">
 // $(document).on('change', '.btn-file :file', function() {

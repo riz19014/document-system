@@ -100,7 +100,7 @@
         <li><a href="#">Privacy policy</a></li>
         <li><a href="#">Terms of use</a></li>
       </ul>
-      <div class="copyright">Softpyramid © 2021</div>
+      <div class="copyright">Nishatmills © 2023</div>
     </footer>
     <!-- end Footer -->
 
