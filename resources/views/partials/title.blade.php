@@ -76,6 +76,12 @@
                             <a class="nav-link" data-bs-toggle="modal" data-bs-target="#unitAddModal" href="#"><i class="fas fa-code-branch"></i><br> Unit</a>
                           </li>
 
+                          @elseif(Route::currentRouteName() == 'manage-company')
+
+                          <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#companyAddModal" href="#"><i class="fas fa-map-marker-alt"></i><br> Location</a>
+                          </li>
+
 
                          @elseif(Route::currentRouteName() == 'file-view')
 

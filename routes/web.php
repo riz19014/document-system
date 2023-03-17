@@ -41,8 +41,6 @@ Route::post('/add-meta', [App\Http\Controllers\FolderController::class, 'AddMeta
 
 // Route::get('/edit/meta/{id}', [App\Http\Controllers\FolderController::class, 'EditMeta'])->name('edit-meta');
 
-Route::get('/delete/meta/{id}', [App\Http\Controllers\FolderController::class, 'DeleteMeta'])->name('delete-meta');
-
 Route::post('/column-folder', [App\Http\Controllers\FolderController::class, 'ColumnFolder'])->name('add-column-folder');
 
 // Route::post('/upload-image', [App\Http\Controllers\UploadController::class, 'postUploadForm']);
@@ -127,6 +125,22 @@ Route::post('/create/sections', [App\Http\Controllers\AccountController::class, 
 Route::post('/delete/sections', [App\Http\Controllers\AccountController::class, 'deleteSection'])->name('section-delete');
 
 Route::get('/get/department/sections', [App\Http\Controllers\AccountController::class, 'getSections'])->name('get-department-sections');
+
+
+
+Route::get('/create/company', [App\Http\Controllers\AccountController::class, 'company'])->name('manage-company');
+
+Route::get('/company/data', [App\Http\Controllers\AccountController::class, 'companyData'])->name('company-table-data');
+
+Route::post('/store/company', [App\Http\Controllers\AccountController::class, 'storeCompany'])->name('store-company');
+
+Route::post('/delete/company', [App\Http\Controllers\AccountController::class, 'deleteCompany'])->name('delete-company');
+
+Route::get('/get/unit/companies', [App\Http\Controllers\AccountController::class, 'getUnits'])->name('get-unit-company');
+
+
+
+
 
 Route::get('/company/units', [App\Http\Controllers\AccountController::class, 'unit'])->name('manage-units');
 

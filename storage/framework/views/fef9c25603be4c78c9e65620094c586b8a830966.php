@@ -67,7 +67,7 @@
                             <th > Name </th>
                             <th > Date </th> 
                             <th > Due date </th> 
-                            <th > Signature </th> 
+                            <th > Notes </th> 
                             <th > Size </th>
                             <th > Tags </th>
                             <th></th>
@@ -144,7 +144,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New Foldar</h5>
+        <h5 class="modal-title" id="exampleModalLabel">New Foldars</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -261,7 +261,8 @@
                 {data: 'action', name: 'action'},
                 {data: 'created_at', name: 'created_at'}, 
                 {data: 'due_date', name: 'due_date'},
-                {data: 'signed_by', name: 'signed_by'},
+                // {data: 'signed_by', name: 'signed_by'},
+                {data: 'notes', name: 'notes'},
                 {data: 'filesize', name: 'filesize'},
                 {data: 'tags', name: 'tags'},
                 {data: 'listAction', name: 'listAction'},

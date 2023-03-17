@@ -16,7 +16,7 @@
                      <li><a id="sinfo" data-id="<?php echo e($side->id); ?>" href="<?php echo e(route('folder-index',$side->id)); ?>"><?php echo e($side->description); ?></a></li>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     <div id="line_items"></div>
-                     
+
                     <li class="mb-5"><a id="sectionId" href="#" data-bs-toggle="modal" data-bs-target="#createnewsection"><i class="fas fa-plus-circle text-primary"></i> &nbsp;Create New Section</a></li>
 
                     <li><p class="heading-sidebar">Admin tools</p></li>
@@ -36,9 +36,11 @@
                     </li>
                   <?php endif; ?>
 
-                    
+
 
                   <?php if(Auth::user()->role_id == 4): ?>
+
+                  <li><a href="<?php echo e(route('manage-company')); ?>"><i class="fas fa-map-marker-alt"></i>&nbsp; Location</a></li>
 
                   <li><a href="<?php echo e(route('manage-units')); ?>"><i class="fas fa-code-branch"></i>&nbsp; Operating Unit</a></li>
 
@@ -50,14 +52,32 @@
                     
 
                   <?php endif; ?>
-                     
+
                 </ul>
             </nav>
           </div>
           <div class="col-lg-9">
 
             <!-- Page Content  -->
+             <div style="margin-bottom: -10px; text-align: center;background-color: #f9f8f8">
+            <?php if(Auth::user()->role_id !== 4): ?>
+                  <strong> 
+                       <?php echo e(Auth::user()->company->company_name); ?> <i style="color: #b7b7b7" class="fas fa-arrow-right"></i>
+                       <?php echo e(Auth::user()->unit->unit_name); ?> <i style="color: #b7b7b7" class="fas fa-arrow-right"></i>
+                       <?php echo e(Auth::user()->department->name); ?> <i style="color: #b7b7b7" class="fas fa-arrow-right"></i>
+                       <?php echo e(Auth::user()->section->name); ?> <i style="color: #b7b7b7" class="fas fa-arrow-right"></i>
+                       <?php echo e(Auth::user()->name); ?>
 
+                  </strong>
+              <?php else: ?>
+                   <strong> 
+                      <?php echo e(Auth::user()->name); ?>
+
+                   </strong>
+              <?php endif; ?>
+               
+               
+             </div>
              <?php echo $__env->yieldContent('content'); ?>
 
           </div>
@@ -70,7 +90,7 @@
 
     </div>
 
-    
+
 
   </div>
 
@@ -101,4 +121,5 @@
           </div>
         </div>
       </div>
-    </div><?php /**PATH /home/rizwan/tpro/NDMS/resources/views/partials/sidebar.blade.php ENDPATH**/ ?>
+    </div>
+<?php /**PATH /home/rizwan/tpro/NDMS/resources/views/partials/sidebar.blade.php ENDPATH**/ ?>

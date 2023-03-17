@@ -11,8 +11,9 @@ class Section extends Model
 
     protected $fillable = [
         'name',
-        'department_id',
         'unit_id',
+        'company_id',
+        'department_id'
     ];
 
     public function unit(){

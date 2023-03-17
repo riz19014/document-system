@@ -212,11 +212,21 @@
 
                         <div class="col-lg-6 mb-3">
                             <div class="form-group">
+                             <select required id="company_id" class="form-control" name="company">
+                                <option value="" disabled="" selected="">Select location</option>
+                                <?php $__currentLoopData = $companies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $company): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                 <option value="<?php echo e($company->id); ?>"><?php echo e($company->company_name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 mb-3" id="unit_company">
+                            <div class="form-group">
                                 <select required id="unit_id" class="form-control" name="unit">
-                                    <option value="" disabled="" selected="">Select unit</option>
-                                    <?php $__currentLoopData = $units; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($unit->id); ?>"><?php echo e($unit->unit_name); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="">Select unit</option>
+                                    <option v-for='unit in units' :value="unit.id">{{ unit.unit_name }}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -326,6 +336,15 @@
         });
     });
 
+    var unitData = new Vue({
+
+        el: '#unit_company',
+        data: {
+            units: ''
+        }
+
+    });
+
 
     var departmentData = new Vue({
 
@@ -386,6 +405,21 @@
                     $("#" + key + "_error").text(val[0]);
                 });
             }
+        });
+    });
+
+    $(document).on('change', '#company_id', function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: "get",
+            url: "<?php echo e(route('get-unit-company')); ?>",
+            dataType: 'JSON',
+            data: {
+                company_id: $(this).val()
+            },
+            success: function(response) {
+                unitData.units = response.units;
+            },
         });
     });
 

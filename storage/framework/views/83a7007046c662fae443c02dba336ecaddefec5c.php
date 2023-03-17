@@ -258,4 +258,5 @@ var table = $('.meta-table').DataTable({
 
 
     </script>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/rizwan/tpro/NDMS/resources/views/meta/index.blade.php ENDPATH**/ ?>

@@ -28,6 +28,7 @@
                   <tr>
                     <th>Department Name</th>
                     <th>Unit</th>
+                    <th>Location</th>
                     <th>Created at</th>
                     <th>Action</th>
                   </tr>
@@ -69,12 +70,22 @@
 
             <div class="mb-3">
                 <div class="form-group">
-                 <select required id="unit_id" class="form-control" name="unit">
-                    <option value="" disabled="" selected="">Select unit</option>
-                    @foreach ($units as $unit)
-                     <option value="{{$unit->id}}">{{$unit->unit_name}}</option>
+                 <select required id="company_id" class="form-control" name="company">
+                    <option value="" disabled="" selected="">Select location</option>
+                    @foreach ($companies as $company)
+                     <option value="{{$company->id}}">{{$company->company_name}}</option>
                     @endforeach
                 </select>
+                </div>
+            </div>
+
+            <div class="mb-3" id="unit_company">
+                <div class="form-group">
+                    <select required id="unit_id" class="form-control" name="unit">
+                        <option value="">Select unit</option>
+                        <option v-for='unit in units' :value="unit.id">@{{ unit.unit_name }}
+                        </option>
+                    </select>
                 </div>
             </div>
 
@@ -117,7 +128,7 @@
 @endsection
 
  @section('js')
-
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
  <script type="text/javascript">
 
 
@@ -144,6 +155,7 @@
 
               {data: 'name', name: 'name'},
               {data: 'unit', name: 'unit'},
+              {data: 'company', name: 'company'},
               {data: 'created_at', name: 'created_at'},
               {data: 'action', name: 'action'},
 
@@ -215,8 +227,30 @@
        document.getElementById('search_grid').placeholder = 'Search department..';
     }) 
 
+$(document).on('change', '#company_id', function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: "get",
+            url: "{{ route('get-unit-company') }}",
+            dataType: 'JSON',
+            data: {
+                company_id: $(this).val()
+            },
+            success: function(response) {
+                unitData.units = response.units;
+            },
+        });
+    });
 
 
+var unitData = new Vue({
+
+        el: '#unit_company',
+        data: {
+            units: ''
+        }
+
+    });
 </script>
 
 @endsection

@@ -16,6 +16,8 @@ class CreateSectionsTable extends Migration
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->bigInteger('company_id')->nullable(); 
+            $table->bigInteger('unit_id')->nullable(); 
             $table->unsignedBigInteger('department_id')->nullable();
             $table->foreign('department_id')->on('departments')->references('id')->onDelete('cascade'); 
             $table->timestamps();

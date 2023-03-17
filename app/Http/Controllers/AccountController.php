@@ -26,8 +26,8 @@ class AccountController extends Controller
     {
         $roles = Role::where('id', '!=', 4)->get();
         $users = User::where('role_id', '!=', 4)->get();
-        $units = dm_unit::orderBy('id', 'DESC')->get();
-     	return view('account.users',compact('roles','users','units'));
+        $companies = dm_company::orderBy('id', 'DESC')->get();
+     	return view('account.users',compact('roles','users','companies'));
     }
 
     public function store(Request $request)
@@ -36,7 +36,7 @@ class AccountController extends Controller
         $user->name = $request['fname']." ".$request['lname'];
         $user->email = $request['email'];
         $user->role_id = $request['role'];
-        $user->company_id = 1;
+        $user->company_id = $request['company'];
         $user->company_branch_id = $request['unit'];
         $user->department_id = $request['department'];
         $user->section_id = $request['section'];
@@ -127,8 +127,8 @@ class AccountController extends Controller
      }
 
      public function department(){
-        $units = dm_unit::orderBy('id', 'DESC')->get();
-        return view('account.department', compact('units'));
+        $companies = dm_company::orderBy('id', 'DESC')->get();
+        return view('account.department', compact('companies'));
      }
 
      public function departmentData(Request $request)
@@ -147,6 +147,10 @@ class AccountController extends Controller
 
         ->addColumn('unit', function($row){
            return $row->unit->unit_name;
+       })
+
+        ->addColumn('company', function($row){
+           return $row->company_id ? $row->company->company_name : '--';
        })
 
         ->addColumn('created_at', function($row){
@@ -169,10 +173,12 @@ class AccountController extends Controller
      }
     public function storeDepartment(Request $request)
     {
+        // dd($request->all());
         if(!Department::where('name', $request->name)->exists()){
 
             $create = new Department ();
             $create->name = $request->name;
+            $create->company_id = $request->company;
             $create->unit_id = $request->unit;
             $create->save();
             return response()->json(['success' => true]);
@@ -190,10 +196,8 @@ class AccountController extends Controller
     }
 
      public function section(){
-        //dd('innnn');
-        $departments = Department::all();
-        $units = dm_unit::all();
-        return view('account.section',compact('departments','units'));
+        $companies = dm_company::all();
+        return view('account.section',compact('companies'));
      }
 
      public function sectionData(Request $request)
@@ -235,6 +239,7 @@ class AccountController extends Controller
         if(!Section::where('name', $request->name)->exists()){
             $create = new Section ();
             $create->name = $request->name;
+            $create->company_id = $request->company;
             $create->unit_id = $request->unit;
             $create->department_id = $request->department;
             $create->save();
@@ -251,7 +256,8 @@ class AccountController extends Controller
     }
 
     public function unit(){
-        return view('account.unit');
+        $companies = dm_company::orderBy('id', 'DESC')->get();
+        return view('account.unit',compact('companies'));
      }
 
      public function unitData(Request $request){
@@ -265,6 +271,10 @@ class AccountController extends Controller
 
         ->addColumn('name', function($row){
            return $row->unit_name;
+       })
+
+        ->addColumn('company', function($row){
+           return $row->company_id ? $row->company->company_name : '--';
        })
 
         ->addColumn('created_at', function($row){
@@ -291,6 +301,7 @@ class AccountController extends Controller
 
             $create = new dm_unit ();
             $create->unit_name = $request->name;
+            $create->company_id = $request->company;
             $create->save();
             return response()->json(['success' => true]);
         }
@@ -306,10 +317,86 @@ class AccountController extends Controller
 
     }
 
+
+
+
+
+
+
+
+
+
+
+
+    public function company(){
+        return view('account.company');
+     }
+
+     public function companyData(Request $request){
+
+        $units = dm_company::orderBy('id', 'DESC');
+        if($request->search_grid){
+          $units->where('company_name', 'LIKE', '%'.$request->search_grid.'%');
+        }
+        $units->get();
+        return Datatables::of($units)
+
+        ->addColumn('name', function($row){
+           return $row->company_name;
+       })
+
+        ->addColumn('created_at', function($row){
+           return Carbon::parse( $row->created_at )->timezone('Asia/Karachi')->format('d.m.y | H:i:s');
+       })
+
+        ->addColumn('action', function($row){
+
+              $html_string = '<a class="nav-link delCompany" title="Delete company" style="cursor:pointer" data-name="'.$row->company_name.'"  data-id="'.$row->id.'"><i class="fas fa-trash"></i><br></a>';
+
+              return $html_string;
+
+       })
+     ->rawColumns(['action'])
+          ->make(true);
+
+
+
+
+     }
+    public function storeCompany(Request $request)
+    {
+        // dd($request->all());
+        if(!dm_company::where('company_name', $request->name)->exists()){
+
+            $create = new dm_company ();
+            $create->company_name = $request->name;
+            $create->save();
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false]);
+
+    }
+
+    public function deleteCompany(Request $request)
+    {
+        dm_company::where('id', $request->company_id)->delete();
+        return response()->json(['success' => true]);
+
+    }
+
     public function getDepartments(Request $request)
     {
         $departments = Department::where('unit_id', $request->unit_id)->get();
         return json_encode(['departments' => $departments]);
+    }
+
+    public function getUnits(Request $request)
+    {
+        // dd($request->all());
+        $units = dm_unit::where('company_id', $request->company_id)->get();
+        // dd($units);
+        return json_encode(['units' => $units]);
     }
 
     public function getSections(Request $request)

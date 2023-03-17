@@ -54,4 +54,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\Section', 'section_id');
     }
+    public function unit()
+    {
+        return $this->belongsTo('App\Models\dm_unit', 'company_branch_id');
+    }
+    public function company()
+    {
+        return $this->belongsTo('App\Models\dm_company', 'company_id');
+    }
 }

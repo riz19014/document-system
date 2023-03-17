@@ -11,10 +11,14 @@ class Department extends Model
 
     protected $fillable = [
         'name',
-        'unit_id'
+        'unit_id',
+        'company_id'
     ];
 
     public function unit(){
         return $this->belongsTo('App\Models\dm_unit', 'unit_id');
+    }
+    public function company(){
+        return $this->belongsTo('App\Models\dm_company', 'company_id');
     }
 }

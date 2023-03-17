@@ -16,7 +16,7 @@
                      <li><a id="sinfo" data-id="{{$side->id}}" href="{{route('folder-index',$side->id)}}">{{$side->description}}</a></li>
                     @endforeach
                     <div id="line_items"></div>
-                     
+
                     <li class="mb-5"><a id="sectionId" href="#" data-bs-toggle="modal" data-bs-target="#createnewsection"><i class="fas fa-plus-circle text-primary"></i> &nbsp;Create New Section</a></li>
 
                     <li><p class="heading-sidebar">Admin tools</p></li>
@@ -36,9 +36,11 @@
                     </li>
                   @endif
 
-                    
+
 
                   @if(Auth::user()->role_id == 4)
+
+                  <li><a href="{{route('manage-company')}}"><i class="fas fa-map-marker-alt"></i>&nbsp; Location</a></li>
 
                   <li><a href="{{route('manage-units')}}"><i class="fas fa-code-branch"></i>&nbsp; Operating Unit</a></li>
 
@@ -50,14 +52,30 @@
                     {{--<li><a href="#"><i class="fas fa-users"></i>&nbsp; Manage User Groups</a></li>--}}
 
                   @endif
-                     
+
                 </ul>
             </nav>
           </div>
           <div class="col-lg-9">
 
             <!-- Page Content  -->
-
+             <div style="margin-bottom: -10px; text-align: center;background-color: #f9f8f8">
+            @if(Auth::user()->role_id !== 4)
+                  <strong> 
+                       {{Auth::user()->company->company_name}} <i style="color: #b7b7b7" class="fas fa-arrow-right"></i>
+                       {{Auth::user()->unit->unit_name}} <i style="color: #b7b7b7" class="fas fa-arrow-right"></i>
+                       {{Auth::user()->department->name}} <i style="color: #b7b7b7" class="fas fa-arrow-right"></i>
+                       {{Auth::user()->section->name}} <i style="color: #b7b7b7" class="fas fa-arrow-right"></i>
+                       {{Auth::user()->name}}
+                  </strong>
+              @else
+                   <strong> 
+                      {{Auth::user()->name}}
+                   </strong>
+              @endif
+               
+               
+             </div>
              @yield('content')
 
           </div>
@@ -70,7 +88,7 @@
 
     </div>
 
-    
+
 
   </div>
 

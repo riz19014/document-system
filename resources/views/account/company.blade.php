@@ -14,7 +14,7 @@
       <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb"  >
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#" onclick="return false;">Nishat</a></li>
-            <li class="breadcrumb-item active" aria-current="page">units</li>
+            <li class="breadcrumb-item active" aria-current="page">company</li>
           </ol>
       </nav>
     </div>
@@ -22,12 +22,11 @@
       <div class="file-view-area">
         <div class="row">
             <div class="audit-logs">
-              <p class="mb-2 text-primary font-600">Units</p>
-              <table class="table table-striped unit-table" >
+              <p class="mb-2 text-primary font-600">company</p>
+              <table class="table table-striped company-table" >
                 <thead>
                   <tr>
-                    <th>Unit Name</th>
-                    <th>Location</th>
+                    <th>Location Name</th>
                     <th>Created at</th>
                     <th>Action</th>
                   </tr>
@@ -42,40 +41,29 @@
 </div>
 
 
-<!-- create unit model -->
+<!-- create company model -->
 
-<div class="modal fade" id="unitAddModal" tabindex="-1" aria-labelledby="    exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="companyAddModal" tabindex="-1" aria-labelledby="    exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">New unit</h5>
+          <h5 class="modal-title" id="exampleModalLabel">New Location</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="unit_form" action="" method="post">
+          <form id="company_form" action="" method="post">
               {{csrf_field()}}
 
             <div class="mb-3">
             <div class="form-group">
-              <label>Unit Name</label>
-              <input required type="text" id="unit-name" class="form-control" name="name">
+              <label>Location Name</label>
+              <input required type="text" id="company-name" class="form-control" name="name">
 
               <div class="d-none" id='form-meta_name'>
                 <span id="error-meta_name" style="color: red"></span>
               </div>
 
             </div>
-            </div>
-
-            <div class="mb-3">
-                <div class="form-group">
-                 <select required id="company_id" class="form-control" name="company">
-                    <option value="" disabled="" selected="">Select location</option>
-                    @foreach ($companies as $company)
-                     <option value="{{$company->id}}">{{$company->company_name}}</option>
-                    @endforeach
-                </select>
-                </div>
             </div>
 
             <div class="mb-3 text-end">
@@ -88,21 +76,21 @@
 </div>
 
 
-<!-- delete unit model -->
+<!-- delete company model -->
 
-<div class="modal fade" id="unitDelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="companyDelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" style=" text-align: left;">
-        <p>Are you sure you want to delete unit?</p>
-        <form id="unit_delete" action="" method="post">
+        <p>Are you sure you want to delete company?</p>
+        <form id="company_delete" action="" method="post">
            {{csrf_field()}}
           <div class="mb-3">
             <div class="d-none" id='form-fname'><span id="error-fname" style="color: red"></span></div>
-            <input type="hidden" name="unit_id" id="unitDel" >
+            <input type="hidden" name="company_id" id="companyDel" >
             <div class="big" id="textTitle" style="font-size: 2.2rem;"></div>
           </div>
           <div class="mb-3 text-end">
@@ -121,10 +109,10 @@
  <script type="text/javascript">
 
 
-  /* ---- unit list ----  */
+  /* ---- company list ----  */
 
   $(function () {
-       var table = $('.unit-table').DataTable({
+       var table = $('.company-table').DataTable({
        "paging": false,
        "ordering": false,
        "searching": false,
@@ -134,7 +122,7 @@
           "zeroRecords": " "
       },
         ajax: {
-            url:"{!! route('unit-table-data') !!}",
+            url:"{!! route('company-table-data') !!}",
             data: function(data) { 
                data.search_grid = $('#search_grid').val()
            },
@@ -143,7 +131,6 @@
           columns: [
 
               {data: 'name', name: 'name'},
-              {data: 'company', name: 'company'},
               {data: 'created_at', name: 'created_at'},
               {data: 'action', name: 'action'},
 
@@ -152,22 +139,22 @@
 
   });
 
-  /* ---- unit sotre ----  */
+  /* ---- company sotre ----  */
 
-    $(document).on('submit','#unit_form',function(e){
+    $(document).on('submit','#company_form',function(e){
         e.preventDefault();
         $.ajax({
           type: "POST",
-          url: "{{ route('store-unit') }}",
-         data: $('#unit_form').serialize(),
+          url: "{{ route('store-company') }}",
+         data: $('#company_form').serialize(),
           success: function(data) {
             if(data.success){
-              $('#unitAddModal').modal('hide');
-              $('#unit_form')[0].reset();
-              $('.unit-table').DataTable().ajax.reload();
+              $('#companyAddModal').modal('hide');
+              $('#company_form')[0].reset();
+              $('.company-table').DataTable().ajax.reload();
             }else{
               $("#form-meta_name").removeClass('d-none');
-              document.getElementById('error-meta_name').innerHTML = "Unit name already exists.";
+              document.getElementById('error-meta_name').innerHTML = "Company name already exists.";
               setTimeout(function(){ $('#form-meta_name').addClass('d-none'); }, 4000);
             }
 
@@ -176,47 +163,47 @@
       });
 
 
-  /* ---- unit delete ----  */
+  /* ---- company delete ----  */
 
-    $(document).on('click','.delUnit',function(e){
+    $(document).on('click','.delCompany',function(e){
       var name = $(this).data("name");
-      $('#unitDel').val($(this).data("id"));
+      $('#companyDel').val($(this).data("id"));
       $('#textTitle').html('"'+name+'"');
-      $('#unitDelModal').modal('show');
+      $('#companyDelModal').modal('show');
     });
 
-  /* ---- reset unit create form ----  */
+  /* ---- reset company create form ----  */
 
     $(document).ready(function(){
-      $(document).on('shown.bs.modal','#unitAddModal', function () {
-        $('#unit_form')[0].reset();
-        $('#unit-name').focus();
+      $(document).on('shown.bs.modal','#companyAddModal', function () {
+        $('#company_form')[0].reset();
+        $('#company-name').focus();
       });
     });
 
-  /* ---- delete unit ----  */
+  /* ---- delete company ----  */
 
-    $(document).on('submit','#unit_delete',function(e){
+    $(document).on('submit','#company_delete',function(e){
         e.preventDefault();
         $.ajax({
           type: "POST",
-          url: "{{ route('delete-unit') }}",
-          data: $('#unit_delete').serialize(),
+          url: "{{ route('delete-company') }}",
+          data: $('#company_delete').serialize(),
           success: function(data) {
-              $('#unitDelModal').modal('hide');
-              $('.unit-table').DataTable().ajax.reload();
+              $('#companyDelModal').modal('hide');
+              $('.company-table').DataTable().ajax.reload();
           },
         });
       });
 
-  /* ---- search unit ----  */
+  /* ---- search company ----  */
 
     $(document).on('keyup','#search_grid', function(e) {
-      $('.unit-table').DataTable().ajax.reload(); 
+      $('.company-table').DataTable().ajax.reload(); 
     });
 
     document.addEventListener('DOMContentLoaded', function () {
-       document.getElementById('search_grid').placeholder = 'Search unit..';
+       document.getElementById('search_grid').placeholder = 'Search company..';
     }) 
 
 

@@ -14,7 +14,7 @@ class dm_unit extends Model
         'company_id'
     ];
 
-    public function unit(){
+    public function company(){
         return $this->belongsTo('App\Models\dm_company', 'company_id');
     }
 

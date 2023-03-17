@@ -354,6 +354,8 @@ class FolderController extends Controller
 
         $folder_files = DmFileUpload::where('folder_id', $request->folderid)->where('is_delete', 0)->orderBy('created_at', 'desc')->get();
 
+        // dd($folder_files);
+
         $array_pro = array(); 
 
       foreach ($folder_files as $row_product)
@@ -364,7 +366,8 @@ class FolderController extends Controller
           $array_pro [$i]["tags"]= $row_product->tags;
           $array_pro [$i]["due_date"]= $row_product->due_date;
           $array_pro [$i]["object_type"]= $row_product->object_type;
-          $array_pro [$i]["signature"]= $row_product->signature;
+          // $array_pro [$i]["signature"]= $row_product->signature;
+          $array_pro [$i]["notes"]= $row_product->note;
           $array_pro [$i]["created_at"]= $row_product->created_at;
           $i++;
       }
@@ -449,7 +452,7 @@ class FolderController extends Controller
 
             return $row['tags'];
 
-          }elseif(strpos($row['description'], '.PDF') || strpos($row['description'], '.txt')){
+          }elseif(strpos($row['description'], '.PDF') || strpos($row['description'], '.pdf') || strpos($row['description'], '.txt')){
 
                  return $row['tags'];
              
@@ -458,23 +461,38 @@ class FolderController extends Controller
             }         
      })
 
-      ->addColumn('signed_by', function($row){
+     //  ->addColumn('signed_by', function($row){
 
-          if(strpos($row['description'], '.png') || strpos($row['description'], '.jpg')
-                        || strpos($row['description'], '.jpeg') || strpos($row['description'], '.svg')){
+     //      if(strpos($row['description'], '.png') || strpos($row['description'], '.jpg')
+     //                    || strpos($row['description'], '.jpeg') || strpos($row['description'], '.svg')){
 
-             return $row['signature']; 
+     //         return $row['signature']; 
 
-          }elseif(strpos($row['description'], '.PDF') || strpos($row['description'], '.txt')){
+     //      }elseif(strpos($row['description'], '.PDF') || strpos($row['description'], '.txt')){
 
-                  return $row['signature']; 
+     //              return $row['signature']; 
              
-            }else{            
-                  return ;             
-            }
+     //        }else{            
+     //              return ;             
+     //        }
 
 
                   
+     // })
+
+        ->addColumn('notes', function($row){
+                if(strpos($row['description'], '.png') || strpos($row['description'], '.jpg')
+                        || strpos($row['description'], '.jpeg') || strpos($row['description'], '.svg')){
+
+             return $row['notes']; 
+
+          }elseif(strpos($row['description'], '.PDF') || strpos($row['description'], '.pdf') || strpos($row['description'], '.txt')){
+
+                  return $row['notes']; 
+             
+            }else{            
+                  return ;             
+            }      
      })
 
         ->addColumn('created_at', function($row){

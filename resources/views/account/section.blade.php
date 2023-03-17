@@ -67,11 +67,21 @@
 
                     <div class="mb-3">
                         <div class="form-group">
+                         <select required id="company_id" class="form-control" name="company">
+                            <option value="" disabled="" selected="">Select location</option>
+                            @foreach ($companies as $company)
+                             <option value="{{$company->id}}">{{$company->company_name}}</option>
+                            @endforeach
+                        </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3" id="unit_company">
+                        <div class="form-group">
                             <select required id="unit_id" class="form-control" name="unit">
-                                <option value="" disabled="" selected="">Select unit</option>
-                                @foreach ($units as $unit)
-                                    <option value="{{ $unit->id }}">{{ $unit->unit_name }}</option>
-                                @endforeach
+                                <option value="">Select unit</option>
+                                <option v-for='unit in units' :value="unit.id">@{{ unit.unit_name }}
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -244,6 +254,21 @@
         });
     });
 
+    $(document).on('change', '#company_id', function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: "get",
+            url: "{{ route('get-unit-company') }}",
+            dataType: 'JSON',
+            data: {
+                company_id: $(this).val()
+            },
+            success: function(response) {
+                unitData.units = response.units;
+            },
+        });
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('search_grid').placeholder = 'Search section..';
     })
@@ -258,6 +283,15 @@
         el: '#unit_department',
         data: {
             departments: ''
+        }
+
+    });
+
+    var unitData = new Vue({
+
+        el: '#unit_company',
+        data: {
+            units: ''
         }
 
     });

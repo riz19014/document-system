@@ -1,5 +1,6 @@
 
-  @if(Route::currentRouteName() == 'manage-units' || Route::currentRouteName() == 'manage-departments' || Route::currentRouteName() == 'manage-sections' || Route::currentRouteName() == 'manage-users')
+  @if(Route::currentRouteName() == 'manage-units' || Route::currentRouteName() == 'manage-departments' || Route::currentRouteName() == 'manage-sections' || Route::currentRouteName() == 'manage-users' 
+  || Route::currentRouteName() == 'manage-company')
 
     <div class="right d-flex align-items-center">
           <div class="input-group">
