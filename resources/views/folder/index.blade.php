@@ -211,6 +211,42 @@
 </div> 
 
 
+
+<!-- create company model -->
+
+<div class="modal fade" id="changeNameModal" tabindex="-1" aria-labelledby="    exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Change Name</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="company_form" action="" method="post">
+              {{csrf_field()}}
+
+            <div class="mb-3">
+            <div class="form-group">
+              <label>Location Name</label>
+              <input required type="text" id="company-name" class="form-control" name="name">
+
+              <div class="d-none" id='form-meta_name'>
+                <span id="error-meta_name" style="color: red"></span>
+              </div>
+
+            </div>
+            </div>
+
+            <div class="mb-3 text-end">
+              <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+
     <style>
     .container {
       max-width: 450px;
@@ -334,6 +370,11 @@ $(document).on('click', '#folderdelete', function(){
 
          alert(selected_quots);
       });
+});
+
+
+$('.main-table').on('dblclick', 'td form input', function() {
+    alert('caught')
 });
 
 
@@ -529,6 +570,16 @@ $(document).ready(function () {
           },
         });
       });
+
+       
+
+    $(document).on('click','#change_folder_name',function(e){  
+         var selected_quots = [];
+          $("input.check1:checked").each(function() {
+            selected_quots.push($(this).val());
+          });
+          alert(selected_quots.length);
+    });
 
 
       

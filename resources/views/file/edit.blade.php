@@ -107,7 +107,7 @@
                                   @else
                                    @foreach($editfiles as $editfile)
 
-                                      <div class="col-md-6">
+                                    <div class="col-md-6">
                                     <div class="mb-3">
                                       <span class="form-control metavalue">{{$editfile->metaname->tagging_name}}</span>
                                     </div>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Scopes\FilterScope;
 
 class DmFileTagging extends Model
 {
@@ -15,5 +16,11 @@ class DmFileTagging extends Model
 
     public function filename(){
         return $this->belongsTo('App\Models\DmFileUpload', 'file_scan_id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new FilterScope);
     }
 }

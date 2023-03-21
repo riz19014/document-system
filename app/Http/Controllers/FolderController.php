@@ -56,9 +56,9 @@ class FolderController extends Controller
      
         $metaTags =  DmFolderColumn::where('folder_id',$id)->orderBy('tab_index', 'ASC')->get();
          //dd($metaTags);
-        $folder_child = DmSection::where('parent_id', $id)->where('section_id', Auth::user()->section_id)->orderBy('created_at', 'desc')->get();
+        $folder_child = DmSection::where('parent_id', $id)->orderBy('created_at', 'desc')->get();
         //dd( $folder_child);
-        $folder_files = DmFileUpload::where('folder_id', $id)->where('section_id', Auth::user()->section_id)->where('is_delete', 0)->orderBy('created_at', 'desc')->get();
+        $folder_files = DmFileUpload::where('folder_id', $id)->where('is_delete', 0)->orderBy('created_at', 'desc')->get();
         // dd($folder_files);
         $parents = array();  
         do {
@@ -115,8 +115,11 @@ class FolderController extends Controller
       $activity =  Audits::getAudit($params);
  
         $folder = new DmMetaTagging();
-
         $folder->tagging_name = $request->meta_name;
+        $folder->company_id = Auth::user()->company_id;
+        $folder->company_branch_id = Auth::user()->company_branch_id;
+        $folder->department_id = Auth::user()->department_id;
+        $folder->section_id = Auth::user()->section_id;
         $folder->save();
 
 
@@ -162,6 +165,10 @@ class FolderController extends Controller
              $status = new ApprovalStatus();
              $status->file_id = $photo->id;
              $status->user_id = $priorityUser->user_id;
+             $status->company_id = Auth::user()->company_id;
+             $status->company_branch_id = Auth::user()->company_branch_id;
+             $status->department_id = Auth::user()->department_id;
+             $status->section_id = Auth::user()->section_id;
             if($flag==1){
               $status->notify =  1;
             }else{
@@ -211,6 +218,10 @@ class FolderController extends Controller
                       $column_tag->meta_tag_id = $value;
                       $column_tag->tab_index = $key;
                       $column_tag->tag_value = 1;
+                      $column_tag->company_id = Auth::user()->company_id;
+                      $column_tag->company_branch_id = Auth::user()->company_branch_id;
+                      $column_tag->department_id = Auth::user()->department_id;
+                      $column_tag->section_id = Auth::user()->section_id;
                       $column_tag->save();
                 }else{
                       $column_tag->folder_id = $id;
@@ -406,7 +417,7 @@ class FolderController extends Controller
 
              
             }else{
-              $status_btn .= '<a id="sinfo" data-id="{{$child->id}}" href="'.route('folder-index',$row['id']).'"><i class="fas fa-folder" style="font-size:18px; margin-right: 0.4em;""></i>'.$row['description'].'</a>';
+              $status_btn .= '<a id="sinfo" data-id="{{$child->id}}" href="'.route('folder-index',$row['id']).'"><i class="fas fa-folder change-name" style="font-size:18px; margin-right: 0.4em;""></i>'.$row['description'].'</a>';
             }
 
             return $status_btn;         

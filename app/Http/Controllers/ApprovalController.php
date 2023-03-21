@@ -23,12 +23,14 @@ class ApprovalController extends Controller
     }
 
     public function InviteUser(Request $request){
-
-      // dd($request->all());
-
+      
           $filetag = new ApprovalUser();
           $filetag->user_id  = $request->email;
           $filetag->position = ApprovalUser::max('position') + 1;
+          $filetag->company_id = Auth::user()->company_id;
+          $filetag->company_branch_id = Auth::user()->company_branch_id;
+          $filetag->department_id = Auth::user()->department_id;
+          $filetag->section_id = Auth::user()->section_id;
           $filetag->save(); 
 
           return response()->json(['data'=>1]);
@@ -99,26 +101,19 @@ class ApprovalController extends Controller
 
     public function ResoView($id){
 
-      // dd($id);
       $status_data = ApprovalStatus::find($id);
-
-      // dd($status_data);
-
       $users = ApprovalUser::all();
     
       $users_id = $users->map->only(['user_id'])->toArray();
-      //dd($d);
       $app_status = ApprovalStatus::whereIn('user_id',$users_id)->where('file_id',$status_data->file_id)->get();
      
       $approval_status = $app_status->map->only(['approval_status','user_id'])->toArray();
-      //dd($approval_status);
       return view('approval.resolution',compact('status_data','users','approval_status'));
      
     }
 
      public function ResoStatus(Request $request){
 
-      // dd($request->all());
       $status_val = ApprovalStatus::where('file_id',$request->file)
       ->where('user_id',Auth::user()->id)->first();
       $Approval_user = ApprovalUser::where('user_id',Auth::user()->id)->first();
@@ -135,6 +130,10 @@ class ApprovalController extends Controller
        $status = new ApprovalStatus();
        $status->file_id = $request->file;
        $status->user_id = $AppUser->user_id;
+       $status->company_id = Auth::user()->company_id;
+       $status->company_branch_id = Auth::user()->company_branch_id;
+       $status->department_id = Auth::user()->department_id;
+       $status->section_id = Auth::user()->section_id;
        $status->notify = 1;
        $status->save();
      }

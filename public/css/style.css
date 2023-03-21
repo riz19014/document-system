@@ -262,15 +262,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     overflow: hidden;
     width: 300px;
 }
-#sidebar .heading-sidebar:after {
-    content: "";
-    display: inline-block;
-    position: absolute;
-    top: 50%;
-    margin-left: 1.5rem;
-    border: 1px solid #bbbbbb;
-    width: 100%;
-}
+
 #sidebar ul.components {
     padding: 20px 0;
 }

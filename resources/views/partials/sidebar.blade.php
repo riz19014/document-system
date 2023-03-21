@@ -3,7 +3,7 @@
     <div class="wrapper">
         <!-- Sidebar  -->
         <div class="row">
-          <div class="col-lg-3 left-sidebar-area">
+          <div class="col-lg-2 left-sidebar-area">
               <nav id="sidebar">
 
                    <ul class="list-unstyled components">
@@ -56,7 +56,7 @@
                 </ul>
             </nav>
           </div>
-          <div class="col-lg-9">
+          <div class="col-lg-10">
 
             <!-- Page Content  -->
              <div style="margin-bottom: -10px; text-align: center;background-color: #f9f8f8">

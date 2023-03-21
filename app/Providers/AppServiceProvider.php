@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
      
          view()->composer(['layouts.layout','approval.notify'], function ($view) {
             $filecount = 0;
-            $sidebars = DmSection::where('is_section',1)->where('section_id', Auth::user()->section_id)->get();
+            $sidebars = DmSection::where('is_section',1)->get();
             $apps = ApprovalUser::all();
             foreach($apps as $app){
 

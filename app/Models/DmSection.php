@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Scopes\FilterScope;
 
 class DmSection extends Model
 {
@@ -28,6 +29,12 @@ class DmSection extends Model
 
     public function metatagfolder(){
         return $this->hasMany('App\Models\DmFileTagging', 'folder_id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new FilterScope);
     }
 
 

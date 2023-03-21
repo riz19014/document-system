@@ -47,6 +47,26 @@
                                 <div class="border border-top-2"></div>
                               </div>
                               <div class="mb-5">
+                                <table class="table table-striped company-table">
+                                  <thead>
+                                    <tr>
+                                      <th>File Tag</th>
+                                      <th>Notes</th>
+                                    </tr>
+                                    
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        {{$status_data->file->tags}}
+                                      </td>
+                                      <td>
+                                        {{$status_data->file->note}}
+                                      </td>
+                                    </tr>
+                                    
+                                  </tbody>
+                                </table>
                                 <h6 class="font-600 mb-3">Users in this approval workflow</h6>
                                 @foreach($users as $user)
                                 <div class="form-check">
@@ -113,6 +133,27 @@
                               <div class="mb-3">
                                 <div class="border-top border-top-2"></div>
                               </div>
+
+                              <table class="table table-striped company-table">
+                                  <thead>
+                                    <tr>
+                                      <th>File Tag</th>
+                                      <th>Notes</th>
+                                    </tr>
+                                    
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        {{$status_data->file->tags}}
+                                      </td>
+                                      <td>
+                                        {{$status_data->file->note}}
+                                      </td>
+                                    </tr>
+                                    
+                                  </tbody>
+                                </table>
 
 
                               <div class="mb-3">

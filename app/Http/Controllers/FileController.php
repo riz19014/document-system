@@ -14,6 +14,7 @@ use App\Models\DmRentention;
 use App\Models\ApprovalStatus;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class FileController extends Controller
 {
@@ -134,6 +135,10 @@ if(!$fcols->isEmpty()){
           $filetag->folder_id  = $file->folder_id;
           $filetag->meta_tag_id = $key;
           $filetag->meta_tag_value = $meta;
+          $filetag->company_id = Auth::user()->company_id;
+          $filetag->company_branch_id = Auth::user()->company_branch_id;
+          $filetag->department_id = Auth::user()->department_id;
+          $filetag->section_id = Auth::user()->section_id;
           $filetag->save(); 
 
         }
@@ -149,6 +154,10 @@ if(!$fcols->isEmpty()){
           $filetag->folder_id  = $file->folder_id;
           $filetag->meta_tag_id = $key;
           $filetag->meta_tag_value = $meta;
+          $filetag->company_id = Auth::user()->company_id;
+          $filetag->company_branch_id = Auth::user()->company_branch_id;
+          $filetag->department_id = Auth::user()->department_id;
+          $filetag->section_id = Auth::user()->section_id;
           $filetag->save(); 
           }else{
 
@@ -288,6 +297,10 @@ if(!$fcols->isEmpty()){
            $fileRe->file_id = $arr;
            $fileRe->count_value = $count_value;
            $fileRe->description = $request->time_period;
+           $fileRe->company_id = Auth::user()->company_id;
+           $fileRe->company_branch_id = Auth::user()->company_branch_id;
+           $fileRe->department_id = Auth::user()->department_id;
+           $fileRe->section_id = Auth::user()->section_id;
            $fileRe->save();
 
         }

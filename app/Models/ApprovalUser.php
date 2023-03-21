@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Scopes\FilterScope;
 
 class ApprovalUser extends Model
 {
@@ -20,6 +21,12 @@ class ApprovalUser extends Model
 
       public function User(){
         return $this->belongsTo('App\Models\User', 'user_id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new FilterScope);
     }
    
 }
