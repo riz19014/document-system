@@ -113,9 +113,6 @@ class AccountController extends Controller
      ->rawColumns(['action'])
           ->make(true);
 
-
-
-
      }
 
      public function FolderAuditView($id){
@@ -133,7 +130,7 @@ class AccountController extends Controller
 
      public function departmentData(Request $request)
      {
-        $departments = Department::orderBy('id', 'DESC');
+        $departments = Department::withCount('sections')->orderBy('id', 'DESC');
         if($request->search_grid){
           $departments->where('name', 'LIKE', '%'.$request->search_grid.'%');
         }
@@ -153,24 +150,28 @@ class AccountController extends Controller
            return $row->company_id ? $row->company->company_name : '--';
        })
 
+        ->addColumn('total_section', function($row){
+           $count = '<span style="background:#108115" class="badge w-50">'.$row->sections_count.'</span>';
+           return $count;
+       })
+
         ->addColumn('created_at', function($row){
            return Carbon::parse( $row->created_at )->timezone('Asia/Karachi')->format('d.m.y | H:i:s');
        })
 
         ->addColumn('action', function($row){
 
-              $html_string = '<a class="nav-link delDepartment" title="Delete Department" style="cursor:pointer" data-name="'.$row->name.'"  data-id="'.$row->id.'"><i class="fas fa-trash"></i><br></a>';
+              $html_string = '<a class="delDepartment" title="Delete Department" style="cursor:pointer" data-name="'.$row->name.'"  data-id="'.$row->id.'"><i class="fas fa-trash"></i></a><a class="viewSection" title="View sections" style="cursor:pointer;margin-left:5px" data-id="'.$row->id.'"><i class="fas fa-eye"></i></a>';
 
               return $html_string;
 
        })
-     ->rawColumns(['action'])
+     ->rawColumns(['action','total_section'])
           ->make(true);
 
 
-
-
      }
+
     public function storeDepartment(Request $request)
     {
         // dd($request->all());
@@ -203,7 +204,7 @@ class AccountController extends Controller
      public function sectionData(Request $request)
      {
 
-        $sections = Section::orderBy('id', 'DESC');
+        $sections = Section::withCount('users')->orderBy('id', 'DESC');
         if($request->search_grid){
           $sections->where('name', 'LIKE', '%'.$request->search_grid.'%');
         }
@@ -219,18 +220,23 @@ class AccountController extends Controller
            return $row->department->name;
        })
 
+        ->addColumn('total_user', function($row){
+           $count = '<span style="background:#108115" class="badge w-50">'.$row->users_count.'</span>';
+           return $count;
+       })
+
         ->addColumn('created_at', function($row){
            return Carbon::parse( $row->created_at )->timezone('Asia/Karachi')->format('d.m.y | H:i:s');
        })
 
         ->addColumn('action', function($row){
 
-              $html_string = '<a class="nav-link delSection" title="Delete Section" style="cursor:pointer" data-name="'.$row->name.'"  data-id="'.$row->id.'"><i class="fas fa-trash"></i><br></a>';
+              $html_string = '<a class="delSection" title="Delete Section" style="cursor:pointer" data-name="'.$row->name.'"  data-id="'.$row->id.'"><i class="fas fa-trash"></i></a><a class="viewUser" title="View users" style="cursor:pointer;margin-left:5px" data-id="'.$row->id.'"><i class="fas fa-eye"></i></a>';
 
               return $html_string;
 
        })
-     ->rawColumns(['action'])
+     ->rawColumns(['action','total_user'])
           ->make(true);
      }
 
@@ -262,7 +268,7 @@ class AccountController extends Controller
 
      public function unitData(Request $request){
 
-        $units = dm_unit::orderBy('id', 'DESC');
+        $units = dm_unit::withCount('departments')->orderBy('id', 'DESC');
         if($request->search_grid){
           $units->where('unit_name', 'LIKE', '%'.$request->search_grid.'%');
         }
@@ -271,6 +277,11 @@ class AccountController extends Controller
 
         ->addColumn('name', function($row){
            return $row->unit_name;
+       })
+
+        ->addColumn('departments', function($row){
+           $count = '<span style="background:#108115" class="badge w-50">'.$row->departments_count.'</span>';
+           return $count;
        })
 
         ->addColumn('company', function($row){
@@ -283,16 +294,13 @@ class AccountController extends Controller
 
         ->addColumn('action', function($row){
 
-              $html_string = '<a class="nav-link delUnit" title="Delete unit" style="cursor:pointer" data-name="'.$row->unit_name.'"  data-id="'.$row->id.'"><i class="fas fa-trash"></i><br></a>';
+              $html_string = '<a class="delUnit" title="Delete unit" style="cursor:pointer" data-name="'.$row->unit_name.'"  data-id="'.$row->id.'"><i class="fas fa-trash"></i></a><a class="viewDepartment" title="View departments" style="cursor:pointer;margin-left:5px" data-id="'.$row->id.'"><i class="fas fa-eye"></i></a>';
 
               return $html_string;
 
        })
-     ->rawColumns(['action'])
+     ->rawColumns(['action','departments'])
           ->make(true);
-
-
-
 
      }
     public function storeUnit(Request $request)
@@ -318,23 +326,13 @@ class AccountController extends Controller
     }
 
 
-
-
-
-
-
-
-
-
-
-
     public function company(){
         return view('account.company');
      }
 
      public function companyData(Request $request){
 
-        $units = dm_company::orderBy('id', 'DESC');
+        $units = dm_company::withCount('units')->orderBy('id', 'DESC');
         if($request->search_grid){
           $units->where('company_name', 'LIKE', '%'.$request->search_grid.'%');
         }
@@ -349,14 +347,20 @@ class AccountController extends Controller
            return Carbon::parse( $row->created_at )->timezone('Asia/Karachi')->format('d.m.y | H:i:s');
        })
 
+        ->addColumn('total_unit', function($row){
+           $count = '<span style="background:#108115" class="badge w-50">'.$row->units_count.'</span>';
+           return $count;
+
+       })
+
         ->addColumn('action', function($row){
 
-              $html_string = '<a class="nav-link delCompany" title="Delete company" style="cursor:pointer" data-name="'.$row->company_name.'"  data-id="'.$row->id.'"><i class="fas fa-trash"></i><br></a>';
+              $html_string = '<a class="delCompany" title="Delete company" style="cursor:pointer" data-name="'.$row->company_name.'"  data-id="'.$row->id.'"><i class="fas fa-trash"></i></a><a class="viewUnit" title="View units" style="cursor:pointer;margin-left:5px" data-id="'.$row->id.'"><i class="fas fa-eye"></i></a>';
 
               return $html_string;
 
        })
-     ->rawColumns(['action'])
+     ->rawColumns(['action','total_unit'])
           ->make(true);
 
 
@@ -404,6 +408,14 @@ class AccountController extends Controller
         $sections = Section::where('department_id', $request->department_id)->get();
         return json_encode(['sections' => $sections]);
     }
+
+    public function getUser(Request $request)
+    {
+        $users = User::where('section_id', $request->section_id)->get();
+        return json_encode(['users' => $users]);
+    }
+
+    
 
     public function changePassword(Request $request)
     {

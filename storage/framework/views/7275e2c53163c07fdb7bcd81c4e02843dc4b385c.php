@@ -24,6 +24,7 @@
                             <tr>
                                 <th>Section Name</th>
                                 <th>Department</th>
+                                <th>Total users</th>
                                 <th>Created at</th>
                                 <th>Action</th>
                             </tr>
@@ -132,6 +133,39 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="viewUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">User list</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style=" text-align: left;">
+        <div v-if="!!users" class="table-responsive" id="view_section_user">
+          <label style="color:red;" v-if="users.length ==0">Users are not created against this section</label>
+          <table class="table" v-if="users.length >0">
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>created at</th>
+
+                  </tr>
+              </thead>
+              <tbody>
+
+                  <tr v-for="user in users">
+                      <td>{{ user.name }}</td>
+                      <td>{{ user.created_at }}</td>
+                  </tr>
+
+              </tbody>
+          </table>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('js'); ?>
@@ -165,6 +199,10 @@
                 {
                     data: 'department',
                     name: 'department'
+                },
+                {
+                    data: 'total_user',
+                    name: 'total_user'
                 },
                 {
                     data: 'created_at',
@@ -240,6 +278,27 @@
         });
     });
 
+    $(document).on('click','.viewUser',function(e){
+      e.preventDefault();
+      $.ajax({
+          url: "<?php echo e(route('get-section-users')); ?>",
+          type: 'get',
+          dataType: 'JSON',
+          data: {
+              'section_id': $(this).data("id"),
+          },
+          success: function(response) {
+            $('#viewUserModal').modal('show');
+            viewSectionUser.users = response.users;
+              
+          },
+          error: function(response) {
+              console.log(response);
+          }
+      });
+      
+    });
+
 
     $(document).on('submit', '#section_delete', function(e) {
         e.preventDefault();
@@ -292,6 +351,15 @@
         el: '#unit_company',
         data: {
             units: ''
+        }
+
+    });
+
+    var viewSectionUser = new Vue({
+
+        el: '#view_section_user',
+        data: {
+            users: ''
         }
 
     });

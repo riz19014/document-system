@@ -28,6 +28,7 @@
                   <tr>
                     <th>Location Name</th>
                     <th>Created at</th>
+                    <th>Total Units</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -102,10 +103,44 @@
   </div>
 </div>
 
+
+
+<div class="modal fade" id="viewUnitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Unit list</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style=" text-align: left;">
+        <div v-if="!!units" class="table-responsive" id="view_company_unit">
+          <label style="color:red;" v-if="units.length ==0">Unit are not created against this location</label>
+          <table class="table" v-if="units.length >0">
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>created at</th>
+
+                  </tr>
+              </thead>
+              <tbody>
+
+                  <tr v-for="unit in units">
+                      <td>@{{ unit.unit_name }}</td>
+                      <td>@{{ unit.created_at }}</td>
+                  </tr>
+
+              </tbody>
+          </table>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 
  @section('js')
-
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
  <script type="text/javascript">
 
 
@@ -132,6 +167,7 @@
 
               {data: 'name', name: 'name'},
               {data: 'created_at', name: 'created_at'},
+              {data: 'total_unit', name: 'total_unit'},
               {data: 'action', name: 'action'},
 
           ]
@@ -172,6 +208,28 @@
       $('#companyDelModal').modal('show');
     });
 
+
+    $(document).on('click','.viewUnit',function(e){
+      e.preventDefault();
+      $.ajax({
+          url: "{{ route('get-unit-company') }}",
+          type: 'get',
+          dataType: 'JSON',
+          data: {
+              'company_id': $(this).data("id"),
+          },
+          success: function(response) {
+            $('#viewUnitModal').modal('show');
+            viewCompanyUnit.units = response.units;
+              
+          },
+          error: function(response) {
+              console.log(response);
+          }
+      });
+      
+    });
+
   /* ---- reset company create form ----  */
 
     $(document).ready(function(){
@@ -205,7 +263,16 @@
     document.addEventListener('DOMContentLoaded', function () {
        document.getElementById('search_grid').placeholder = 'Search company..';
     }) 
+  
 
+  var viewCompanyUnit = new Vue({
+
+        el: '#view_company_unit',
+        data: {
+            units: ''
+        }
+
+    });
 
 </script>
 

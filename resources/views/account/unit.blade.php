@@ -28,6 +28,7 @@
                   <tr>
                     <th>Unit Name</th>
                     <th>Location</th>
+                    <th>Total Department</th>
                     <th>Created at</th>
                     <th>Action</th>
                   </tr>
@@ -114,10 +115,44 @@
   </div>
 </div>
 
+
+
+<div class="modal fade" id="viewDepartmentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Department list</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style=" text-align: left;">
+        <div v-if="!!departments" class="table-responsive" id="view_unit_department">
+          <label style="color:red;" v-if="departments.length ==0">Departments are not created against this unit</label>
+          <table class="table" v-if="departments.length >0">
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>created at</th>
+
+                  </tr>
+              </thead>
+              <tbody>
+
+                  <tr v-for="department in departments">
+                      <td>@{{ department.name }}</td>
+                      <td>@{{ department.created_at }}</td>
+                  </tr>
+
+              </tbody>
+          </table>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 
  @section('js')
-
+ <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
  <script type="text/javascript">
 
 
@@ -144,6 +179,7 @@
 
               {data: 'name', name: 'name'},
               {data: 'company', name: 'company'},
+              {data: 'departments', name: 'departments'},
               {data: 'created_at', name: 'created_at'},
               {data: 'action', name: 'action'},
 
@@ -209,6 +245,28 @@
         });
       });
 
+
+   $(document).on('click','.viewDepartment',function(e){
+      e.preventDefault();
+      $.ajax({
+          url: "{{ route('get-unit-departments') }}",
+          type: 'get',
+          dataType: 'JSON',
+          data: {
+              'unit_id': $(this).data("id"),
+          },
+          success: function(response) {
+            $('#viewDepartmentModal').modal('show');
+            viewUnitDepartment.departments = response.departments;
+              
+          },
+          error: function(response) {
+              console.log(response);
+          }
+      });
+      
+    });
+
   /* ---- search unit ----  */
 
     $(document).on('keyup','#search_grid', function(e) {
@@ -218,7 +276,15 @@
     document.addEventListener('DOMContentLoaded', function () {
        document.getElementById('search_grid').placeholder = 'Search unit..';
     }) 
+   
+   var viewUnitDepartment = new Vue({
 
+        el: '#view_unit_department',
+        data: {
+            departments: ''
+        }
+
+    });
 
 </script>
 

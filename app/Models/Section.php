@@ -23,4 +23,9 @@ class Section extends Model
     public function department(){
         return $this->belongsTo('App\Models\Department', 'department_id');
     }
+
+    public function users()
+    {
+        return $this->hasMany('App\Models\User','section_id', 'id');
+    }
 }

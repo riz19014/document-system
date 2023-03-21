@@ -18,4 +18,9 @@ class dm_unit extends Model
         return $this->belongsTo('App\Models\dm_company', 'company_id');
     }
 
+    public function departments()
+    {
+        return $this->hasMany('App\Models\Department','unit_id', 'id');
+    }
+
 }

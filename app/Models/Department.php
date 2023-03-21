@@ -21,4 +21,8 @@ class Department extends Model
     public function company(){
         return $this->belongsTo('App\Models\dm_company', 'company_id');
     }
+    public function sections()
+    {
+        return $this->hasMany('App\Models\Section','department_id', 'id');
+    }
 }

@@ -12,4 +12,11 @@ class dm_company extends Model
     protected $fillable = [
         'company_name'
     ];
+     
+    public function units()
+    {
+        return $this->hasMany('App\Models\dm_unit','company_id', 'id');
+    }
+    
+
 }

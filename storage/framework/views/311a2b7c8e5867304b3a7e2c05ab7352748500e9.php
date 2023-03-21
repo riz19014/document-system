@@ -27,6 +27,7 @@
                     <th>Department Name</th>
                     <th>Unit</th>
                     <th>Location</th>
+                    <th>Total section</th>
                     <th>Created at</th>
                     <th>Action</th>
                   </tr>
@@ -125,6 +126,39 @@
   </div>
 </div>
 
+
+<div class="modal fade" id="viewSectionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Section list</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style=" text-align: left;">
+        <div v-if="!!sections" class="table-responsive" id="view_department_section">
+          <label style="color:red;" v-if="sections.length ==0">Sections are not created against this department</label>
+          <table class="table" v-if="sections.length >0">
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>created at</th>
+
+                  </tr>
+              </thead>
+              <tbody>
+
+                  <tr v-for="section in sections">
+                      <td>{{ section.name }}</td>
+                      <td>{{ section.created_at }}</td>
+                  </tr>
+
+              </tbody>
+          </table>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
 <?php $__env->stopSection(); ?>
 
  <?php $__env->startSection('js'); ?>
@@ -156,6 +190,7 @@
               {data: 'name', name: 'name'},
               {data: 'unit', name: 'unit'},
               {data: 'company', name: 'company'},
+              {data: 'total_section', name: 'total_section'},
               {data: 'created_at', name: 'created_at'},
               {data: 'action', name: 'action'},
 
@@ -243,11 +278,41 @@ $(document).on('change', '#company_id', function(e) {
     });
 
 
+$(document).on('click','.viewSection',function(e){
+      e.preventDefault();
+      $.ajax({
+          url: "<?php echo e(route('get-department-sections')); ?>",
+          type: 'get',
+          dataType: 'JSON',
+          data: {
+              'department_id': $(this).data("id"),
+          },
+          success: function(response) {
+            $('#viewSectionModal').modal('show');
+            viewDepartmentSection.sections = response.sections;
+              
+          },
+          error: function(response) {
+              console.log(response);
+          }
+      });
+      
+    });
+
 var unitData = new Vue({
 
         el: '#unit_company',
         data: {
             units: ''
+        }
+
+    });
+
+var viewDepartmentSection = new Vue({
+
+        el: '#view_department_section',
+        data: {
+            sections: ''
         }
 
     });

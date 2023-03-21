@@ -102,6 +102,7 @@ Route::get('/company/users', [App\Http\Controllers\AccountController::class, 'in
 
 Route::post('/user/change-password', [App\Http\Controllers\AccountController::class, 'changePassword'])->name('user-changePassword');
 
+Route::get('/get/section/user', [App\Http\Controllers\AccountController::class, 'getUser'])->name('get-section-users');
 
 
 Route::get('/delete/company/{id}/user', [App\Http\Controllers\AccountController::class, 'deleteUser'])->name('delete-manage-user');
@@ -137,10 +138,6 @@ Route::post('/store/company', [App\Http\Controllers\AccountController::class, 's
 Route::post('/delete/company', [App\Http\Controllers\AccountController::class, 'deleteCompany'])->name('delete-company');
 
 Route::get('/get/unit/companies', [App\Http\Controllers\AccountController::class, 'getUnits'])->name('get-unit-company');
-
-
-
-
 
 Route::get('/company/units', [App\Http\Controllers\AccountController::class, 'unit'])->name('manage-units');
 
