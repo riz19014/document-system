@@ -16,7 +16,7 @@ class ApprovalController extends Controller
 {
     public function index(){
 
-          $users = User::all();
+          $users = User::where('section_id', Auth::user()->section_id)->get();
           $invites = ApprovalUser::all();
 
           return view('approval.users',compact('users','invites'));

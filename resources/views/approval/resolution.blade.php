@@ -4,6 +4,8 @@
 
 
                 <!-- Page Content  -->
+
+                <a href="{{route('file-approval-view')}}" class="btn btn-primary" style="float: left;width: 100px;margin: 10px">Back</a>
              @if($status_data->approval_status == 1)   
                 <div id="content">
                       <div class="main-content-area">
@@ -52,6 +54,8 @@
                                     <tr>
                                       <th>File Tag</th>
                                       <th>Notes</th>
+                                      <th>Date</th>
+                                      <th>Due Date</th>
                                     </tr>
                                     
                                   </thead>
@@ -62,6 +66,12 @@
                                       </td>
                                       <td>
                                         {{$status_data->file->note}}
+                                      </td>
+                                      <td>
+                                        {{$status_data->file->date}}
+                                      </td>
+                                      <td>
+                                        {{$status_data->file->due_date}}
                                       </td>
                                     </tr>
                                     

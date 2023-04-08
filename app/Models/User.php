@@ -62,4 +62,5 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\dm_company', 'company_id');
     }
+
 }

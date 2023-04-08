@@ -2,6 +2,8 @@
 
 
                 <!-- Page Content  -->
+
+                <a href="<?php echo e(route('file-approval-view')); ?>" class="btn btn-primary" style="float: left;width: 100px;margin: 10px">Back</a>
              <?php if($status_data->approval_status == 1): ?>   
                 <div id="content">
                       <div class="main-content-area">
@@ -44,6 +46,38 @@
                                 <div class="border border-top-2"></div>
                               </div>
                               <div class="mb-5">
+                                <table class="table table-striped company-table">
+                                  <thead>
+                                    <tr>
+                                      <th>File Tag</th>
+                                      <th>Notes</th>
+                                      <th>Date</th>
+                                      <th>Due Date</th>
+                                    </tr>
+                                    
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <?php echo e($status_data->file->tags); ?>
+
+                                      </td>
+                                      <td>
+                                        <?php echo e($status_data->file->note); ?>
+
+                                      </td>
+                                      <td>
+                                        <?php echo e($status_data->file->date); ?>
+
+                                      </td>
+                                      <td>
+                                        <?php echo e($status_data->file->due_date); ?>
+
+                                      </td>
+                                    </tr>
+                                    
+                                  </tbody>
+                                </table>
                                 <h6 class="font-600 mb-3">Users in this approval workflow</h6>
                                 <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <div class="form-check">
@@ -106,6 +140,29 @@
                               <div class="mb-3">
                                 <div class="border-top border-top-2"></div>
                               </div>
+
+                              <table class="table table-striped company-table">
+                                  <thead>
+                                    <tr>
+                                      <th>File Tag</th>
+                                      <th>Notes</th>
+                                    </tr>
+                                    
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <?php echo e($status_data->file->tags); ?>
+
+                                      </td>
+                                      <td>
+                                        <?php echo e($status_data->file->note); ?>
+
+                                      </td>
+                                    </tr>
+                                    
+                                  </tbody>
+                                </table>
 
 
                               <div class="mb-3">
