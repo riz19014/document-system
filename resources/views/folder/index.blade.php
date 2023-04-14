@@ -260,7 +260,7 @@
 
     @endsection 
 
-
+     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       
@@ -528,6 +528,35 @@ $(document).ready(function () {
          });
 
 
+$(document).on('click', '.delete-folder', function(e){
+e.preventDefault();
+  var folder_id = $(this).data('id');
+swal({
+    title: "Delete Folder?",
+    text: "Are you sure, you want to delete this folder. ?",
+    buttons: {
+        cancel: true,
+        confirm: true,
+    },
+    icon: "warning",
+    dangerMode: true,
+})
+    .then(willDelete => {
+        if (willDelete) {
+
+        $.ajax({
+          type: "get",
+          url: "{{ route('delete-folder-section') }}",
+         data: { folder_id: folder_id},
+          success: function(data) {
+
+             $('.main-table').DataTable().ajax.reload();
+
+          },
+        });
+        }
+    });
+});
 
 
 // $(document).ready(function(){
@@ -582,13 +611,12 @@ $(document).ready(function () {
     });
 
 
-      
 
     $(document).on('submit','#files_upload',function(e){  
 
         var $fileUpload = $("input[type='file']");
-        if (parseInt($fileUpload.get(0).files.length)>5){
-         alert("You can only upload a maximum of 5 files");
+        if (parseInt($fileUpload.get(0).files.length)>30){
+         alert("You can only upload a maximum of 30 files");
          document.getElementById("files_upload").reset();
          return false
         }

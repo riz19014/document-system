@@ -442,6 +442,11 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     color: #1ea1d7;
     cursor: pointer;
 }
+
+.font-icon-color {
+    color: #0d6efd;
+    cursor: pointer;
+}
 .download-report {
     background-color: #1ea1d7;
     border-radius: 0.4rem;

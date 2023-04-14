@@ -94,6 +94,10 @@ Route::post('/edit/meta', [App\Http\Controllers\FolderController::class, 'EditMe
 
 Route::post('/delete/meta', [App\Http\Controllers\FolderController::class, 'DeleteMeta'])->name('delete-meta');
 
+Route::get('/delete/folder', [App\Http\Controllers\FolderController::class, 'DeleteFolder'])->name('delete-folder-section');
+
+
+
 Route::get('/account/report', [App\Http\Controllers\DashboardController::class, 'index'])->name('dash-index');
 
 Route::get('proceed-invoice-order',[App\Http\Controllers\FolderController::class, 'OrderData'])->name('proceed-invoice-order');

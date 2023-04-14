@@ -210,6 +210,43 @@
 </div> 
 
 
+
+<!-- create company model -->
+
+<div class="modal fade" id="changeNameModal" tabindex="-1" aria-labelledby="    exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Change Name</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="company_form" action="" method="post">
+              <?php echo e(csrf_field()); ?>
+
+
+            <div class="mb-3">
+            <div class="form-group">
+              <label>Location Name</label>
+              <input required type="text" id="company-name" class="form-control" name="name">
+
+              <div class="d-none" id='form-meta_name'>
+                <span id="error-meta_name" style="color: red"></span>
+              </div>
+
+            </div>
+            </div>
+
+            <div class="mb-3 text-end">
+              <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+
     <style>
     .container {
       max-width: 450px;
@@ -223,7 +260,7 @@
 
     <?php $__env->stopSection(); ?> 
 
-
+     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       
@@ -333,6 +370,11 @@ $(document).on('click', '#folderdelete', function(){
 
          alert(selected_quots);
       });
+});
+
+
+$('.main-table').on('dblclick', 'td form input', function() {
+    alert('caught')
 });
 
 
@@ -486,6 +528,35 @@ $(document).ready(function () {
          });
 
 
+$(document).on('click', '.delete-folder', function(e){
+e.preventDefault();
+  var folder_id = $(this).data('id');
+swal({
+    title: "Delete Folder?",
+    text: "Are you sure, you want to delete this folder. ?",
+    buttons: {
+        cancel: true,
+        confirm: true,
+    },
+    icon: "warning",
+    dangerMode: true,
+})
+    .then(willDelete => {
+        if (willDelete) {
+
+        $.ajax({
+          type: "get",
+          url: "<?php echo e(route('delete-folder-section')); ?>",
+         data: { folder_id: folder_id},
+          success: function(data) {
+
+             $('.main-table').DataTable().ajax.reload();
+
+          },
+        });
+        }
+    });
+});
 
 
 // $(document).ready(function(){
@@ -529,14 +600,23 @@ $(document).ready(function () {
         });
       });
 
+       
 
-      
+    $(document).on('click','#change_folder_name',function(e){  
+         var selected_quots = [];
+          $("input.check1:checked").each(function() {
+            selected_quots.push($(this).val());
+          });
+          alert(selected_quots.length);
+    });
+
+
 
     $(document).on('submit','#files_upload',function(e){  
 
         var $fileUpload = $("input[type='file']");
-        if (parseInt($fileUpload.get(0).files.length)>5){
-         alert("You can only upload a maximum of 5 files");
+        if (parseInt($fileUpload.get(0).files.length)>30){
+         alert("You can only upload a maximum of 30 files");
          document.getElementById("files_upload").reset();
          return false
         }

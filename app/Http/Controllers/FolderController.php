@@ -529,7 +529,7 @@ class FolderController extends Controller
 
              if($row['object_type'] == 1){
 
-                  $html_string = '<a class="nav-link" href="'.route('download-folder-file',$row['id'].'-folder').'"><i class="fas fa-download"></i><br></a>';
+                  $html_string = '<a class="font-icon-color" style="margin-right: 0.4em;" href="'.route('download-folder-file',$row['id'].'-folder').'"><i class="fas fa-download title="download""></i></a><a data-id="'.$row['id'].'" class="delete-folder font-icon-color"><i class="fas fa-trash" title="delete"></i></a>';
 
                   return $html_string;  
 
@@ -568,7 +568,24 @@ class FolderController extends Controller
       $DeleteMeta = DmMetaTagging::find($request->meta_id);
       $DeleteMeta->delete();
 
+ } 
+
+ public function DeleteFolder(Request $request)
+ {
+
+       if(DmFileUpload::where('folder_id', $request->folder_id)->exists())
+       {
+          DmFileUpload::where('folder_id', $request->folder_id)->delete();
+       }
+       DmSection::where('id', $request->folder_id)->delete();
+
+
+       return response()->json(['success' => true]);
+
  }  
+
+
+ 
 
    public function OrderData(Request $request){
 
