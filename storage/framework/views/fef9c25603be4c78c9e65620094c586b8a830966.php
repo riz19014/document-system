@@ -51,7 +51,8 @@
             </div>
 
 <?php endif; ?>
-
+              <strong>Folders: <?php echo e($folder_file->children->count()); ?></strong>
+              <strong>Files: <?php echo e($folder_file->FolderName->count()); ?></strong>
               <table class="table table-striped table-hover main-table" style="width:100%;">
                     
                     <thead>
@@ -217,28 +218,26 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Change Name</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Change Folder Name</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="company_form" action="" method="post">
+          <form id="folder_change_name">
               <?php echo e(csrf_field()); ?>
 
 
+              <input type="hidden" name="folder_id" id="folder-name-id">
+
             <div class="mb-3">
             <div class="form-group">
-              <label>Location Name</label>
-              <input required type="text" id="company-name" class="form-control" name="name">
-
-              <div class="d-none" id='form-meta_name'>
-                <span id="error-meta_name" style="color: red"></span>
-              </div>
+              <label>Folder Name</label>
+              <input required type="text" id="folder-name" class="form-control" name="name">
 
             </div>
             </div>
 
             <div class="mb-3 text-end">
-              <button type="submit" class="btn btn-primary">Create</button>
+              <button type="submit" class="btn btn-primary">Change</button>
             </div>
           </form>
         </div>
@@ -274,13 +273,14 @@
    valfol = '<?php echo e($folid); ?>';
     var table = $('.main-table').DataTable({
          
-         "paging": false,
-         "ordering": false,
-         "searching": false,
-         "info": false,
-          fnDrawCallback: function (settings) {
-        $(".main-table").parent().toggle(settings.fnRecordsDisplay() > 0);
-    },
+         processing: false,
+                serverSide: true,
+                "ordering": false,
+                "searching": false,
+                "info": false,
+                "pageLength": 15,
+                "lengthChange": false,
+
          // "lengthChange": false
          language : {
             "zeroRecords": " "             
@@ -293,6 +293,18 @@
 
               method: "get",
             },
+            language: {
+                    paginate: {
+                        next: '<i class="fa fa-fw fa-long-arrow-right" style="font-size: 17px;">',
+                        previous: '<i class="fa fa-fw fa-long-arrow-left" style="font-size: 17px;">'
+                    },
+                },
+
+                drawCallback: function(settings) {
+                    var pagination = $(this).closest('.dataTables_wrapper').find(
+                    '.dataTables_paginate');
+                    pagination.toggle(this.api().page.info().pages > 1);
+                },
             columns: [
                 { data: 'checkbox', name: 'checkbox' },
                 {data: 'action', name: 'action'},
@@ -600,17 +612,6 @@ swal({
         });
       });
 
-       
-
-    $(document).on('click','#change_folder_name',function(e){  
-         var selected_quots = [];
-          $("input.check1:checked").each(function() {
-            selected_quots.push($(this).val());
-          });
-          alert(selected_quots.length);
-    });
-
-
 
     $(document).on('submit','#files_upload',function(e){  
 
@@ -653,6 +654,34 @@ swal({
 
         },
         });
-        });     
+        }); 
+
+$(document).on('click','.change-name',function(e){ 
+      var folder_name = $(this).data('name');
+      var folder_id = $(this).data('id');
+      $('#folder-name').val(folder_name) 
+      $('#folder-name-id').val(folder_id) 
+      $('#changeNameModal').modal('show');
+  }); 
+
+  $(document).on('submit','#folder_change_name',function(e){   
+   e.preventDefault(); 
+    let formData = new FormData(this); 
+
+    $.ajax({
+         type: "POST",
+         url: "<?php echo e(route('change-folder-name')); ?>",
+         data: formData,
+         contentType: false,
+         processData: false,
+        success: function(data) {
+          $('#changeNameModal').modal('hide');
+          $('.main-table').DataTable().ajax.reload();
+
+      },
+    }); 
+
+  });
+
     </script>     
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/rizwan/tpro/NDMS/resources/views/folder/index.blade.php ENDPATH**/ ?>

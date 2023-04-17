@@ -231,7 +231,7 @@ label {
 }
 
 #sidebar {
-    min-width: 350px;
+    /*min-width: 350px;*/
     max-width: 350px;
     color: #454545;
     transition: all 0.3s;
@@ -260,7 +260,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     color: #bbbbbb;
     position: relative;
     overflow: hidden;
-    width: 300px;
+    /*width: 300px;*/
 }
 
 #sidebar ul.components {

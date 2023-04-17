@@ -9,9 +9,8 @@
                    <ul class="list-unstyled components">
                     @if(Auth::user()->role_id !== 4)
                     <li>
-                        <a href="#">Index&nbsp;<i class="fas fa-envelope text-primary"></i></a>
+                        <a href="{{route('folder-information', 1)}}">Index&nbsp;<i class="fas fa-hashtag text-primary"></i></a>
                     </li>
-                    <li><a href="#">#team</a></li>
                     @foreach($sidebars as $side)
                      <li><a id="sinfo" data-id="{{$side->id}}" href="{{route('folder-index',$side->id)}}">{{$side->description}}</a></li>
                     @endforeach

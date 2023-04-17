@@ -33,6 +33,8 @@ Route::get('/folder/index/{id}', [App\Http\Controllers\FolderController::class, 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/sections/info/{id}', [App\Http\Controllers\HomeController::class, 'folderInfo'])->name('folder-information');
+
 Route::post('/folder', [App\Http\Controllers\FolderController::class, 'AddFolder'])->name('add-folder');
 
 Route::get('/meta/index', [App\Http\Controllers\FolderController::class, 'MetaIndex'])->name('meta-index');
@@ -96,7 +98,7 @@ Route::post('/delete/meta', [App\Http\Controllers\FolderController::class, 'Dele
 
 Route::get('/delete/folder', [App\Http\Controllers\FolderController::class, 'DeleteFolder'])->name('delete-folder-section');
 
-
+Route::post('/change/folder/name', [App\Http\Controllers\FolderController::class, 'ChangeFolderName'])->name('change-folder-name');
 
 Route::get('/account/report', [App\Http\Controllers\DashboardController::class, 'index'])->name('dash-index');
 
