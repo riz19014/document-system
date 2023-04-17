@@ -3,15 +3,14 @@
     <div class="wrapper">
         <!-- Sidebar  -->
         <div class="row">
-          <div class="col-lg-3 left-sidebar-area">
+          <div class="col-lg-2 left-sidebar-area">
               <nav id="sidebar">
 
                    <ul class="list-unstyled components">
                     <?php if(Auth::user()->role_id !== 4): ?>
                     <li>
-                        <a href="#">Index&nbsp;<i class="fas fa-envelope text-primary"></i></a>
+                        <a href="<?php echo e(route('folder-information', 1)); ?>">Index&nbsp;<i class="fas fa-hashtag text-primary"></i></a>
                     </li>
-                    <li><a href="#">#team</a></li>
                     <?php $__currentLoopData = $sidebars; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $side): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                      <li><a id="sinfo" data-id="<?php echo e($side->id); ?>" href="<?php echo e(route('folder-index',$side->id)); ?>"><?php echo e($side->description); ?></a></li>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -56,7 +55,7 @@
                 </ul>
             </nav>
           </div>
-          <div class="col-lg-9">
+          <div class="col-lg-10">
 
             <!-- Page Content  -->
              <div style="margin-bottom: -10px; text-align: center;background-color: #f9f8f8">

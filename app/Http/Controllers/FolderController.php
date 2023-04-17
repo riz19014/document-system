@@ -44,6 +44,7 @@ class FolderController extends Controller
 
 
     public function index($id){
+      // dd($id);
 
          $folid = $id;
 
@@ -387,11 +388,14 @@ class FolderController extends Controller
         return Datatables::of($arr3)
 
         ->addColumn('checkbox', function ($row) { 
-
+              $text = 'hidden';
+              if($row['object_type'] == 1){
+                  $text = '';
+              }
               $html_string = '<div class="custom-control custom-checkbox custom-checkbox1 d-inline-block">
                                     <input type="checkbox" class="custom-control-input check1" value="'.$row['id'].'" id="quot_'.$row['id'].'">
                                     <label class="custom-control-label" for="quot_'.$row['id'].'"></label>
-                                </div>';
+                                </div><a data-id="'.$row['id'].'" data-name="'.$row['description'].'" style="color:#c3c3c3;visibility: '.$text.'" class="change-name font-icon-color"><i class="fas fa-edit" title="change folder name"></i></a>';
   
 
         
@@ -582,10 +586,14 @@ class FolderController extends Controller
 
        return response()->json(['success' => true]);
 
+ }
+
+ public function ChangeFolderName(Request $request)
+ {
+       DmSection::where('id', $request->folder_id)->update(['description' => $request->name]);
+       return response()->json(['success' => true]);  
+
  }  
-
-
- 
 
    public function OrderData(Request $request){
 

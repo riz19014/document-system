@@ -49,8 +49,6 @@
                             <a class="nav-link" href="#"><i class="fas fa-download"></i><br> Download File</a>
                           </li>
 
-                       
-
                         <?php elseif(Route::currentRouteName() == 'manage-users'): ?>
 
                           <li class="nav-item">

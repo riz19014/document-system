@@ -45,10 +45,10 @@
         <div class="container-xxl">
 
           <div class="row align-items-center">
-            <div class="col-6 col-lg-3">
+            <div class="col-6 col-lg-2">
               <h3>Main Sections</h3>
             </div>
-            <div class="col-6 col-lg-9 text-end">
+            <div class="col-6 col-lg-10 text-end">
 
                <?php echo $__env->yieldContent('content_header'); ?>
 
