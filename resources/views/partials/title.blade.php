@@ -48,11 +48,6 @@
                           <li class="nav-item">
                             <a class="nav-link" href="#"><i class="fas fa-download"></i><br> Download File</a>
                           </li>
-                          <li class="nav-item">
-                            <a class="nav-link" id="change_folder_name" href="#" data-bs-toggle="modal" data-bs-target="#changeNameModal"><i class="fas fa-undo"></i><br> Change Folder Name</a>
-                          </li>
-
-                       
 
                         @elseif(Route::currentRouteName() == 'manage-users')
 

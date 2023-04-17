@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\DmSection;
 
 class HomeController extends Controller
 {
@@ -28,5 +29,12 @@ class HomeController extends Controller
         } else {
             return view('layouts.layout');
         }
+    }
+
+    public function folderInfo($id)
+    {
+        $sections = DmSection::where('is_section', 1)->orderBy('id','asc')->get();
+        // dd($sections);
+        return view('folder-info', compact('sections', 'id'));
     }
 }
