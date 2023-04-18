@@ -54,7 +54,7 @@
                                     <tr>
                                       <th>File Name</th>
                                       <th>Location</th>
-                                      <th>Added on</th>
+                                      <th>Added onjjj</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -92,21 +92,19 @@
 
                                 <small>                                            
                                  @foreach($objects as $folder)                     
-                                <a href="{{route('folder-index',$folder->id)}}">{{$folder->description}}</a>
-                                 @if($check != $count)
-                                 <span class="separator">&gt;</span>
-                                 @php $check++; @endphp
-                                 @endif
+                                  <a href="{{route('folder-index',$folder->id)}}">{{$folder->description}}</a>
+                                  @if($check != $count)
+                                  <span class="separator">&gt;</span>
+                                  @php $check++; @endphp
+                                  @endif
                                  @endforeach          
                                  </small>
                                       </td>
                                       <td>
                                         {{ \Carbon\Carbon::parse( $dup->created_at )->format('d M Y') }}
-
                                       </td>
                                     </tr>
-
-                                    @endforeach
+                                  @endforeach
                                   </tbody>
                                 </table>
                               </div>
@@ -235,10 +233,10 @@
                           <div class="tab-pane fade show active" id="all-files" role="tabpanel">
                             <div class="tab-inner-content">
                               <div class="d-flex justify-content-between">
-                                <h5 class="mb-0 font-600 pt-3"><span class="font-700">8</span> duplicates found</h5>
-                                <div class="download-report font-600">
+                                <!-- <h5 class="mb-0 font-600 pt-3"><span class="font-700">8</span> duplicates found</h5> -->
+                                <!-- <div class="download-report font-600">
                                   Download Report: <a href="#" class="text-white font-400 text-decoration-underline">XLSX</a> / <a href="#" class="text-white font-400 text-decoration-underline">ODS</a> / <a href="#" class="text-white font-400 text-decoration-underline">CSV</a>
-                                </div>
+                                </div> -->
                               </div>
                               <div class="table-responsive mt-5">
                                 <table class="table table-striped table-bordered">
@@ -250,7 +248,7 @@
                                       <th>Added on</th>
                                     </tr>
                                   </thead>
-                                  <tbody>
+                                  <!-- <tbody>
                                     <tr>
                                       <td>1</td>
                                       <td><i class="fas fa-file-alt"></i> Payment.png</td>
@@ -281,7 +279,7 @@
                                       <td>GGL>Accounts>Bank Payment Vouchers</td>
                                       <td>28 Jun 2021</td>
                                     </tr>
-                                  </tbody>
+                                  </tbody> -->
                                 </table>
                               </div>
                             </div>
