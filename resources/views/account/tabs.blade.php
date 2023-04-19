@@ -51,7 +51,7 @@
                                     <tr>
                                       <th>File Name</th>
                                       <th>Location</th>
-                                      <th>Added onjjj</th>
+                                      <th>Added</th>
                                     </tr>
                                   </thead>
                                   <tbody>
