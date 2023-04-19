@@ -56,13 +56,7 @@
                                      @if(@$idexplode[1] == 'fi')
 
                                       {{$audit->action}}
-                                      <a style="color: #1ea1d7;" href="{{route('file-view',$idexplode[0])}}">{{$audit->Objectfile->doc_name}}</a>
-
-                                      @else
-
-                                           {{$audit->action}}
-                                      <a style="color: #1ea1d7;" href="{{route('folder-index',$audit->object_id)}}">{{$audit->Object->description}}</a>
-
+                                        <a style="color: #1ea1d7;" href="{{route('file-view',$idexplode[0])}}">{{$audit->Objectfile->doc_name}}</a>
                                       @endif
 
                                     </td>
