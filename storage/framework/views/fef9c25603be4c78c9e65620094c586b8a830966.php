@@ -4,6 +4,7 @@
 <?php $__env->stopSection(); ?>
                
     <!-- Page Content  -->
+    
     <div id="content">
       <div class="breadcrumb-area mb-4">
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
@@ -94,7 +95,7 @@
       </div>
    
 
-
+ 
         <!-- Columns Modal -->
 <div class="modal fade" id="ColumnsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -543,9 +544,10 @@ $(document).ready(function () {
 $(document).on('click', '.delete-folder', function(e){
 e.preventDefault();
   var folder_id = $(this).data('id');
+  var name = $(this).data('name');
 swal({
-    title: "Delete Folder?",
-    text: "Are you sure, you want to delete this folder. ?",
+    title: "Delete "+name+"?",
+    text: "Are you sure, you want to delete this "+name+". ?",
     buttons: {
         cancel: true,
         confirm: true,
@@ -559,7 +561,7 @@ swal({
         $.ajax({
           type: "get",
           url: "<?php echo e(route('delete-folder-section')); ?>",
-         data: { folder_id: folder_id},
+         data: { folder_id: folder_id, name:name},
           success: function(data) {
 
              $('.main-table').DataTable().ajax.reload();

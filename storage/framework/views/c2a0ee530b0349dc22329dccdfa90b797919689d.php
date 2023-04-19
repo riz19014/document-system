@@ -5,6 +5,7 @@
 <?php $__env->stopSection(); ?>
                
     <!-- Page Content  -->
+    
     <div id="content">
       <div class="breadcrumb-area mb-4">
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
@@ -52,7 +53,8 @@
             </div>
 
 <?php endif; ?>
-
+              <strong>Folders: <?php echo e($folder_file->children->count()); ?></strong>
+              <strong>Files: <?php echo e($folder_file->FolderName->count()); ?></strong>
               <table class="table table-striped table-hover main-table" style="width:100%;">
                     
                     <thead>
@@ -68,7 +70,7 @@
                             <th > Name </th>
                             <th > Date </th> 
                             <th > Due date </th> 
-                            <th > Signature </th> 
+                            <th > Notes </th> 
                             <th > Size </th>
                             <th > Tags </th>
                             <th></th>
@@ -94,7 +96,7 @@
       </div>
    
 
-
+ 
         <!-- Columns Modal -->
 <div class="modal fade" id="ColumnsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -145,7 +147,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New Foldar</h5>
+        <h5 class="modal-title" id="exampleModalLabel">New Foldars</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -211,6 +213,41 @@
 </div> 
 
 
+
+<!-- create company model -->
+
+<div class="modal fade" id="changeNameModal" tabindex="-1" aria-labelledby="    exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Change Folder Name</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="folder_change_name">
+              <?php echo e(csrf_field()); ?>
+
+
+              <input type="hidden" name="folder_id" id="folder-name-id">
+
+            <div class="mb-3">
+            <div class="form-group">
+              <label>Folder Name</label>
+              <input required type="text" id="folder-name" class="form-control" name="name">
+
+            </div>
+            </div>
+
+            <div class="mb-3 text-end">
+              <button type="submit" class="btn btn-primary">Change</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+
     <style>
     .container {
       max-width: 450px;
@@ -224,7 +261,7 @@
 
     <?php $__env->stopSection(); ?> 
 
-
+     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       
@@ -238,13 +275,14 @@
    valfol = '<?php echo e($folid); ?>';
     var table = $('.main-table').DataTable({
          
-         "paging": false,
-         "ordering": false,
-         "searching": false,
-         "info": false,
-          fnDrawCallback: function (settings) {
-        $(".main-table").parent().toggle(settings.fnRecordsDisplay() > 0);
-    },
+         processing: false,
+                serverSide: true,
+                "ordering": false,
+                "searching": false,
+                "info": false,
+                "pageLength": 15,
+                "lengthChange": false,
+
          // "lengthChange": false
          language : {
             "zeroRecords": " "             
@@ -257,12 +295,25 @@
 
               method: "get",
             },
+            language: {
+                    paginate: {
+                        next: '<i class="fa fa-fw fa-long-arrow-right" style="font-size: 17px;">',
+                        previous: '<i class="fa fa-fw fa-long-arrow-left" style="font-size: 17px;">'
+                    },
+                },
+
+                drawCallback: function(settings) {
+                    var pagination = $(this).closest('.dataTables_wrapper').find(
+                    '.dataTables_paginate');
+                    pagination.toggle(this.api().page.info().pages > 1);
+                },
             columns: [
                 { data: 'checkbox', name: 'checkbox' },
                 {data: 'action', name: 'action'},
                 {data: 'created_at', name: 'created_at'}, 
                 {data: 'due_date', name: 'due_date'},
-                {data: 'signed_by', name: 'signed_by'},
+                // {data: 'signed_by', name: 'signed_by'},
+                {data: 'notes', name: 'notes'},
                 {data: 'filesize', name: 'filesize'},
                 {data: 'tags', name: 'tags'},
                 {data: 'listAction', name: 'listAction'},
@@ -333,6 +384,11 @@ $(document).on('click', '#folderdelete', function(){
 
          alert(selected_quots);
       });
+});
+
+
+$('.main-table').on('dblclick', 'td form input', function() {
+    alert('caught')
 });
 
 
@@ -486,6 +542,35 @@ $(document).ready(function () {
          });
 
 
+$(document).on('click', '.delete-folder', function(e){
+e.preventDefault();
+  var folder_id = $(this).data('id');
+swal({
+    title: "Delete Folder?",
+    text: "Are you sure, you want to delete this folder. ?",
+    buttons: {
+        cancel: true,
+        confirm: true,
+    },
+    icon: "warning",
+    dangerMode: true,
+})
+    .then(willDelete => {
+        if (willDelete) {
+
+        $.ajax({
+          type: "get",
+          url: "<?php echo e(route('delete-folder-section')); ?>",
+         data: { folder_id: folder_id},
+          success: function(data) {
+
+             $('.main-table').DataTable().ajax.reload();
+
+          },
+        });
+        }
+    });
+});
 
 
 // $(document).ready(function(){
@@ -530,9 +615,14 @@ $(document).ready(function () {
       });
 
 
-      
-
     $(document).on('submit','#files_upload',function(e){  
+
+        var $fileUpload = $("input[type='file']");
+        if (parseInt($fileUpload.get(0).files.length)>30){
+         alert("You can only upload a maximum of 30 files");
+         document.getElementById("files_upload").reset();
+         return false
+        }
       e.preventDefault();
       let formData = new FormData(this);  
     $.ajax({
@@ -566,6 +656,34 @@ $(document).ready(function () {
 
         },
         });
-        });     
+        }); 
+
+$(document).on('click','.change-name',function(e){ 
+      var folder_name = $(this).data('name');
+      var folder_id = $(this).data('id');
+      $('#folder-name').val(folder_name) 
+      $('#folder-name-id').val(folder_id) 
+      $('#changeNameModal').modal('show');
+  }); 
+
+  $(document).on('submit','#folder_change_name',function(e){   
+   e.preventDefault(); 
+    let formData = new FormData(this); 
+
+    $.ajax({
+         type: "POST",
+         url: "<?php echo e(route('change-folder-name')); ?>",
+         data: formData,
+         contentType: false,
+         processData: false,
+        success: function(data) {
+          $('#changeNameModal').modal('hide');
+          $('.main-table').DataTable().ajax.reload();
+
+      },
+    }); 
+
+  });
+
     </script>     
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Tariq_Naeem\TNN\Laravel\DMS_S\NDMS\resources\views/folder/index.blade.php ENDPATH**/ ?>
