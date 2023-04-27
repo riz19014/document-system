@@ -581,7 +581,12 @@ class FolderController extends Controller
        {
            if(DmFileUpload::where('id', $request->folder_id)->exists())
            {
-              DmFileUpload::where('id', $request->folder_id)->delete();
+              $file = DmFileUpload::where('id', $request->folder_id)->first();
+              $file->is_delete = 1;
+              $file->deleted_at = Carbon::now();
+              $file->save();
+
+
            }
        }
 

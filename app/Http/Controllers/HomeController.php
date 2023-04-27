@@ -27,7 +27,8 @@ class HomeController extends Controller
         if (auth()->user()->role_id == 4) {
             return redirect()->route('manage-company');
         } else {
-            return view('layouts.layout');
+            // return view('layouts.layout'); 
+            return redirect()->route('folder-information', 1);
         }
     }
 
