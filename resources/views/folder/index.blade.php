@@ -54,7 +54,7 @@
 @endif
               <strong>Folders: {{$folder_file->children->count()}}</strong>
               <strong>Files: {{$folder_file->FolderName->count()}}</strong>
-              <table class="table table-striped table-hover main-table" style="width:100%;">
+              <table class="table table-striped table-hover main-table text-nowrap" style="width:100%;">
                     
                     <thead>
                    
