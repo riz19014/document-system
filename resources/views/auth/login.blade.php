@@ -30,10 +30,10 @@
             <div class="row align-items-center">
               <div class="col-6 col-lg-3">
                 <a  href="/"><img src="{{asset('img/folder-logo.png')}}" align="" class="img-fluid" width="200"></a>
-              </div> 
-              <div class="col-6 col-lg-9 text-end">                
+              </div>
+              <div class="col-6 col-lg-9 text-end">
                 {{--<a href="{{ route('register') }}" class="ps-2 text-white">Sign up</a>--}}
-                <a href="{{ route('login') }}" class="ps-2 text-white">Login</a>         
+                <a href="{{ route('login') }}" class="ps-2 text-white">Login</a>
               </div>
             </div>
           </div>
@@ -97,8 +97,8 @@
     <footer class="footer">
       <ul class="footer-menu">
         <li><a href="#">Contact</a></li>
-        <li><a href="#">Privacy policy</a></li>
-        <li><a href="#">Terms of use</a></li>
+        <li><a href="#">Policy</a></li>
+        <li><a href="#">Terms</a></li>
       </ul>
       <div class="copyright">Nishatmills © 2023</div>
     </footer>
