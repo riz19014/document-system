@@ -2,7 +2,7 @@
         <div class="container-xxl">
             <div class="row align-items-center">
               <div class="col-6 col-lg-3">
-                <a class="logo" href="{{route('home')}}"><img src="{{asset('img/logo-white.png')}}" align="" class="img-fluid" width="200"></a>
+                <a class="logo" href="{{route('home')}}"><img src="{{asset('img/folder-logo.png')}}" align="" class="img-fluid" width="200"></a>
               </div> 
               <div class="col-6 col-lg-9 text-end">
 

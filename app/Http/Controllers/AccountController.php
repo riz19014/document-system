@@ -63,7 +63,7 @@ class AccountController extends Controller
 
         return Datatables::of($audits)
 
-
+        ->addIndexColumn()
         ->addColumn('date', function($row){
            return Carbon::parse( $row->date )->timezone('Asia/Karachi')->format('d.m.y | H:i:s');
      })
@@ -84,12 +84,11 @@ class AccountController extends Controller
 
         ->addColumn('object', function($row){
             if($row->object_type == 2){
-                $file = DmFileUpload::find($row->object_type);
-                return $file->doc_name;
-
+                $file = DmFileUpload::find(explode('-', $row->object_id)[0]);
+                return $file ? $file->doc_name : '--';
             }elseif($row->object_type == 1){
-                $folder = DmSection::find($row->object_type);
-                return $folder->description;
+                $folder = DmSection::find($row->object_id);
+                return $folder ? $folder->description:'--';
 
             }elseif($row->object_type == 3){
                 return Auth::user()->name;

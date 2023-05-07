@@ -2,7 +2,7 @@
         <div class="container-xxl">
             <div class="row align-items-center">
               <div class="col-6 col-lg-3">
-                <a class="logo" href="<?php echo e(route('home')); ?>"><img src="<?php echo e(asset('img/logo-white.png')); ?>" align="" class="img-fluid" width="200"></a>
+                <a class="logo" href="<?php echo e(route('home')); ?>"><img src="<?php echo e(asset('img/folder-logo.png')); ?>" align="" class="img-fluid" width="200"></a>
               </div> 
               <div class="col-6 col-lg-9 text-end">
 

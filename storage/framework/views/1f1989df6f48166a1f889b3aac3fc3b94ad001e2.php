@@ -29,7 +29,7 @@
         <div class="container-xxl">
             <div class="row align-items-center">
               <div class="col-6 col-lg-3">
-                <a class="logo" href="#"><img src="<?php echo e(asset('img/logo-white.png')); ?>" align="" class="img-fluid" width="200"></a>
+                <a  href="/"><img src="<?php echo e(asset('img/folder-logo.png')); ?>" align="" class="img-fluid" width="200"></a>
               </div> 
               <div class="col-6 col-lg-9 text-end">                
                 
@@ -41,11 +41,11 @@
     <!-- end Header -->
 
     <!-- Auth Content -->
-    <div class="main-content wrapper flex-grow-1">
+    <div  class="main-content wrapper flex-grow-1 background-image">
       <div class="my-5 py-5">
         <div class="container-xxl">
           <div class="row justify-content-center">
-            <div class="col-lg-4">
+            <div class="col-lg-4 login-setting">
               <div class="heading">
                 <h3 class="mb-4">Sign in</h3>
               </div>
@@ -126,7 +126,7 @@ unset($__errorArgs, $__bag); ?>
         <li><a href="#">Privacy policy</a></li>
         <li><a href="#">Terms of use</a></li>
       </ul>
-      <div class="copyright">Softpyramid © 2021</div>
+      <div class="copyright">Nishatmills © 2023</div>
     </footer>
     <!-- end Footer -->
 
