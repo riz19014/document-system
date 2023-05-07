@@ -20,6 +20,21 @@ h1, h2 {
 }*/
 
 
+.img-fluid {
+    max-width: 18%;
+    height: auto;
+}
+
+.background-image {  
+    background-image: url("/img/background-image.jpg") ;
+    background-size: 350px;
+}
+
+.login-setting {
+    background: white;
+    border: 1px solid #00bcd4;
+    padding: 10px;
+}
 
 .btn-primary {
      background: #1ea1d7 ;

@@ -181,7 +181,7 @@ class FolderController extends Controller
 
 
 
-             $params = ['objtype'=> 1,'obj_id'=>$photo->id.'-fi','obj'=> $request->FolderId,
+             $params = ['objtype'=> 2,'obj_id'=>$photo->id.'-fi','obj'=> $request->FolderId,
             'action'=> trans('global.folder.ficreate')];
             $activity =  Audits::getAudit($params);
 
@@ -394,8 +394,8 @@ class FolderController extends Controller
               }
               $html_string = '<div class="custom-control custom-checkbox custom-checkbox1 d-inline-block">
                                     <input type="checkbox" class="custom-control-input check1" value="'.$row['id'].'" id="quot_'.$row['id'].'">
-                                    <label class="custom-control-label" for="quot_'.$row['id'].'"></label>
-                                </div><a data-id="'.$row['id'].'" data-name="'.$row['description'].'" style="color:#c3c3c3;visibility: '.$text.'" class="change-name font-icon-color"><i class="fas fa-edit" title="change folder name"></i></a>';
+                                    <label class="custom-control-label" for="quot_'.$row['id'].'"></label><a data-id="'.$row['id'].'" data-name="'.$row['description'].'" style="color:#c3c3c3;visibility: '.$text.'" class="change-name font-icon-color"><i class="fas fa-edit" title="change folder name"></i></a>
+                                </div>';
   
 
         
