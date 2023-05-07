@@ -96,11 +96,14 @@
     <!-- Footer -->
     <footer class="footer">
       <ul class="footer-menu">
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">Policy</a></li>
-        <li><a href="#">Terms</a></li>
+        <li>
+            <div class="copyright">
+                © Copyright <a target="_blank" href="https://mrtnsol.com/">
+                    <strong style="color:#e97979">MRTN SOL </strong>
+                </a> All Rights Reserved
+            </div>
+        </li>
       </ul>
-      <div class="copyright">Nishatmills © 2023</div>
     </footer>
     <!-- end Footer -->
 
