@@ -15,6 +15,7 @@ use App\Models\ApprovalStatus;
 use DataTables;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class FolderController extends Controller
 {
@@ -135,15 +136,18 @@ class FolderController extends Controller
          }
         $priorityUser = ApprovalUser::where('position', 1)->first();
 
-        foreach($request->file('filenames') as $file){
-        //  dd($file);
-           $fileSize = $file->getSize();
+        foreach($request->file('filenames') as $file){          
+
+            $fileSize = $file->getSize();
             $photo = new DmFileUpload();
             $name = $file->getClientOriginalName();
-           // $path = $file->move(public_path() . '/file_uploads/', $name);
-            $path = $file->storeAs($fid->description, $name, 'public');
+            $filename = pathinfo($name, PATHINFO_FILENAME);
+            $extension = pathinfo($name, PATHINFO_EXTENSION);
+            $filepath = $filename . '.' . strtolower($extension);
+            $path = $file->storeAs($fid->description, $filepath, 'public');
             $photo->folder_id = $request->FolderId;
-            $photo->doc_name =  $name;
+            $photo->doc_name =  $filepath;
+            $photo->file_mime = $file->getClientMimeType();
             if($flag==1){
               $photo->notify =  1;
             }else{
@@ -337,16 +341,8 @@ class FolderController extends Controller
 
     
 
-    public function MainData(Request $request){
-
-      // dd($request->all());
-
-//       $arr1 = array('foo' => 'bar');
-// $arr2 = array('baz' => 'bof');
-
-// // dd($arr1);
-// $arr3 = $arr1 + $arr2;
-// dd($arr3);
+    public function MainData(Request $request)
+    {
       $records = array();
 
       $folder_child = DmSection::where('parent_id', $request->folderid)->orderBy('created_at', 'desc')->get();
@@ -374,6 +370,7 @@ class FolderController extends Controller
       {
           $array_pro [$i]["id"]= $row_product->id;
           $array_pro [$i]["description"]= $row_product->doc_name;
+          $array_pro [$i]["file_mime"]= $row_product->file_mime;
           $array_pro [$i]["size"]= $row_product->file_size;
           $array_pro [$i]["tags"]= $row_product->tags;
           $array_pro [$i]["due_date"]= $row_product->due_date;
@@ -408,20 +405,27 @@ class FolderController extends Controller
 
             $status_btn = ''; 
 
-            // dd($row['description']);
+            if($row['object_type'] == 1){
+               
+               $status_btn .= '<a id="sinfo" data-id="{{$child->id}}" href="'.route('folder-index',$row['id']).'"><i title="Folder" class="fas fa-folder change-name" style="font-size:18px; margin-right: 0.4em;""></i>'.$row['description'].'</a>';
 
-            if(strpos($row['description'], '.png') || strpos($row['description'], '.jpg')
-                        || strpos($row['description'], '.jpeg') || strpos($row['description'], '.svg')){
-
-              $status_btn .= '<a id="sinfo" data-id="{{$child->id}}" href="'.route('file-view',$row['id']).'"><i class="fas fa-images" style="font-size:18px; margin-right: 0.4em;""></i>'.$row['description'].'</a>';
-
-            }elseif(strpos($row['description'], '.PDF') || strpos($row['description'], '.txt')
-              || strpos($row['description'], '.odt') | strpos($row['description'], '.pdf')){
-              $status_btn .= '<a id="sinfo" data-id="{{$child->id}}" href="'.route('file-view',$row['id']).'"><i class="fas fa-file-alt" style="font-size:18px; margin-right: 0.4em;""></i>'.$row['description'].'</a>';
-
-             
             }else{
-              $status_btn .= '<a id="sinfo" data-id="{{$child->id}}" href="'.route('folder-index',$row['id']).'"><i class="fas fa-folder change-name" style="font-size:18px; margin-right: 0.4em;""></i>'.$row['description'].'</a>';
+
+                if(Str::contains($row['file_mime'], 'image/')){
+                  $status_btn .= '<a id="sinfo" data-id="{{$child->id}}" href="'.route('file-view',$row['id']).'"><i title="Image" class="fas fa-images" style="font-size:18px; margin-right: 0.4em;""></i>'.$row['description'].'</a>';
+
+                }elseif(Str::contains($row['file_mime'], 'application/') && $row['file_mime'] != 'application/octet-stream'){
+                  $status_btn .= '<a id="sinfo" data-id="{{$child->id}}" href="'.route('file-view',$row['id']).'"><i title="File" class="fas fa-file-alt" style="font-size:18px; margin-right: 0.4em;""></i>'.$row['description'].'</a>';
+                }elseif(Str::contains($row['file_mime'], 'application/octet-stream')){
+
+                  $status_btn .= '<a id="sinfo" data-id="{{$child->id}}" href="'.route('file-view',$row['id']).'"><i title="Corrupt file" class="fa fa-ban" style="font-size:18px; margin-right: 0.4em;""></i>'.$row['description'].'</a>';
+
+                }elseif(Str::contains($row['file_mime'], 'text/')){
+
+                  $status_btn .= '<a id="sinfo" data-id="{{$child->id}}" href="'.route('file-view',$row['id']).'"><i title="File" class="fa fa-file" style="font-size:18px; margin-right: 0.4em;""></i>'.$row['description'].'</a>';
+
+                }
+
             }
 
             return $status_btn;         
@@ -462,18 +466,14 @@ class FolderController extends Controller
      })
 
         ->addColumn('tags', function($row){
-            if(strpos($row['description'], '.png') || strpos($row['description'], '.jpg')
-                        || strpos($row['description'], '.jpeg') || strpos($row['description'], '.svg')){
 
+             if($row['object_type'] == 1){
+            return '';
+
+          }else{
             return $row['tags'];
 
-          }elseif(strpos($row['description'], '.PDF') || strpos($row['description'], '.pdf') || strpos($row['description'], '.txt')){
-
-                 return $row['tags'];
-             
-            }else{            
-                  return ;             
-            }         
+          }         
      })
 
      //  ->addColumn('signed_by', function($row){

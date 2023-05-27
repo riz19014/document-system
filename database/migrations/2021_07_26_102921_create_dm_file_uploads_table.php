@@ -17,6 +17,7 @@ class CreateDmFileUploadsTable extends Migration
             $table->id();
             $table->bigInteger('folder_id')->nullable();
             $table->string('doc_name')->nullable();
+            $table->string('file_mime')->nullable();
             $table->tinyInteger('notify')->default(0);
             $table->string('tags')->nullable();
             $table->string('file_size')->nullable();
