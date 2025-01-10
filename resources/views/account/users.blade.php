@@ -213,7 +213,7 @@
                         <div class="col-lg-6 mb-3">
                             <div class="form-group">
                              <select required id="company_id" class="form-control" name="company">
-                                <option value="" disabled="" selected="">Select location</option>
+                                <option value="" disabled="" selected="">Select company</option>
                                 @foreach ($companies as $company)
                                  <option value="{{$company->id}}">{{$company->company_name}}</option>
                                 @endforeach

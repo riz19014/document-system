@@ -34,8 +34,13 @@ class HomeController extends Controller
 
     public function folderInfo($id)
     {
+
+
         $sections = DmSection::where('is_section', 1)->orderBy('id','asc')->get();
+        $totalSubFolder = DmSection::where('is_section', 0)->count();
+        $files = DmSection::withCount('FolderName')->get();
+        $totalFiles = $files->sum('folder_name_count');
         // dd($sections);
-        return view('folder-info', compact('sections', 'id'));
+        return view('folder-info', compact('sections', 'id','totalSubFolder','totalFiles'));
     }
 }

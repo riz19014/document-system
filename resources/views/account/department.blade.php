@@ -28,7 +28,7 @@
                   <tr>
                     <th>Department Name</th>
                     <th>Unit</th>
-                    <th>Location</th>
+                    <th>Company</th>
                     <th>Total section</th>
                     <th>Created at</th>
                     <th>Action</th>
@@ -72,7 +72,7 @@
             <div class="mb-3">
                 <div class="form-group">
                  <select required id="company_id" class="form-control" name="company">
-                    <option value="" disabled="" selected="">Select location</option>
+                    <option value="" disabled="" selected="">Select company</option>
                     @foreach ($companies as $company)
                      <option value="{{$company->id}}">{{$company->company_name}}</option>
                     @endforeach

@@ -27,7 +27,7 @@
                 <thead>
                   <tr>
                     <th>Unit Name</th>
-                    <th>Location</th>
+                    <th>Company</th>
                     <th>Total Department</th>
                     <th>Created at</th>
                     <th>Action</th>

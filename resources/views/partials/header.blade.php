@@ -6,7 +6,10 @@
               </div> 
               <div class="col-6 col-lg-9 text-end">
 
-                <div class="login-info">  <a href="{{ url('logout') }}" class="logout"><span class="fas fa-power-off"></span> Log Out</a></div>
+              
+              <a href="{{ url('logout') }}" class="btn btn-danger btn-sm px-3 d-inline-flex align-items-center">
+                  <span class="fas fa-power-off me-2"></span> Log Out
+                </a>
                 <button type="button" id="sidebarCollapse" class="btn btn-info d-lg-none d-inline-block">
                     <i class="fas fa-align-left"></i>
                 </button>
@@ -20,8 +23,19 @@
                     <li><a class="dropdown-item" href="#">Something else here</a></li>
                   </ul>
                 </span>  --}}
-                <a href="{{route('notify-files')}}" class="share-link text-primary ps-2 position-relative"><i class="fas fa-bell fa-lg" ></i>@if($filecount > 0) <span class="badge">{{$filecount}}</span>@endif</a>
-                <a target="_blank" title="User Manual" href="{{asset('help/UserManual.pdf')}}" class="ps-2 help-link"><i class="fas fa-question"></i></a>         
+                <a href="{{ route('notify-files') }}" 
+                      class="btn btn-outline-primary position-relative d-inline-flex align-items-center px-3 py-2">
+                      <i class="fas fa-bell fa-lg me-2" style="color: yellow;"></i>
+                      @if($filecount > 0)
+                        <span class="badge bg-danger position-absolute top-0 start-100 translate-middle" 
+                              style="font-size: 0.75rem; padding: 0.25em 0.5em;">
+                          {{ $filecount }}
+                        </span>
+                      @endif
+                 </a>
+               
+
+                <!-- <a target="_blank" title="User Manual" href="{{asset('help/UserManual.pdf')}}" class="ps-2 help-link"><i class="fas fa-question"></i></a>          -->
               </div>
             </div>
           </div>

@@ -26,7 +26,7 @@
               <table class="table table-striped company-table" >
                 <thead>
                   <tr>
-                    <th>Location Name</th>
+                    <th>Company Name</th>
                     <th>Created at</th>
                     <th>Total Units</th>
                     <th>Action</th>
@@ -48,7 +48,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">New Location</h5>
+          <h5 class="modal-title" id="exampleModalLabel">New Company</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -57,7 +57,7 @@
 
             <div class="mb-3">
             <div class="form-group">
-              <label>Location Name</label>
+              <label>Company Name</label>
               <input required type="text" id="company-name" class="form-control" name="name">
 
               <div class="d-none" id='form-meta_name'>
@@ -114,7 +114,7 @@
       </div>
       <div class="modal-body" style=" text-align: left;">
         <div v-if="!!units" class="table-responsive" id="view_company_unit">
-          <label style="color:red;" v-if="units.length ==0">Unit are not created against this location</label>
+          <label style="color:red;" v-if="units.length ==0">Unit are not created against this company</label>
           <table class="table" v-if="units.length >0">
               <thead>
                   <tr>

@@ -15,6 +15,7 @@ use App\Models\ApprovalStatus;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class FileController extends Controller
 {
@@ -179,74 +180,117 @@ if(!$fcols->isEmpty()){
        return response()->json(['fileid'=>$request->file_id]);
     }
 
-    public function FileDownload($id){
-      //dd($id);
 
-       $params = ['objtype'=> 2,'obj_id'=>$id,'obj'=>$id,
-      'action'=>trans('global.file.dn')];
-      $activity =  Audits::getAudit($params);
+public function FileDownload($id)
+{
+    // Log the file download activity
+    $params = [
+        'objtype' => 2,
+        'obj_id'  => $id,
+        'obj'     => $id,
+        'action'  => trans('global.file.dn'),
+    ];
+    $activity = Audits::getAudit($params);
 
+    // Fetch the file record from the database
+    $file = DmFileUpload::findOrFail($id);
+    $path = public_path($file->doc_path); // Adjust path if necessary
 
-      $file = DmFileUpload::where('id', $id)->first();
-      // dd($file->doc_path);
-      $path = $file->doc_path;
-      return response()->download($path);
-
-     
-    }
-
-
-    public function FileFolderDownload($id){
-
-     
-      $str = $id;
-      $idexplode = explode("-",$str);
-
-      // dd($idexplode[1]);
-
-      if($idexplode[1] == 'file'){
-
-      $params = ['objtype'=> 2,'obj_id'=>$idexplode[0],'obj'=>$idexplode[0],
-      'action'=>trans('global.file.dn')];
-      $activity =  Audits::getAudit($params);
-
-
-        $file = DmFileUpload::where('id', $idexplode[0])->first();
-        $path = $file->doc_path;
-
-        return response()->download($path);
-      }else{
-
-
-        $folder = DmSection::where('id', $idexplode[0])->first();
-
-
-
-
-        $zip_file = $folder->description.'.zip';
-        $zip = new \ZipArchive();
-        $zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
-
-        $path = 'storage/'.$folder->description;
-        $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
-        foreach ($files as $name => $file)
-        {
-            // We're skipping all subfolders
-            if (!$file->isDir()) {
-                $filePath = $file->getRealPath();
-                // extracting filename with substr/strlen
-                $relativePath = 'invoices/' . substr($filePath, strlen($path) + 1);
-                $zip->addFile($filePath, $relativePath);
-            }
+    try {
+        // Ensure the file exists
+        if (!file_exists($path)) {
+            return response()->json(['error' => 'File not found.'], 404);
         }
-        $zip->close();
-        return response()->download($zip_file);
 
+        // Read the encrypted file contents
+        $encryptedContents = file_get_contents($path);
 
+        // Decrypt the file contents
+        $decryptedContents = Crypt::decrypt($encryptedContents);
 
-      }
-      
+        // Generate a filename for download
+        $filename = basename($file->doc_path);
+
+        // Serve the decrypted file as a download
+        return response()->streamDownload(function () use ($decryptedContents) {
+            echo $decryptedContents;
+        }, $filename);
+    } catch (\Exception $e) {
+        // Handle any exceptions gracefully
+        return response()->json(['error' => 'Failed to decrypt and download the file: ' . $e->getMessage()], 500);
     }
+}
+
+
+
+public function FileFolderDownload($id)
+{
+    $str = $id;
+    $idexplode = explode("-", $str);
+
+    if ($idexplode[1] === 'file') {
+        // Handle file download
+        $params = [
+            'objtype' => 2,
+            'obj_id'  => $idexplode[0],
+            'obj'     => $idexplode[0],
+            'action'  => trans('global.file.dn'),
+        ];
+        $activity = Audits::getAudit($params);
+
+        $file = DmFileUpload::findOrFail($idexplode[0]);
+        $path = public_path($file->doc_path);
+
+        try {
+            // Ensure the file exists
+            if (!file_exists($path)) {
+                return response()->json(['error' => 'File not found.'], 404);
+            }
+
+            // Read and decrypt the file contents
+            $encryptedContents = file_get_contents($path);
+            $decryptedContents = Crypt::decrypt($encryptedContents);
+
+            $filename = basename($file->doc_path);
+
+            return response()->streamDownload(function () use ($decryptedContents) {
+                echo $decryptedContents;
+            }, $filename);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to decrypt and download the file: ' . $e->getMessage()], 500);
+        }
+    } else {
+        // Handle folder download as a ZIP
+        $folder = DmSection::findOrFail($idexplode[0]);
+        $zipFileName = $folder->description . '.zip';
+
+        try {
+            $zip = new \ZipArchive();
+            if ($zip->open($zipFileName, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === true) {
+                $path = public_path('storage/' . $folder->description); // Adjust base path if necessary
+                $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
+
+                foreach ($files as $name => $file) {
+                    if (!$file->isDir()) {
+                        $filePath = $file->getRealPath();
+                        $relativePath = substr($filePath, strlen($path) + 1);
+
+                        // Add files to the ZIP archive
+                        $zip->addFile($filePath, $relativePath);
+                    }
+                }
+                $zip->close();
+
+                return response()->download($zipFileName)->deleteFileAfterSend(true);
+            } else {
+                return response()->json(['error' => 'Failed to create ZIP archive.'], 500);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error while zipping files: ' . $e->getMessage()], 500);
+        }
+    }
+}
+
 
     public function DeleteFile(Request $request){
        $now = Carbon::now();

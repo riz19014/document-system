@@ -10,24 +10,25 @@
                           @if(Route::currentRouteName() == 'folder-index') 
 
                          @if(Auth::user()->role_id == 1)
+
                             <li class="nav-item">
                             <a class="nav-link" id="folderid" data-id="{{$folder_file->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#"><i class="fas fa-folder-plus"></i><br> +Foldar</a>
                           </li>
                          
                           <li class="nav-item">
-                            <a class="nav-link" data-id="{{$folder_file->id}}" id="column_folder_id" href="#" data-bs-toggle="modal" data-bs-target="#ColumnsModal"><i class="fas fa-columns"></i><br> Columns</a>
+                            <a class="nav-link" data-id="{{$folder_file->id}}" id="column_folder_id" href="#" data-bs-toggle="modal" data-bs-target="#ColumnsModal"><i class="fa fa-tag"></i><br> Multi Tags</a>
                           </li>
-                          <li class="nav-item">
+                          {{--<li class="nav-item">
                             <a class="nav-link" href="#"><i class="fas fa-tag"></i><br> Meta</a>
                           </li>
                           <li class="nav-item">
                             <a class="nav-link" href="#"><i class="far fa-handshake"></i><br> Approval</a>
-                          </li>
+                          </li>--}}
                           <li class="nav-item">
                             <a class="nav-link" href="{{route('folder-audit',$folder_file->id)}}"><i class="fas fa-file-alt"></i><br> Audit Log</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fas fa-list-ol"></i><br> Numbering</a>
+                            <a class="nav-link" id="numbering_id" data-id="{{$folder_file->id}}" data-bs-toggle="modal" data-bs-target="#numberingModal" href="javascript:void(0)"><i class="fas fa-list-ol"></i><br> Numbering</a>
                           </li>
                            @endif
 
@@ -36,9 +37,9 @@
 
                         <div class="cats-navbar checkitem d-none" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center">
-                           <li class="nav-item">
+                           {{--<li class="nav-item">
                             <a class="nav-link" href="#"><img src="{{asset('img/move_right.png')}}" align="" class="img-fluid" width="20" ><br> Move</a>
-                          </li>
+                          </li>--}}
                           <li class="nav-item">
                             <a class="nav-link" id="folderdelete" href="#"><i class="fas fa-trash"></i><br> Delete</a>
                           </li>
@@ -77,7 +78,7 @@
                           @elseif(Route::currentRouteName() == 'manage-company')
 
                           <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#companyAddModal" href="#"><i class="fas fa-map-marker-alt"></i><br> Location</a>
+                            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#companyAddModal" href="#"><i class="fas fa-building"></i><br> Company</a>
                           </li>
 
 

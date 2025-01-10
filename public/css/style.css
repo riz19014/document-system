@@ -591,3 +591,190 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   flex-direction: row;
   justify-content: flex-end;
 }
+
+
+
+
+
+
+
+/* For Webkit browsers (Chrome, Safari) */
+    #sidebar-list::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    #sidebar-list::-webkit-scrollbar-thumb {
+        background-color: #1ea1d7; /* New color */
+        border-radius: 10px;
+        transition: background-color 0.3s;
+    }
+
+    #sidebar-list::-webkit-scrollbar-thumb:hover {
+        background-color: #137b94; /* Darker shade for hover */
+    }
+
+    #sidebar-list::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .badgee {
+    font-size: 13px;
+    padding: 10px 20px;
+    border-radius: 50px;
+    color: #767676;
+    font-weight: bold;
+    border: 1px solid #1ea1d7;
+}
+
+/*.bg-primary {
+    background-color: #007bff;
+}
+
+.bg-secondary {
+    background-color: #6c757d;
+}
+
+.bg-success {
+    background-color: #28a745;
+}*/
+
+
+/* General menu item styling */
+.menu-item {
+    padding: 12px 20px; /* Increased padding for better spacing */
+    font-size: 18px; /* Larger font size for better visibility */
+    color: #444; /* Slightly lighter text color */
+    text-decoration: none; /* Remove underline */
+    font-weight: 600; /* Slightly bolder text */
+    border-radius: 8px; /* Rounded corners */
+    display: flex; /* Flexbox for icon and text alignment */
+    align-items: center; /* Vertically center-align the text */
+    transition: all 0.3s ease; /* Smooth transition for all properties */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    background-color: #fff; /* White background for each menu item */
+    margin-bottom: 10px; /* Added bottom margin for space between items */
+}
+
+/* Hover effect */
+.menu-item:hover {
+    background-color: #e9ecef; /* Light grey background on hover */
+    padding-left: 25px; /* Expand left padding on hover for a sliding effect */
+    color: #007bff; /* Change text color on hover */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Darker shadow on hover */
+    /* transform: translateX(5px);  Slight horizontal movement to the right */
+}
+
+/* Active state for the current menu item */
+.menu-item.active {
+    background-color: #007bff; /* Blue background for active item */
+    color: #fff; /* White text for active item */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Darker shadow for active item */
+}
+
+/* Add icons margin and size */
+.menu-item i {
+    margin-right: 12px; /* Increased space between icon and text */
+    font-size: 20px; /* Larger icons for better visibility */
+    color: #1ea1d7; /* Icon color set to #1ea1d7 */
+    transition: color 0.3s ease; /* Smooth icon color transition */
+}
+
+/* Hover effect on icons */
+.menu-item:hover i {
+    color: #007bff; /* Change icon color to blue on hover */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .menu-item {
+        font-size: 16px; /* Smaller font size on mobile */
+        padding: 10px 15px; /* Adjust padding on smaller screens */
+    }
+
+    .menu-item i {
+        font-size: 18px; /* Adjust icon size for smaller screens */
+    }
+}
+
+
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 25px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 21px;
+  width: 21px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4caf50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(25px);
+}
+
+
+
+/* Table responsiveness and scroll */
+.table-responsive {
+  max-height: 300px; /* Adjust to your desired scrollable area height */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.table thead th {
+  position: sticky; /* Keep header fixed */
+  top: 0;
+  background-color: #f8f9fa; /* Match Bootstrap's table header background */
+  z-index: 2;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.table td input[type="text"] {
+  width: 100%; /* Ensure input fields span the full cell width */
+  box-sizing: border-box; /* Include padding and borders in width */
+}
+
+.text-center {
+  text-align: center;
+}
+
+.align-middle {
+  vertical-align: middle;
+}
+
+

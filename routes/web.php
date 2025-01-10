@@ -98,6 +98,13 @@ Route::post('/delete/meta', [App\Http\Controllers\FolderController::class, 'Dele
 
 Route::get('/delete/folder', [App\Http\Controllers\FolderController::class, 'DeleteFolder'])->name('delete-folder-section');
 
+Route::get('/fetch/folder-files', [App\Http\Controllers\FolderController::class, 'fetchFolder'])->name('fetch-folder-files');
+
+Route::post('/update/numbering', [App\Http\Controllers\FolderController::class, 'updateNumbering'])->name('update-numbering');
+
+
+
+
 Route::post('/change/folder/name', [App\Http\Controllers\FolderController::class, 'ChangeFolderName'])->name('change-folder-name');
 
 Route::get('/account/report', [App\Http\Controllers\DashboardController::class, 'index'])->name('dash-index');

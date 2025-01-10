@@ -16,6 +16,11 @@ class DmFileUpload extends Model
         return $this->belongsTo('App\Models\DmSection', 'folder_id');
     }
 
+    public function numbering()
+    {
+        return $this->hasOne(DmNumbering::class, 'entity_id')->where('entity_type', 2); // Adjust entity_type as needed
+    }
+
     protected static function boot()
     {
         parent::boot();

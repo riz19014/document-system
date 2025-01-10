@@ -52,23 +52,32 @@
             </div>
 
 @endif
-              <strong>Folders: {{$folder_file->children->count()}}</strong>
-              <strong>Files: {{$folder_file->FolderName->count()}}</strong>
+
+             <span class="badgee d-inline-flex align-items-center">
+  <i class="fas fa-folder me-2" style="font-size: 1.5rem; color: #1ea1d7;"></i>
+  {{$folder_file->children->count() }}
+</span>
+<span class="badgee d-inline-flex align-items-center ms-2">
+  <i class="fas fa-file me-2" style="font-size: 1.5rem; color: #1ea1d7;"></i>
+  {{$folder_file->FolderName->count()}}
+</span>
+
+
               <table class="table table-striped table-hover main-table text-nowrap" style="width:100%;">
                     
                     <thead>
                    
                         <tr>
                           <th class="noVis">
-              <div class="custom-control custom-checkbox custom-checkbox1 d-inline-block">
-                <input type="checkbox" class="custom-control-input check-all1" name="check_all" id="check-all">
-                <label class="custom-control-label" for="check-all"></label>
-              </div>
-            </th>
+                            <div class="custom-control custom-checkbox custom-checkbox1 d-inline-block">
+                              <input type="checkbox" class="custom-control-input check-all1" name="check_all" id="check-all">
+                              <label class="custom-control-label" for="check-all"></label>
+                            </div>
+                          </th>
                      
                             <th > Name </th>
                             <th > Date </th> 
-                            <th > Due date </th> 
+                            <th > Numbering </th> 
                             <th > Notes </th> 
                             <th > Size </th>
                             <th > Tags </th>
@@ -101,37 +110,44 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Select Meta-Tags for folder "{{$foldered->description}}"</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Select Meta-Tags for folder "{{ $foldered->description }}"</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form id="column_Part" action="" method="post">
-        {{csrf_field()}}
+          {{ csrf_field() }}
           <div class="mb-3">
-            
-            {{--<div>
-        Toggle column: <a class="toggle-vis" data-column="0">CheckBox</a> - <a class="toggle-vis" data-column="1">Name</a> - <a class="toggle-vis" data-column="2">Date</a> - <a class="toggle-vis" data-column="3">Due date</a> - <a class="toggle-vis" data-column="4">Signature</a> - <a class="toggle-vis" data-column="5">Size</a> - <a class="toggle-vis" data-column="6">Tags</a>
-    </div>--}}
-
-@foreach($metaTagNames as $meta)
-
-  <ul style="list-style: none;"><li>
-            {{-- {{$metaTags->contains('folder_id',$foldered->id)}}
-            {{ $foldered->id }} --}}
-          {{-- {{ $meta->tagstatus[1]->folder_id }} --}}
-
-      <div class="form-check">
-            <input style="height: 35px;width: 40px;" class="form-check-input batchCheckbox" name="column_folder[]" type="checkbox" value="{{$meta->id}}" id="flexCheckDefault" {{($metaTags->contains('meta_tag_id',$meta->id)) ? 'checked' : ''}} />
-
-          <label class="form-check-label" for="flexCheckDefault" style="font-size: 25px;padding-left: 0.4em;">
-            {{$meta->tagging_name}}  
-          </label>
-      </div> 
-    </li>
-  </ul>
-@endforeach 
-
-  
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 70%;">Meta-Tag Name</th>
+                    <th style="width: 30%; text-align: center;">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($metaTagNames as $meta)
+                    <tr>
+                      <!-- Left Column: Meta-Tag Name -->
+                      <td>
+                        <label style="font-size: 18px;">{{ $meta->tagging_name }}</label>
+                      </td>
+                      <!-- Right Column: Right Swipe Action -->
+                      <td style="text-align: center;">
+                        <label class="switch">
+                          <input type="checkbox" 
+                                 class="batchCheckbox" 
+                                 name="column_folder[]" 
+                                 value="{{ $meta->id }}" 
+                                 {{ $metaTags->contains('meta_tag_id', $meta->id) ? 'checked' : '' }} />
+                          <span class="slider round"></span>
+                        </label>
+                      </td>
+                    </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
             <input type="hidden" name="folder_id_col" id="col_folder_id" value="{{ $foldered->id }}" />
           </div>
           <div class="mb-3 text-end">
@@ -141,7 +157,8 @@
       </div>
     </div>
   </div>
-</div>            
+</div>
+          
 
         <!-- New Foldar Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -245,6 +262,35 @@
       </div>
     </div>
 </div>
+
+
+
+
+<div class="modal fade" id="numberingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Numbering</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="numbering_part" action="{{route('update-numbering')}}" method="post">
+          {{ csrf_field() }}
+          <input type="hidden" name="num_folder_id" id="num_folder_id" value="">
+          <div id="dynamic-content">
+            <!-- Dynamic content (scrollable table) will be injected here -->
+          </div>
+          <div class="mb-3 text-end">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+ 
 
 
     <style>
@@ -374,21 +420,21 @@ $(document).on('click', '.check-all1', function () {
     });
 
 
-$(document).on('click', '#folderdelete', function(){
+    $(document).on('click', '#folderdelete', function(){
 
-   var selected_quots = [];
-       var check_idd = 1;
-      $("input.check1:checked").each(function() {
-        selected_quots.push($(this).val());
+       var selected_quots = [];
+           var check_idd = 1;
+          $("input.check1:checked").each(function() {
+            selected_quots.push($(this).val());
 
-         alert(selected_quots);
-      });
-});
+             alert(selected_quots);
+          });
+    });
 
 
-$('.main-table').on('dblclick', 'td form input', function() {
-    alert('caught')
-});
+    $('.main-table').on('dblclick', 'td form input', function() {
+        alert('caught')
+    });
 
 
 $(document).on('submit','#file_retention',function(e){   
@@ -530,7 +576,90 @@ $(document).ready(function () {
           var edit_id = $(this).data('id');
           $('#fid').val(edit_id);
             // alert(edit_id);
-         });  
+         });
+
+
+
+
+
+
+    $(document).on('click', '#numbering_id', function () {
+    var numb_id = $(this).data('id');
+
+    $.ajax({
+        method: "get",
+        dataType: "json",
+        data: { numb_id: numb_id },
+        url: "{{ route('fetch-folder-files') }}",
+        success: function (result) {
+            // Clear dynamic content inside the modal
+            let dynamicContent = $('#dynamic-content');
+            dynamicContent.html(''); // Clear previous content
+
+            // Construct the table
+            let table = `
+  <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+    <table class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th style="width: 10%; text-align: center;">Type</th>
+          <th style="width: 45%;">Name</th>
+          <th style="width: 45%;">Numbering</th>
+        </tr>
+      </thead>
+      <tbody>
+`;
+
+// Populate folders
+result.folders.forEach(function (folder) {
+  table += `
+        <tr>
+          <td class="text-center align-middle">
+            <i class="fa fa-folder text-warning"></i>
+          </td>
+          <td class="align-middle">${folder.name}</td>
+          <td>
+            <input type="text" name="folders[${folder.id}]" class="form-control folder-numbering"  data-id="${folder.id}" value="${folder.numbering ? folder.numbering : ''}" placeholder="Enter numbering">
+          </td>
+        </tr>`;
+});
+
+// Populate files
+result.files.forEach(function (file) {
+  table += `
+        <tr>
+          <td class="text-center align-middle">
+            <i class="fa fa-file text-primary"></i>
+          </td>
+          <td class="align-middle">${file.name}</td>
+          <td>
+            <input type="text" name="files[${file.id}]"  class="form-control file-numbering" data-id="${file.id}" value="${file.numbering ? file.numbering : ''}" placeholder="Enter numbering">
+          </td>
+        </tr>`;
+});
+
+table += `
+      </tbody>
+    </table>
+  </div>
+`;
+
+dynamicContent.html(table); // Insert the table into the modal
+
+
+            // Set folder ID for reference
+            $('#num_folder_id').val(numb_id);
+
+            // Show the modal
+            $('#numberingModal').modal('show');
+        }
+    });
+});
+
+
+
+
+
 
          $(document).on('click', '#column_folder_id', function(){
             // $('.disbtn').prop('disabled', true);

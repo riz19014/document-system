@@ -16,13 +16,16 @@ use DataTables;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use App\Models\DmNumbering;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
 
 class FolderController extends Controller
 {
   
 
     public function AddSection(Request $request){
-      // dd($request->all());
+      
 
       $section = new DmSection();
       $section->description = $request->folder_name;
@@ -51,8 +54,8 @@ class FolderController extends Controller
 
         $folder_file = DmSection::find($id);
         $foldered = DmSection::find($id);
-         //dd($foldered);
 
+        // dd($foldered->countAllFiles());
 
         $metaTagNames =  DmMetaTagging::all();
      
@@ -81,7 +84,7 @@ class FolderController extends Controller
 
     public function AddFolder(Request $request){
 
-        // dd($request->all());
+        
       
       $objName = DmSection::where('id',$request->folder_id)->first();
      
@@ -110,7 +113,7 @@ class FolderController extends Controller
 
     public function AddMeta(Request $request){
 
-        // dd($request->all());
+        
 
         $params = ['objtype'=> 3,'obj_id'=>null,'obj'=> Auth::id(),
       'action'=> trans('global.Meta.create').'"'.$request->meta_name.'"'];
@@ -127,81 +130,73 @@ class FolderController extends Controller
 
     }
 
-    public function fileUpload(Request $request){
-         $flag = 0;
-         $fid = DmSection::where('id',$request->FolderId)->first();
-         $cuser = ApprovalUser::count();
-         if($cuser){
-            $flag = 1;
-         }
-        $priorityUser = ApprovalUser::where('position', 1)->first();
 
-        foreach($request->file('filenames') as $file){          
+public function fileUpload(Request $request)
+{
+    $flag = 0;
+    $fid = DmSection::where('id', $request->FolderId)->first();
+    $cuser = ApprovalUser::count();
+    if ($cuser) {
+        $flag = 1;
+    }
+    $priorityUser = ApprovalUser::where('position', 1)->first();
 
-            $fileSize = $file->getSize();
-            $photo = new DmFileUpload();
-            $name = $file->getClientOriginalName();
-            $filename = pathinfo($name, PATHINFO_FILENAME);
-            $extension = pathinfo($name, PATHINFO_EXTENSION);
-            $filepath = $filename . '.' . strtolower($extension);
-            $path = $file->storeAs($fid->description, $filepath, 'public');
-            $photo->folder_id = $request->FolderId;
-            $photo->doc_name =  $filepath;
-            $photo->file_mime = $file->getClientMimeType();
-            if($flag==1){
-              $photo->notify =  1;
-            }else{
-              $photo->notify =  0;
-            }
+    foreach ($request->file('filenames') as $file) {
+        $fileSize = $file->getSize();
 
-            $photo->file_size =  $fileSize / 1000;
-            // $photo->doc_path = 'file_uploads/' . $name;
-            $photo->doc_path = 'storage/'.$path;
-            $photo->company_id = Auth::user()->company_id;
-            $photo->company_branch_id = Auth::user()->company_branch_id;
-            $photo->department_id = Auth::user()->department_id;
-            $photo->section_id = Auth::user()->section_id;
-            $photo->save();
+        // Get the original file details
+        $name = $file->getClientOriginalName();
+        $filename = pathinfo($name, PATHINFO_FILENAME);
+        $extension = pathinfo($name, PATHINFO_EXTENSION);
+        $filepath = $filename . '.' . strtolower($extension);
 
-            if($priorityUser !=null){
-              
-           
+        // Read file contents
+        $fileContents = file_get_contents($file->getRealPath());
 
-             $status = new ApprovalStatus();
-             $status->file_id = $photo->id;
-             $status->user_id = $priorityUser->user_id;
-             $status->company_id = Auth::user()->company_id;
-             $status->company_branch_id = Auth::user()->company_branch_id;
-             $status->department_id = Auth::user()->department_id;
-             $status->section_id = Auth::user()->section_id;
-            if($flag==1){
-              $status->notify =  1;
-            }else{
-              $status->notify =  0;
-            }
+        // Encrypt the file contents
+        $encryptedContents = Crypt::encrypt($fileContents);
+
+        // Store the encrypted file in the storage
+        $path = $fid->description . '/' . $filepath;
+        Storage::disk('public')->put($path, $encryptedContents);
+
+        // Create a record in the database
+        $photo = new DmFileUpload();
+        $photo->folder_id = $request->FolderId;
+        $photo->doc_name = $filepath;
+        $photo->file_mime = $file->getClientMimeType();
+        $photo->notify = ($flag == 1) ? 1 : 0;
+        $photo->file_size = $fileSize / 1000;
+        $photo->doc_path = 'storage/' . $path;
+        $photo->company_id = Auth::user()->company_id;
+        $photo->company_branch_id = Auth::user()->company_branch_id;
+        $photo->department_id = Auth::user()->department_id;
+        $photo->section_id = Auth::user()->section_id;
+        $photo->save();
+
+        // Create an approval status if a priority user exists
+        if ($priorityUser != null) {
+            $status = new ApprovalStatus();
+            $status->file_id = $photo->id;
+            $status->user_id = $priorityUser->user_id;
+            $status->company_id = Auth::user()->company_id;
+            $status->company_branch_id = Auth::user()->company_branch_id;
+            $status->department_id = Auth::user()->department_id;
+            $status->section_id = Auth::user()->section_id;
+            $status->notify = ($flag == 1) ? 1 : 0;
             $status->save();
+        }
 
- }
+        // Log the audit action
+        $params = ['objtype' => 2, 'obj_id' => $photo->id . '-fi', 'obj' => $request->FolderId, 'action' => trans('global.folder.ficreate')];
+        $activity = Audits::getAudit($params);
+    }
+}
 
-
-
-             $params = ['objtype'=> 2,'obj_id'=>$photo->id.'-fi','obj'=> $request->FolderId,
-            'action'=> trans('global.folder.ficreate')];
-            $activity =  Audits::getAudit($params);
-
-            // $params = ['objtype'=> 2,'obj_id'=>$photo->id,'obj'=> $photo->id,
-            // 'action'=> trans('global.file.create')];
-            // $activity =  Audits::getAudit($params);
-            
-                       
-         }
-
-
-  }
 
     public function ColumnFolder(Request $request)
     {
-     // dd($request->all());
+     
      if(!is_null($request['column_folder'])) {
         $parent = DmSection::find($request->folder_id_col);
         $array[]=$request->folder_id_col;
@@ -343,46 +338,66 @@ class FolderController extends Controller
 
     public function MainData(Request $request)
     {
-      $records = array();
+      // Fetch child folders and their numbering in a single query
+          $folder_children = DmSection::with([
+              'numbering' => function ($query) {
+                  $query->where('entity_type', 1); // 1 for folder
+              }
+          ])
+          ->where('parent_id', $request->folderid)
+          ->orderBy('created_at', 'desc')
+          ->get();
 
-      $folder_child = DmSection::where('parent_id', $request->folderid)->orderBy('created_at', 'desc')->get();
+          // Prepare folder data
+          $array_product = $folder_children->map(function ($folder) {
+              return [
+                  'id' => $folder->id,
+                  'description' => $folder->description,
+                  'object_type' => $folder->object_type,
+                  'created_at' => $folder->created_at,
+                  'numbering' => $folder->numbering->numbering ?? null, // Add numbering if available
+              ];
+          })->toArray();
+
+          // Fetch files in the folder and their numbering in a single query
+          $folder_files = DmFileUpload::with([
+              'numbering' => function ($query) {
+                  $query->where('entity_type', 2); // 2 for file
+              }
+          ])
+          ->where('folder_id', $request->folderid)
+          ->where('is_delete', 0)
+          ->orderBy('created_at', 'desc')
+          ->get();
+
+          // Prepare file data
+          $array_pro = $folder_files->map(function ($file) {
+              return [
+                  'id' => $file->id,
+                  'description' => $file->doc_name,
+                  'file_mime' => $file->file_mime,
+                  'size' => $file->file_size,
+                  'tags' => $file->tags,
+                  'due_date' => $file->due_date,
+                  'object_type' => $file->object_type,
+                  'notes' => $file->note,
+                  'created_at' => $file->created_at,
+                  'numbering' => $file->numbering->numbering ?? null, // Add numbering if available
+              ];
+          })->toArray();
+
+          // Combine folders and files data
+          $records = array_merge($array_product, $array_pro);
 
 
-      $array_product = array(); 
-      $i = 0;
+                  // Optionally, you can return or use $arr3 here
 
-      foreach ($folder_child as $row_pro)
-      {
-          $array_product [$i]["id"]= $row_pro->id;
-          $array_product [$i]["description"]= $row_pro->description;
-          $array_product [$i]["object_type"]= $row_pro->object_type;
-          $array_product [$i]["created_at"]= $row_pro->created_at;
-          $i++;
-      }
 
-        $folder_files = DmFileUpload::where('folder_id', $request->folderid)->where('is_delete', 0)->orderBy('created_at', 'desc')->get();
+            
 
-        // dd($folder_files);
 
-        $array_pro = array(); 
 
-      foreach ($folder_files as $row_product)
-      {
-          $array_pro [$i]["id"]= $row_product->id;
-          $array_pro [$i]["description"]= $row_product->doc_name;
-          $array_pro [$i]["file_mime"]= $row_product->file_mime;
-          $array_pro [$i]["size"]= $row_product->file_size;
-          $array_pro [$i]["tags"]= $row_product->tags;
-          $array_pro [$i]["due_date"]= $row_product->due_date;
-          $array_pro [$i]["object_type"]= $row_product->object_type;
-          // $array_pro [$i]["signature"]= $row_product->signature;
-          $array_pro [$i]["notes"]= $row_product->note;
-          $array_pro [$i]["created_at"]= $row_product->created_at;
-          $i++;
-      }
-
-      $arr3 = $array_product + $array_pro;
-        return Datatables::of($arr3)
+        return Datatables::of($records)
 
         ->addColumn('checkbox', function ($row) { 
               $text = 'hidden';
@@ -517,13 +532,15 @@ class FolderController extends Controller
           ->addColumn('due_date', function($row){
 
 
-           if($row['object_type'] == 2){
+          //  if($row['object_type'] == 2){
 
-             return ($row['due_date'] != null) ? Carbon::parse( $row['due_date'] )->format('d M Y') : '';
+          //    return ($row['due_date'] != null) ? Carbon::parse( $row['due_date'] )->format('d M Y') : '';
 
-          }else{            
-                   return ;           
-            }  
+          // }else{            
+          //          return ;           
+          //   } 
+
+          return $row['numbering']; 
 
                  
      })
@@ -614,9 +631,152 @@ class FolderController extends Controller
 
    public function OrderData(Request $request){
 
-     // dd($request->all());
+     
 
    }
+
+
+  // public function fetchFolder(Request $request)
+  // {
+  //       // Validate and capture the incoming request
+  //       $folderId = $request->numb_id;
+
+  //       // Fetch folders (children of the given folder ID)
+  //       $folderChild = DmSection::where('parent_id', $folderId)
+  //           ->orderBy('created_at', 'desc')
+  //           ->get(['id', 'description']);
+
+  //       // Fetch files in the folder (not deleted)
+  //       $folderFiles = DmFileUpload::where('folder_id', $folderId)
+  //           ->where('is_delete', 0)
+  //           ->orderBy('created_at', 'desc')
+  //           ->get(['id', 'doc_name']);
+
+  //       // Prepare response structure
+  //       $response = [
+  //           'folders' => $folderChild->map(function ($folder) {
+  //               return [
+  //                   'id' => $folder->id,
+  //                   'name' => $folder->description,
+  //               ];
+  //           }),
+  //           'files' => $folderFiles->map(function ($file) {
+  //               return [
+  //                   'id' => $file->id,
+  //                   'name' => $file->doc_name,
+  //               ];
+  //           }),
+  //       ];
+
+  //       // Return response in JSON format
+  //       return response()->json($response);
+  // }
+
+
+   public function fetchFolder(Request $request)
+{
+    // Validate and capture the incoming request
+    $folderId = $request->numb_id;
+
+    // Fetch folders (children of the given folder ID) along with numbering
+    $folderChild = DmSection::where('parent_id', $folderId)
+        ->orderBy('created_at', 'desc')
+        ->get(['id', 'description'])
+        ->map(function ($folder) {
+            // Fetch the numbering for each folder (entity_type = 1 for folder)
+            $folderNumbering = DmNumbering::where('entity_id', $folder->id)
+                ->where('entity_type', 1)
+                ->first(); // Get the first matching numbering
+
+            return [
+                'id' => $folder->id,
+                'name' => $folder->description,
+                'numbering' => $folderNumbering ? $folderNumbering->numbering : null, // Add numbering if available
+            ];
+        });
+
+    // Fetch files in the folder (not deleted) along with numbering
+    $folderFiles = DmFileUpload::where('folder_id', $folderId)
+        ->where('is_delete', 0)
+        ->orderBy('created_at', 'desc')
+        ->get(['id', 'doc_name'])
+        ->map(function ($file) {
+            // Fetch the numbering for each file (entity_type = 2 for file)
+            $fileNumbering = DmNumbering::where('entity_id', $file->id)
+                ->where('entity_type', 2)
+                ->first(); // Get the first matching numbering
+
+            return [
+                'id' => $file->id,
+                'name' => $file->doc_name,
+                'numbering' => $fileNumbering ? $fileNumbering->numbering : null, // Add numbering if available
+            ];
+        });
+
+    // Prepare response structure
+    $response = [
+        'folders' => $folderChild,
+        'files' => $folderFiles,
+    ];
+
+    // dd($response);
+
+    // Return response in JSON format
+    return response()->json($response);
+}
+
+
+  
+
+  public function updateNumbering(Request $request)
+  {
+      $data = $request->all();
+      $authUser = Auth::user();
+
+      // Loop through folder numbering updates
+      if (isset($data['folders'])) {
+          foreach ($data['folders'] as $folderId => $numbering) {
+              DmNumbering::updateOrCreate(
+                  [
+                      'entity_id' => $folderId,
+                      'entity_type' => 1, // 1 for folder
+                  ],
+                  [
+                      'numbering' => $numbering,
+                      'company_id' => $authUser->company_id,
+                      'company_branch_id' => $authUser->company_branch_id,
+                      'department_id' => $authUser->department_id,
+                      'section_id' => $authUser->section_id,
+                  ]
+              );
+          }
+      }
+
+      // Loop through file numbering updates
+      if (isset($data['files'])) {
+          foreach ($data['files'] as $fileId => $numbering) {
+              DmNumbering::updateOrCreate(
+                  [
+                      'entity_id' => $fileId,
+                      'entity_type' => 2, // 2 for file
+                  ],
+                  [
+                      'numbering' => $numbering,
+                      'company_id' => $authUser->company_id,
+                      'company_branch_id' => $authUser->company_branch_id,
+                      'department_id' => $authUser->department_id,
+                      'section_id' => $authUser->section_id,
+                  ]
+              );
+          }
+      }
+
+      return redirect()->back();
+  }
+
+
+
+
 
 
 }
