@@ -87,6 +87,7 @@
 </div>
 @endsection
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     $(document).ready(function(){
 
@@ -156,10 +157,33 @@ $(document).on('click', '#switchBtn', function(){
             },
             success: function(response){
                 if(response.status == 'success'){
-                    alert('Switched Successfully!');
-                    location.reload(); // ya kisi aur page par redirect karwana chaho to
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Switched Successfully!',
+                        text: 'You have successfully switched to the selected company, unit, department, and section.',
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#28a745',
+                        allowOutsideClick: false,  // Disable closing by clicking outside
+                        allowEscapeKey: false      // Disable closing by pressing Escape
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload(); // Reload the page after the user clicks "Ok"
+                        }
+                    });
                 } else {
-                    alert('Failed to switch');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed to Switch',
+                        text: 'There was an issue switching to the selected company.',
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#dc3545',
+                        allowOutsideClick: false,  // Disable closing by clicking outside
+                        allowEscapeKey: false      // Disable closing by pressing Escape
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload(); // Reload the page after the user clicks "Ok"
+                        }
+                    });
                 }
             }
         });
