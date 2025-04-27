@@ -456,5 +456,59 @@ class AccountController extends Controller
     }
 
 
+    public function switchCompany()
+    {
+        $companies = dm_company::all(); // ya aap apni logic se search waqara laga sakte ho
+        $user = Auth::user();
+
+        $units = dm_unit::where('company_id',$user->company_id)
+        ->get();
+
+        $departments = Department::where('company_id',$user->company_id)
+        ->where('unit_id',$user->company_branch_id)
+        ->get();
+
+        $sections = Section::where('company_id',$user->company_id)
+        ->where('unit_id',$user->company_branch_id)
+        ->where('department_id',$user->department_id)
+        ->get();
+
+        return view('switch', compact('companies','user','units','departments','sections'));
+    }
+
+    public function getSwitchUnits($company_id)
+    {
+        $units = dm_unit::where('company_id', $company_id)->get();
+        return response()->json($units);
+    }
+
+    public function getSwitchDepartments($unit_id)
+    {
+        $departments = Department::where('unit_id', $unit_id)->get();
+        return response()->json($departments);
+    }
+
+    public function getSwitchSections($department_id)
+    {
+        $sections = Section::where('department_id', $department_id)->get();
+        return response()->json($sections);
+    }
+    public function switch(Request $request)
+    {
+        // dd($request->all());
+        $user = Auth::user();
+
+        $user->company_id = $request->company_id;
+        $user->company_branch_id = $request->unit_id; // unit id
+        $user->department_id = $request->department_id;
+        $user->section_id = $request->section_id;
+
+        $user->save();
+
+        return response()->json(['status' => 'success']);
+    }
+
+
+
 
 }

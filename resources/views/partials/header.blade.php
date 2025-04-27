@@ -7,9 +7,24 @@
               <div class="col-6 col-lg-9 text-end">
 
               
-              <a href="{{ url('logout') }}" class="btn btn-danger btn-sm px-3 d-inline-flex align-items-center">
-                  <span class="fas fa-power-off me-2"></span> Log Out
-                </a>
+              <div class="btn-group">
+                    <a href="{{ url('logout') }}" class="btn btn-danger btn-sm px-3 d-inline-flex align-items-center">
+                      <span class="fas fa-power-off me-2"></span> Log Out
+                    </a>
+                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                      <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a class="dropdown-item text-center" href="{{ route('company.switch') }}">
+    <div style="font-size: 10px; font-style: italic; color: #888;">Switch to other company</div>
+    <i class="fas fa-exchange-alt" style="font-size: 20px; margin-top: 5px;"></i>
+</a>
+
+                      </li>
+                    </ul>
+                </div>
+
                 <button type="button" id="sidebarCollapse" class="btn btn-info d-lg-none d-inline-block">
                     <i class="fas fa-align-left"></i>
                 </button>

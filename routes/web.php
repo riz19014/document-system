@@ -162,6 +162,15 @@ Route::get('/get/unit/departments', [App\Http\Controllers\AccountController::cla
 
 Route::post('/delete/unit', [App\Http\Controllers\AccountController::class, 'deleteUnit'])->name('delete-unit');
 
+Route::get('/switch-company', [App\Http\Controllers\AccountController::class, 'switchCompany'])->name('company.switch');
+
+// AJAX Routes
+Route::get('/get-units/{company_id}', [App\Http\Controllers\AccountController::class, 'getSwitchUnits']);
+Route::get('/get-departments/{unit_id}', [App\Http\Controllers\AccountController::class, 'getSwitchDepartments']);
+Route::get('/get-sections/{department_id}', [App\Http\Controllers\AccountController::class, 'getSwitchSections']);
+
+Route::post('/switch/user-company', [App\Http\Controllers\AccountController::class, 'switch']);
+
 
 
 Route::get('/folder-file/{id}', [App\Http\Controllers\FileController::class, 'FileFolderDownload'])->name('download-folder-file');

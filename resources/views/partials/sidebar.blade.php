@@ -64,17 +64,39 @@
 
             <!-- Page Content -->
             <div class="col-lg-10">
-                <div style="margin-bottom: -10px; text-align: center;background-color: #f9f8f8">
-                    @if(Auth::user()->role_id !== 4)
-                        {{Auth::user()->company->company_name}} <i style="color: #b3acac" class="fas fa-angle-right"></i>
-                        {{Auth::user()->unit->unit_name}} <i style="color: #b3acac" class="fas fa-angle-right"></i>
-                        {{Auth::user()->department->name}} <i style="color: #b3acac" class="fas fa-angle-right"></i>
-                        {{Auth::user()->section->name}} <i style="color: #b3acac" class="fas fa-angle-right"></i>
-                        {{Auth::user()->name}}
-                    @else
-                        {{Auth::user()->name}}
-                    @endif
-                </div>
+                <div style="margin-bottom: -10px; text-align: center; padding: 10px; display: flex; justify-content: center; flex-wrap: wrap; gap: 5px;">
+    @if(Auth::user()->role_id !== 4)
+        <span style="background-color: #e3f2fd; padding: 5px 10px; border-radius: 5px;">
+            {{ Auth::user()->company->company_name }}
+        </span>
+        <i style="color: #b3acac; margin: 0 5px; position: relative; top: 8px;" class="fas fa-angle-right"></i>
+
+        
+        <span style="background-color: #e8f5e9; padding: 5px 10px; border-radius: 5px;">
+            {{ Auth::user()->unit->unit_name }}
+        </span>
+        <i style="color: #b3acac; margin: 0 5px; position: relative; top: 8px;" class="fas fa-angle-right"></i>
+        
+        <span style="background-color: #fff3e0; padding: 5px 10px; border-radius: 5px;">
+            {{ Auth::user()->department->name }}
+        </span>
+        <i style="color: #b3acac; margin: 0 5px; position: relative; top: 8px;" class="fas fa-angle-right"></i>
+        
+        <span style="background-color: #fce4ec; padding: 5px 10px; border-radius: 5px;">
+            {{ Auth::user()->section->name }}
+        </span>
+        <i style="color: #b3acac; margin: 0 5px; position: relative; top: 8px;" class="fas fa-angle-right"></i>
+        
+        <span style="background-color: #ede7f6; padding: 5px 10px; border-radius: 5px;">
+            {{ Auth::user()->name }}
+        </span>
+    @else
+        <span style="background-color: #ede7f6; padding: 5px 10px; border-radius: 5px;">
+            {{ Auth::user()->name }}
+        </span>
+    @endif
+</div>
+
 
                 @yield('content')
             </div>

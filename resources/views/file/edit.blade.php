@@ -55,6 +55,15 @@
                                        <input type="hidden" name="file_id" value="{{$fileid}}">
                                   </div>
                                 </div>
+
+                                <div class="mb-4">
+                                  <label class="font-600 text-primary">Numbering</label>
+                                  <div class="input-group mb-3">
+                                   <input type="text" id="docname" name="numbering" value="{{$file->numbering ? $file->numbering->numbering : ''}}" class="form-control" />
+                                  </div>
+                                </div>
+
+
                                   <div class="mb-4">
                                   <label class="font-600 text-primary">Tags</label>
                                   <div class="input-group mb-3">

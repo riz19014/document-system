@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use App\Models\DmNumbering;
 
 class FileController extends Controller
 {
@@ -110,9 +111,9 @@ class FileController extends Controller
     }  
 
     public function Editfile(Request $request){
-         //dd($request->all());  
 
       $file = DmFileUpload::find($request->file_id);
+      DmNumbering::where('entity_id', $request->file_id)->update(['numbering' => $request->numbering]);
       $fcols = DmFolderColumn::where('folder_id', $file->folder_id)->get();
       $name_ext= $request->doc_name.''.$request->file_ext;
       $fileScan = DmFileTagging::where('file_scan_id',$request->file_id)->get();

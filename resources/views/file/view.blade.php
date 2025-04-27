@@ -73,6 +73,13 @@
 
 
 
+                               <div class="mb-4">
+                                  <p class="mb-0 text-primary font-600">Numbering</p>
+                                  <p class="mb-0">{{$file->numbering ? $file->numbering->numbering : ''}}</p>
+                                </div>
+
+
+
                                 <div class="mb-4">
                                   <p class="mb-0 text-primary font-600">Notes</p>
                                   <p class="mb-0">{{$file->note}}</p>
