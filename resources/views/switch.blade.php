@@ -12,9 +12,6 @@
         </nav>
     </div>
 
- <span class="badgee d-inline-flex align-items-center">
-  <i class="fas fa-folder me-2" style="font-size: 1.5rem; color: #1ea1d7;"></i>
-</span>
 
     <div class="main-content-area">
         <div class="main-section">
