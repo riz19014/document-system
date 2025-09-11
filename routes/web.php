@@ -73,6 +73,15 @@ Route::get('meta', [App\Http\Controllers\FolderController::class, 'MetaRecord'])
 
 Route::get('/download/file/{id}', [App\Http\Controllers\FileController::class, 'FileDownload'])->name('download-file');
 
+
+//view file
+
+
+Route::get('/get/view/decryptefile/{id}', [App\Http\Controllers\FileController::class, 'viewFile'])->name('file.view');
+
+
+//end here
+
 Route::get('/search/index/{query}', [App\Http\Controllers\SearchController::class, 'SearchQuery'])->name('search-query');
 
 Route::get('search', [App\Http\Controllers\SearchController::class, 'SearchRecord'])->name('search-table');

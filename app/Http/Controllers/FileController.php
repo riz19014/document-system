@@ -21,6 +21,7 @@ use App\Models\DmNumbering;
 class FileController extends Controller
 {
      public function index($id){
+        // dd('sd');
      
         $file = DmFileUpload::where('id', $id)->first();
 
@@ -75,6 +76,60 @@ class FileController extends Controller
           $parents=array_reverse($parents);
      	return view('file.view', compact('parents','file','fileScans','fname','folcols','file_audits','retention_end','approve_status'));
      }
+
+
+
+    //  public function viewFile($id)
+    // {
+    //     $file = DmFileUpload::findOrFail($id);
+    //     // dd($file);
+
+    //     $fname = DmSection::find($file->folder_id);
+
+    //     $path = storage_path('app/public/' . $fname->description . '/' . $file->doc_name);
+
+    //     if (!file_exists($path)) {
+    //         abort(404, 'File not found');
+    //     }
+
+    //     $decryptedContents = Crypt::decrypt(file_get_contents($path));
+
+    //     return response($decryptedContents)
+    //         ->header('Content-Type', mime_content_type($path));
+    // }
+
+     public function viewFile($id)
+{
+    $file = DmFileUpload::findOrFail($id);
+    // dd($file);
+    $path = public_path($file->doc_path); // points to public/storage/...
+
+    if (!file_exists($path)) {
+        return response()->json(['error' => 'File not found.'], 404);
+    }
+
+    // Read encrypted contents
+    $encryptedContents = file_get_contents($path);
+
+    // Decrypt
+    $decryptedContents = Crypt::decrypt($encryptedContents);
+
+    // Detect MIME type (pdf, image, etc.)
+    $mime = mime_content_type($path);
+    // dd($mime);
+
+    // Return inline (view in browser)
+    return response($decryptedContents)
+    ->header('Content-Type', $file->file_mime)
+    ->header('Content-Disposition', 'inline; filename="'.basename($file->doc_path).'"');
+
+}
+
+
+
+
+
+
 
     public function EditView($id){
          // dd($id);
@@ -196,6 +251,7 @@ public function FileDownload($id)
     // Fetch the file record from the database
     $file = DmFileUpload::findOrFail($id);
     $path = public_path($file->doc_path); // Adjust path if necessary
+
 
     try {
         // Ensure the file exists

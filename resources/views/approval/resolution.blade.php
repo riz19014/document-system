@@ -30,7 +30,7 @@
 
                               
 
-                                <a href="{{asset('storage/'.$status_data->file->foldername->description.'/'.$status_data->file->doc_name)}}" class="btn text-primary btn-searchfile" type="button" data-lity><i class="far fa-file-alt"></i></a>   
+                                <a href="{{ route('file.view', $status_data->file_id) }}" class="btn text-primary btn-searchfile" type="button" data-lity><i class="far fa-file-alt"></i></a>   
 
 
     {{--<a class="btn text-primary btn-searchfile" type="button" data-lity data-lity-target="{{asset('storage/'.$status_data->file->foldername->description.'/'.$status_data->file->doc_name)}}"><i class="far fa-file-alt"></i></a>--}}
@@ -133,7 +133,7 @@
                                      <i class="fas fa-file-alt"></i>
 
                                   <a href="{{route('download-file',$status_data->file_id)}}" class="btn text-primary btn-download" type="button"><i class="fas fa-download"></i></a>
-                                <a href="{{asset('storage/'.$status_data->file->foldername->description.'/'.$status_data->file->doc_name)}}" class="btn text-primary btn-searchfile" type="button" data-lity><i class="far fa-file-alt"></i></a>   
+                                <a href="{{ route('file.view', $status_data->file_id) }}" class="btn text-primary btn-searchfile" type="button" data-lity><i class="far fa-file-alt"></i></a>   
                                 </div>
                               </div>
                               {{--<div class="mb-3">

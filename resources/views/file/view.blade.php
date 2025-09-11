@@ -37,7 +37,7 @@
 
 
 
-                        <a title="View" href="{{asset('storage/'.$fname->description.'/'.$file->doc_name)}}" data-lity><i class='fas fa-images'></i>&nbsp;&nbsp;</a>
+                        <a title="View" href="{{ route('file.view', $file->id) }}" data-lity><i class='fas fa-images'></i>&nbsp;&nbsp;</a>
 
 
                         @elseif(strpos($file->doc_name, '.odt') || strpos($file->doc_name, '.txt'))
@@ -46,9 +46,9 @@
 
 
 
-                           <a href="" data-lity data-lity-target="{{asset('storage/'.$fname->description.'/'.$file->doc_name)}}">Image</a>
+                           <a href="" data-lity data-lity-target="{{ route('file.view', $file->id) }}">Image</a>
                         @else
-                        <a title="View" href="{{asset('storage/'.$fname->description.'/'.$file->doc_name)}}" data-lity><i class='fas fa-file-alt'></i>&nbsp;&nbsp;</a>
+                        <a title="View" href="{{ route('file.view', $file->id) }}" data-lity><i class='fas fa-file-alt'></i>&nbsp;&nbsp;</a>
 
 
 
