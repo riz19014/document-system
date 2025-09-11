@@ -82,7 +82,7 @@
                       </div>--}}
                   </div>
                   <div class="submit-btn">
-                    <button type="submit" class="btn btn-primary text-uppercase btn-wide">sing in</button>
+                    <button type="submit" class="btn btn-primary text-uppercase btn-wide">sign in</button>
                   </div>
                 </form>
               </div>
